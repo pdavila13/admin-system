@@ -1,10 +1,10 @@
 <x-admin>
     @section('title')
-        {{ 'Product' }}
+        {{ 'VPN3e EMPRESES' }}
     @endsection
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Product Table</h3>
+            <h3 class="card-title">Tabla VPN3e Empreses</h3>
             <div class="card-tools">
                 <a href="{{ route('admin.product.create') }}" class="btn btn-sm btn-info">New</a>
             </div>
@@ -13,9 +13,10 @@
             <table class="table table-striped" id="productTable">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Sub Category</th>
+                        <th>Group VPN</th>
+                        <th>Company</th>
+                        <th>Network</th>
+                        <th>Description</th>
                         <th>Action</th>
                         <th></th>
                     </tr>
@@ -23,9 +24,10 @@
                 <tbody>
                     @foreach ($data as $product)
                         <tr>
-                            <td>{{ $product->name }}</td>
-                            <td>{{ $product->category->name }}</td>
-                            <td>{{ $product->subcategory->name }}</td>
+                            <td>{{ $product->vpn3e_group }}</td>
+                            <td>{{ $product->vpn3e_company }}</td>
+                            <td>{{ $product->vpn3e_network }}</td>
+                            <td>{{ $product->vpn3e_description }}</td>
                             <td><a href="{{ route('admin.product.edit', encrypt($product->id)) }}"
                                     class="btn btn-sm btn-primary">Edit</a></td>
                             <td>

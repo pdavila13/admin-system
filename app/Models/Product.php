@@ -9,15 +9,13 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $table = 'products';
+    protected $table = 'vpngestio';
 
     protected $fillable = [
-        'name',
-        'slug',
-        'category_id',
-        'sub_category_id',
-        'collection_id',
-        'image',
+        'vpn3e_group',
+        'vpn3e_company',
+        'vpn3e_network',
+        'vpn3e_description',
     ];
 
     public function category()

@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Edit Product</h3>
+                        <h3 class="card-title">Edit VPN</h3>
                         <div class="card-tools">
                             <a href="{{ route('admin.product.index') }}" class="btn btn-info btn-sm">Back</a>
                         </div>
