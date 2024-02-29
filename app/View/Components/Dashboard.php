@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use App\Models\Category;
 use App\Models\Collection;
-use App\Models\Product;
+use App\Models\GroupVpn;
 use App\Models\User;
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -23,8 +23,8 @@ class Dashboard extends Component
         $category = Category::count();
         view()->share('category',$category);
         
-        $product = Product::count();
-        view()->share('product',$product);
+        $group_vpn = GroupVpn::count();
+        view()->share('group_vpn',$group_vpn);
         
         $collection = Collection::count();
         view()->share('collection',$collection);

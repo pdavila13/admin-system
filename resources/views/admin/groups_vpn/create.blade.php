@@ -9,10 +9,10 @@
                     <div class="card-header">
                         <h3 class="card-title">Create vpn3e</h3>
                         <div class="card-tools">
-                            <a href="{{ route('admin.product.index') }}" class="btn btn-info btn-sm">Back</a>
+                            <a href="{{ route('admin.group_vpn.index') }}" class="btn btn-info btn-sm">Back</a>
                         </div>
                     </div>
-                    <form class="needs-validation" novalidate action="{{ route('admin.product.store') }}" method="POST"
+                    <form class="needs-validation" novalidate action="{{ route('admin.group_vpn.store') }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
@@ -74,8 +74,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="product-images" class="form-label">Product Slider Images</label>
-                                        <input type="file" name="product_images[]" id="product-images"
+                                        <label for="group_vpn-images" class="form-label">Groups VPN Slider Images</label>
+                                        <input type="file" name="group_vpn_images[]" id="group_vpn-images"
                                             class="form-control" multiple>
                                     </div>
                                 </div>

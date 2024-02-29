@@ -32,7 +32,7 @@
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.category.index') }}" class="nav-link {{ Route::is('admin.category.index') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-list-alt"></i>
+                <i class="nav-icon fas fa-th"></i>
                 <p>Category
                     <span class="badge badge-warning right">{{$CategoryCount}}</span>
                 </p>
@@ -55,10 +55,10 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('admin.product.index') }}" class="nav-link {{ Route::is('admin.product.index') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-th"></i>
-                <p>Products
-                    <span class="badge badge-warning right">{{$ProductCount}}</span>
+            <a href="{{ route('admin.group_vpn.index') }}" class="nav-link {{ Route::is('admin.group_vpn.index') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-list-alt"></i>
+                <p>Grups VPN
+                    <span class="badge badge-warning right">{{$GroupVpnCount}}</span>
                 </p>
             </a>
         </li>

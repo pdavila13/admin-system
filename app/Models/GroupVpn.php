@@ -5,17 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class GroupVpn extends Model
 {
     use HasFactory;
 
-    protected $table = 'vpngestio';
+    protected $table = 'group_vpn';
 
     protected $fillable = [
-        'vpn3e_group',
-        'vpn3e_company',
-        'vpn3e_network',
-        'vpn3e_description',
+        'name',
+        'network',
+        'description',
     ];
 
     public function category()
