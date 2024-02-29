@@ -4,6 +4,7 @@ namespace App\View\Components;
 
 use App\Models\Category;
 use App\Models\Collection;
+use App\Models\Company;
 use App\Models\GroupVpn;
 use App\Models\SubCateory;
 use App\Models\User;
@@ -31,6 +32,9 @@ class Sidebar extends Component
         
         $CategoryCount = Category::count();
         view()->share('CategoryCount',$CategoryCount);
+
+        $CompanyCount = Company::count();
+        view()->share('CompanyCount',$CompanyCount);
         
         $SubCategoryCount = SubCateory::count();
         view()->share('SubCategoryCount',$SubCategoryCount);

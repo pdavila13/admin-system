@@ -39,6 +39,14 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href="{{ route('admin.company.index') }}" class="nav-link {{ Route::is('admin.company.index') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>Company
+                    <span class="badge badge-warning right">{{$CompanyCount}}</span>
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="{{ route('admin.subcategory.index') }}" class="nav-link {{ Route::is('admin.subcategory.index') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-list"></i>
                 <p>Sub Category
