@@ -17,23 +17,8 @@ class GroupVpn extends Model
         'description',
     ];
 
-    public function category()
+    public function company()
     {
-        return $this->belongsTo(Category::class,'category_id');
-    }
-    
-    public function subcategory()
-    {
-        return $this->belongsTo(SubCateory::class,'sub_category_id');
-    }
-
-    public function collection()
-    {
-        return $this->belongsTo(SubCateory::class,'collection_id');
-    }
-
-    public function productImages()
-    {
-        return $this->hasMany(ProductImage::class);
+        return $this->belongsTo(Company::class,'company_id');
     }
 }

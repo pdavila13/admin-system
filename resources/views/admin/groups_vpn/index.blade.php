@@ -1,10 +1,10 @@
 <x-admin>
     @section('title')
-        {{ 'VPN3e EMPRESES' }}
+        {{ 'VPN GROUPS' }}
     @endsection
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Tabla VPN3e Empreses</h3>
+            <h3 class="card-title">VPN Groups Table</h3>
             <div class="card-tools">
                 <a href="{{ route('admin.group_vpn.create') }}" class="btn btn-sm btn-info">New</a>
             </div>
@@ -13,7 +13,7 @@
             <table class="table table-striped" id="group_vpnTable">
                 <thead>
                     <tr>
-                        <th>Group VPN</th>
+                        <th>Name</th>
                         <th>Network</th>
                         <th>Description</th>
                         <th>Action</th>

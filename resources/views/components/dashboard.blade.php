@@ -14,7 +14,7 @@
     <div class="col-lg-3 col-6">
         <div class="small-box bg-success">
             <div class="inner">
-                <h3>{{$category}}</h3>
+                <h3>{{$company}}</h3>
                 <p>Total Companies</p>
             </div>
             <div class="icon">

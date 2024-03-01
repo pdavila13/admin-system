@@ -16,4 +16,9 @@ class Company extends Model
         'cif',
         'description',
     ];
+
+    public function groupVpn()
+    {
+        return $this->belongsTo(GroupVpn::class,'group_vpn_id');
+    }
 }

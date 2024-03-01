@@ -3,7 +3,7 @@
         {{ 'Create vpn3e' }}
     @endsection
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-primary">
                     <div class="card-header">
@@ -16,70 +16,32 @@
                         enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="name" class="form-label">Grup VPN</label>
-                                        <input type="text" name="name" id="name" value="{{ old('name') }}"
-                                            class="form-control" required>
-                                        @error('name')
-                                            <span>{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="collection">Collection</label>
-                                        <select name="collection" id="collection" class="form-control" required>
-                                            <option value="" selected disabled>Select collection</option>
-                                            @foreach ($collection as $collect)
-                                                <option {{ old($collect->id) == $collect->id ? 'selected' : '' }}
-                                                    value="{{ $collect->id }}">{{ $collect->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('collection')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="category" class="form-label">Category</label>
-                                        <select name="category" id="category" class="form-control">
-                                            <option value="" selected disabled>select the category</option>
-                                            @foreach ($category as $cat)
-                                                <option {{ old($cat->id) == $cat->id ? 'selected' : '' }}
-                                                    value="{{ $cat->id }}">{{ $cat->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="subcategory" class="form-label">Sub Category</label>
-                                        <select name="subcategory" id="subcategory" class="form-control">
-                                            <option value="" selected disabled>select the subcategory</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="image" class="form-label">Image</label>
-                                        <input type="file" name="image" id="image" class="form-control"
-                                            required>
-                                        @error('image')
-                                            <span>{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="company-images" class="form-label">Groups VPN Slider Images</label>
-                                        <input type="file" name="group_vpn_images[]" id="company-images"
-                                            class="form-control" multiple>
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" id="name" name="name"
+                                    placeholder="Enter company name" required value="{{ old('name') }}">
                             </div>
+                            @error('name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+
+                            <div class="form-group">
+                                <label for="cif">CIF</label>
+                                <input type="text" class="form-control" id="cif" name="cif"
+                                    placeholder="Enter tax identification code" required value="{{ old('cif') }}">
+                            </div>
+                            @error('cif')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <input type="text" class="form-control" id="description" name="description"
+                                    placeholder="Enter text description" required value="{{ old('description') }}">
+                            </div>
+                            @error('description')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="card-footer">
                             <button type="submit" id="submit" class="btn btn-primary float-right">Save</button>
@@ -89,27 +51,4 @@
             </div>
         </div>
     </div>
-    @section('js')
-        <script>
-            $("#category").on('change', function() {
-                let category = $("#category").val();
-                $("#submit").attr('disabled', 'disabled');
-                $("#submit").html('Please wait');
-                $.ajax({
-                    url: "{{ route('admin.getsubcategory') }}",
-                    type: 'GET',
-                    data: {
-                        category: category,
-                    },
-                    success: function(data) {
-                        if (data) {
-                            $("#submit").removeAttr('disabled', 'disabled');
-                            $("#submit").html('Save');
-                            $("#subcategory").html(data);
-                        }
-                    }
-                });
-            });
-        </script>
-    @endsection
 </x-admin>

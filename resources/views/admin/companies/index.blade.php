@@ -1,34 +1,36 @@
 <x-admin>
     @section('title')
-        {{ 'EMPRESES' }}
+        {{ 'Company' }}
     @endsection
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Tabla Empreses</h3>
+            <h3 class="card-title">Company Table</h3>
             <div class="card-tools">
                 <a href="{{ route('admin.company.create') }}" class="btn btn-sm btn-info">New</a>
             </div>
         </div>
         <div class="card-body">
-            <table class="table table-striped" id="group_vpnTable">
+            <table class="table table-striped" id="companyTable">
                 <thead>
                     <tr>
                         <th>Name</th>
                         <th>CIF</th>
                         <th>Description</th>
                         <th>Action</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($data as $company)
+                    @foreach ($data as $com)
                         <tr>
-                            <td>{{ $company->name }}</td>
-                            <td>{{ $company->cif }}</td>
-                            <td>{{ $company->description }}</td>
-                            <td><a href="{{ route('admin.company.edit', encrypt($company->id)) }}"
+                            <td>{{ $com->name }}</td>
+                            <td>{{ $com->cif }}</td>
+                            <td>{{ $com->description }}</td>
+                            <td><a href="{{ route('admin.company.edit', encrypt($com->id)) }}"
                                     class="btn btn-sm btn-primary">Edit</a></td>
                             <td>
-                                <form action="{{ route('admin.company.destroy', encrypt($company->id)) }}" method="POST" onsubmit="return confirm('Are sure want to delete?')">
+                                <form action="{{ route('admin.company.destroy', encrypt($com->id)) }}" method="POST" 
+                                    onsubmit="return confirm('Are sure want to delete?')">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" class="btn btn-sm btn-danger">Delete</button>
@@ -43,7 +45,7 @@
     @section('js')
         <script>
             $(function() {
-                $('#group_vpnTable').DataTable({
+                $('#companyTable').DataTable({
                     "paging": true,
                     "searching": true,
                     "ordering": true,

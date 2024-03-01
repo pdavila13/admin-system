@@ -19,7 +19,7 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="name" class="form-label">Grup VPN</label>
+                                        <label for="name" class="form-label">Name</label>
                                         <input type="text" name="name" id="name" value="{{ old('name') }}"
                                             class="form-control" required>
                                         @error('name')
@@ -29,54 +29,37 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="collection">Collection</label>
-                                        <select name="collection" id="collection" class="form-control" required>
-                                            <option value="" selected disabled>Select collection</option>
-                                            @foreach ($collection as $collect)
-                                                <option {{ old($collect->id) == $collect->id ? 'selected' : '' }}
-                                                    value="{{ $collect->id }}">{{ $collect->name }}</option>
+                                        <label for="company">Company</label>
+                                        <select name="company" id="company" class="form-control" required>
+                                            <option value="" selected disabled>Select company</option>
+                                            @foreach ($company as $com)
+                                                <option {{ old($com->id) == $com->id ? 'selected' : '' }}
+                                                    value="{{ $com->id }}">{{ $com->name }}</option>
                                             @endforeach
                                         </select>
-                                        @error('collection')
+                                        @error('company')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="category" class="form-label">Category</label>
-                                        <select name="category" id="category" class="form-control">
-                                            <option value="" selected disabled>select the category</option>
-                                            @foreach ($category as $cat)
-                                                <option {{ old($cat->id) == $cat->id ? 'selected' : '' }}
-                                                    value="{{ $cat->id }}">{{ $cat->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="subcategory" class="form-label">Sub Category</label>
-                                        <select name="subcategory" id="subcategory" class="form-control">
-                                            <option value="" selected disabled>select the subcategory</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="image" class="form-label">Image</label>
-                                        <input type="file" name="image" id="image" class="form-control"
-                                            required>
-                                        @error('image')
-                                            <span>{{ $message }}</span>
+                                        <label for="network" class="form-label">Network</label>
+                                        <input type="network" class="form-control" name="network" required
+                                            value="{{ old('network') }}">
+                                        @error('network')
+                                            <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="group_vpn-images" class="form-label">Groups VPN Slider Images</label>
-                                        <input type="file" name="group_vpn_images[]" id="group_vpn-images"
-                                            class="form-control" multiple>
+                                        <label for="description" class="form-label">Description</label>
+                                        <input type="description" class="form-control" name="description" required
+                                            value="{{ old('description') }}">
+                                        @error('description')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -91,21 +74,21 @@
     </div>
     @section('js')
         <script>
-            $("#category").on('change', function() {
-                let category = $("#category").val();
+            $("#company").on('change', function() {
+                let company = $("#company").val();
                 $("#submit").attr('disabled', 'disabled');
                 $("#submit").html('Please wait');
                 $.ajax({
                     url: "{{ route('admin.getsubcategory') }}",
                     type: 'GET',
                     data: {
-                        category: category,
+                        company: company,
                     },
                     success: function(data) {
                         if (data) {
                             $("#submit").removeAttr('disabled', 'disabled');
                             $("#submit").html('Save');
-                            $("#subcategory").html(data);
+                            $("#subcompany").html(data);
                         }
                     }
                 });

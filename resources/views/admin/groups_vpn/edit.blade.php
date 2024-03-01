@@ -9,10 +9,10 @@
                     <div class="card-header">
                         <h3 class="card-title">Edit VPN</h3>
                         <div class="card-tools">
-                            <a href="{{ route('admin.product.index') }}" class="btn btn-info btn-sm">Back</a>
+                            <a href="{{ route('admin.company.index') }}" class="btn btn-info btn-sm">Back</a>
                         </div>
                     </div>
-                    <form class="needs-validation" novalidate action="{{ route('admin.product.update',$data) }}" method="POST"
+                    <form class="needs-validation" novalidate action="{{ route('admin.company.update',$data) }}" method="POST"
                         enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
@@ -79,17 +79,17 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="product-images" class="form-label">Product Slider Images</label>
-                                        <input type="file" name="product_images" id="product-images"
+                                        <label for="company-images" class="form-label">Product Slider Images</label>
+                                        <input type="file" name="company_images" id="company-images"
                                             class="form-control" multiple>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
-                                    <div class="row">
-                                        @foreach ($productImages as $productImage)
+                                    <div class="row">$company
+                                        @foreach ($companyImages as $companyImage)
                                             <div class="col-lg-2">
-                                                <a href="{{ route('admin.remove.image',$productImage->id) }}" onclick="return confirm('Are you sure want to remove image?')">
-                                                    <img src="{{ asset('product-slider-images/'.$productImage->image) }}" alt="">
+                                                <a href="{{ route('admin.remove.image',$companyImage->id) }}" onclick="return confirm('Are you sure want to remove image?')">
+                                                    <img src="{{ asset('company-slider-images/'.$companyImage->image) }}" alt="">
                                                 </a>
                                             </div>
                                         @endforeach
@@ -115,7 +115,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <img src="{{ asset('product-image/' . $data->image) }}" alt="" class="w-full modal-img">
+                    <img src="{{ asset('company-image/' . $data->image) }}" alt="" class="w-full modal-img">
                     <span class="text-muted">If you want to change image just add new image otherwise leave it.</span>
                 </div>
             </div>
