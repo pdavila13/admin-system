@@ -1,35 +1,36 @@
 <x-admin>
     @section('title')
-        {{ 'Company' }}
+        {{ 'Petition' }}
     @endsection
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Company Table</h3>
+            <h3 class="card-title">Petition Table</h3>
             <div class="card-tools">
-                <a href="{{ route('admin.company.create') }}" class="btn btn-sm btn-info">New</a>
+                <a href="{{ route('admin.petition.create') }}" class="btn btn-sm btn-info">New</a>
             </div>
         </div>
         <div class="card-body">
-            <table class="table table-striped" id="companyTable">
+            <table class="table table-striped" id="petitionTable">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>CIF</th>
-                        <th>Description</th>
+                        <th>Company</th>
+                        <th>Petition type</th>
+                        <th>Petition number</th>
+                        <th>Technical system</th>
+                        <th>Petition data</th>
+                        <th>Status</th>
                         <th>Action</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($data as $com)
+                    @foreach ($data as $petition)
                         <tr>
-                            <td>{{ $com->name }}</td>
-                            <td>{{ $com->cif }}</td>
-                            <td>{{ $com->description }}</td>
-                            <td class="text-right"><a href="{{ route('admin.company.edit', encrypt($com->id)) }}"
+                            <td>{{ $petition->name }}</td>
+                            <td><a href="{{ route('admin.petition.edit', encrypt($petition->id)) }}"
                                     class="btn btn-sm btn-primary">Edit</a></td>
-                            <td class="text-right">
-                                <form action="{{ route('admin.company.destroy', encrypt($com->id)) }}" method="POST" 
+                            <td>
+                                <form action="{{ route('admin.petition.destroy', encrypt($petition->id)) }}" method="POST"
                                     onsubmit="return confirm('Are sure want to delete?')">
                                     @method('DELETE')
                                     @csrf
@@ -45,10 +46,10 @@
     @section('js')
         <script>
             $(function() {
-                $('#companyTable').DataTable({
+                $('#petitionTable').DataTable({
                     "paging": true,
                     "searching": true,
-                    "ordering": true,
+                    "ordering": false,
                     "responsive": true,
                 });
             });

@@ -47,10 +47,10 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('admin.subcategory.index') }}" class="nav-link {{ Route::is('admin.subcategory.index') ? 'active' : '' }}">
+            <a href="{{ route('admin.petition.index') }}" class="nav-link {{ Route::is('admin.petition.index') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-list"></i>
-                <p>Sub Category
-                    <span class="badge badge-secondary right">{{$SubCategoryCount}}</span>
+                <p>Petitions
+                    <span class="badge badge-secondary right">{{$PetitionCount}}</span>
                 </p>
             </a>
         </li>

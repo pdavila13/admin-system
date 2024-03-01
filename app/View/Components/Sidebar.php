@@ -7,6 +7,7 @@ use App\Models\Collection;
 use App\Models\Company;
 use App\Models\GroupVpn;
 use App\Models\SubCateory;
+use App\Models\Petition;
 use App\Models\User;
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -44,6 +45,9 @@ class Sidebar extends Component
         
         $GroupVpnCount = GroupVpn::count();
         view()->share('GroupVpnCount',$GroupVpnCount);
+
+        $PetitionCount = Petition::count();
+        view()->share('PetitionCount',$PetitionCount);
     }
 
     /**

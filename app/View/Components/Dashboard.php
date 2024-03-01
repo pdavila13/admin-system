@@ -6,6 +6,7 @@ namespace App\View\Components;
 use App\Models\Collection;
 use App\Models\GroupVpn;
 use App\Models\Company;
+use App\Models\Petition;
 use App\Models\User;
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -32,6 +33,9 @@ class Dashboard extends Component
         
         $collection = Collection::count();
         view()->share('collection',$collection);
+
+        $petition = Petition::count();
+        view()->share('petition',$petition);
     }
 
     /**

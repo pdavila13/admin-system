@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\GroupVpnController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\PetitionController;
 use App\Http\Controllers\SubCateoryController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
     Route::resource('collection',CollectionController::class);
     Route::resource('group_vpn',GroupVpnController::class);
     Route::resource('company',CompanyController::class);
+    Route::resource('petition',PetitionController::class);
     Route::get('/get/subcategory',[GroupVpnController::class,'getsubcategory'])->name('getsubcategory');
     Route::get('/remove-external-img/{id}',[GroupVpnController::class,'removeImage'])->name('remove.image');
 });

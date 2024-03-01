@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('requests', function (Blueprint $table) {
+        Schema::create('petitions', function (Blueprint $table) {
             $table->id();
-            $table->string('request_number');
+            $table->string('petition_number');
             $table->unsignedBigInteger('company_id');
             $table->foreign('company_id')->references('id')->on('company')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('request_type_id');
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('requests');
+        Schema::dropIfExists('petitions');
     }
 };
