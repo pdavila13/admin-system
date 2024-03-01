@@ -36,8 +36,8 @@
 
                             <div class="form-group">
                                 <label for="description">Description</label>
-                                <input type="text" class="form-control" id="description" name="description"
-                                    placeholder="Enter text description" required value="{{ old('description') }}">
+                                <textarea type="text" class="form-control" id="description" name="description"
+                                    placeholder="Enter company description">{{ old('description') }}</textarea>
                             </div>
                             @error('description')
                                 <span class="text-danger">{{ $message }}</span>
