@@ -13,20 +13,20 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         \App\Models\User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'testadmin@gmail.com',
+            'name' => 'SysAdmin',
+            'email' => 'sysadmin@gmail.com',
             'password' => bcrypt('p$ssw#rd'),
         ])->assignRole('admin');
         
-        // \App\Models\User::factory()->create([
-        //     'name' => 'User',
-        //     'email' => 'testuser@gmail.com',
-        //     'password' => bcrypt('p$ssw#rd'),
-        // ])->assignRole('user');
+        \App\Models\User::factory()->create([
+             'name' => 'User',
+             'email' => 'user@gmail.com',
+             'password' => bcrypt('p$ssw#rd'),
+        ])->assignRole('user');
 
         \App\Models\User::factory()->create([
             'name' => 'User',
-            'email' => 'testvendor@gmail.com',
+            'email' => 'vendor@gmail.com',
             'password' => bcrypt('p$ssw#rd'),
         ])->assignRole('vendor');
     }
