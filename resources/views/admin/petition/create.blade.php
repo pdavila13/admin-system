@@ -73,20 +73,19 @@
 
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="date" class="form-label">Date</label>
+                                        <label for="created_at" class="form-label">Date</label>
                                         <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
-                                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" value="{{ old('date') }}">
+                                            <input type="text" name="created_at" id="created_at" class="form-control datetimepicker-input" data-target="#datetimepicker4" value="{{ old('created_at') }}">
                                             <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                             </div>
                                         </div>
-                                        <!--<input type="text" name="date" id="date" value="{{ old('date') }}" class="form-control" required>-->
-                                        @error('date')
+                                        @error('created_at')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="state_id">Status</label>
