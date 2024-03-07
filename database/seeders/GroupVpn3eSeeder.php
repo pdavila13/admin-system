@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
+use App\Models\GroupVpn;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Company;
 
-class CompanySeeder extends Seeder
+class GroupVpn3eSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Company::factory()->count(20)->create();
+        GroupVpn::factory()->count(20)->create();
     }
 }

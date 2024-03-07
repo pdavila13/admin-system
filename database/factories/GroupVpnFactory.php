@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class UserT3Factory extends Factory
+class GroupVpnFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,12 +18,9 @@ class UserT3Factory extends Factory
     {
         $faker = \Faker\Factory::create('es_ES');
         return [
-            'name' => $faker->firstName,
-            'nif' => $faker->dni,
-            'first_name' => $faker->lastName,
-            'last_name' => $faker->lastName,
-            'phone_number' => $faker->mobileNumber,
-            'email' => $faker->safeEmail,
+            'name' => $faker->numerify('gvpneics##'),
+            'network' => $this->faker->ipv4,
+            'description' => $this->faker->catchPhrase,
             'company_id' => $this->faker->numberBetween(1, 20),
         ];
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\GroupVpn;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -13,8 +14,8 @@ class GroupVpnController extends Controller
      */
     public function __construct()
     {
-        $data = GroupVpn::orderBy('id', 'DESC')->get();
-        view()->share('data', $data);
+        $data = GroupVpn::orderBy('id','DESC')->get();
+        view()->share('data',$data);
     }
 
     /**
@@ -30,7 +31,8 @@ class GroupVpnController extends Controller
      */
     public function create()
     {
-        return view('admin.groups_vpn.create');
+        $company = Company::orderBy('id','DESC')->get();
+        return view('admin.groups_vpn.create', compact('company'));
     }
 
     /**
@@ -42,13 +44,23 @@ class GroupVpnController extends Controller
             'name' => 'required|max:255',
             'network' => 'required',
             'description' => 'required',
+            'company_id' => 'required'
         ]);
 
+        GroupVpn::create([
+            'name'=>$request->name,
+            'network'=>$request->network,
+            'description'=>$request->description,
+            'company_id'=>$request->company_id
+        ]);
+        /*
         $group_vpn = new GroupVpn();
         $group_vpn->name = $request->name;
-        $group_vpn->slug = $uniqueSlug;
+        $group_vpn->network = $request->network;
+        $group_vpn->description = $request->description;
+        $group_vpn->company_id = $request->company_id;
 
-        $group_vpn->save();
+        $group_vpn->save();*/
 
         return redirect()->route('admin.group_vpn.index')->with('success', 'GroupVpn created successfully.');
     }
@@ -59,36 +71,43 @@ class GroupVpnController extends Controller
     public function edit($id)
     {
         $data = GroupVpn::where('id', decrypt($id))->first();
-        return view('admin.groups_vpn.edit', compact('data'));
+        $company = Company::orderBy('id','DESC')->get();
+        return view('admin.groups_vpn.edit', compact('data', 'company'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'name' => 'required|max:255',
             'network' => 'required',
             'description' => 'required',
+            'company_id' => 'required'
         ]);
-        
-        $group_vpn = GroupVpn::find($request->id);
+
+        $group_vpn = GroupVpn::findOrFail($id);
         $group_vpn->name = $request->name;
-        $group_vpn->slug = $uniqueSlug;
+        $group_vpn->network = $request->network;
+        $group_vpn->description = $request->description;
+        $group_vpn->company_id = $request->company_id;
         
         $group_vpn->save();
 
-        return redirect()->route('admin.group_vpn.index')->with('success', 'GroupVpn created successfully');
+        return redirect()->route('admin.group_vpn.index')->with('success', 'GroupVpn updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
+
     public function destroy($id)
     {
-        $group_vpn = GroupVpn::where('id', decrypt($id))->first();
-       
-        return redirect()->route('admin.group_vpn.index')->with('error', 'GroupVpn deleted successfully.');
+        $group_vpn = GroupVpn::findOrFail(decrypt($id));
+        $group_vpn->delete();
+
+        return redirect()->route('admin.group_vpn.index')->with('success', 'GroupVpn deleted successfully.');
     }
 }

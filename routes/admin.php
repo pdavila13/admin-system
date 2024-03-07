@@ -20,12 +20,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
     Route::resource('user',UserController::class);
     Route::resource('role',RoleController::class);
     Route::resource('permission',PermissionController::class);
-    Route::resource('category',CategoryController::class);
-    Route::resource('subcategory',SubCateoryController::class);
-    Route::resource('collection',CollectionController::class);
     Route::resource('group_vpn',GroupVpnController::class);
     Route::resource('company',CompanyController::class);
     Route::resource('petition',PetitionController::class);
-    Route::get('/get/subcategory',[GroupVpnController::class,'getsubcategory'])->name('getsubcategory');
-    Route::get('/remove-external-img/{id}',[GroupVpnController::class,'removeImage'])->name('remove.image');
 });

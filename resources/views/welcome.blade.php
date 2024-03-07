@@ -1,8 +1,8 @@
 <!--
 /*!
  *   AdminLTE With Laravel
- *   Author: Nihir Zala
- *   Website: nihirz.netlify.app
+ *   Author: SysAdmin
+ *   Website: 
  *   License: Open source - MIT <https://opensource.org/licenses/MIT>
  */
 -->

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nif')->unique();
             $table->string('name');
-            $table->string('firts_name');
+            $table->string('first_name');
             $table->string('last_name');
             $table->string('phone_number');
             $table->string('email');

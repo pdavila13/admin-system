@@ -18,6 +18,10 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(CompanySeeder::class);
+        $this->call(GroupVpn3eSeeder::class);
         $this->call(UserT3Seeder::class);
+        $this->call(PetitionType::class);
+        $this->call(State::class);
+        $this->call(Petition::class);
     }
 }

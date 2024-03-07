@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 
 class UserT3 extends Model
 {
     use HasFactory;
 
-    protected $table = 't3_users';
+    protected $table = 'users_t3';
 
     protected $fillable = [
         'name',
@@ -18,6 +19,12 @@ class UserT3 extends Model
         'first_name',
         'last_name',
         'phonenumber',
-        'email'
+        'email',
+        'company_id'
     ];
+
+    public function company() : BelongsTo
+    {
+        return $this->belongsTo(Company::class);
+    }
 }

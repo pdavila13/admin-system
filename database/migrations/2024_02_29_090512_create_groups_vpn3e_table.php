@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('network')->nullble();
             $table->string('description')->nullble();
-            $table->foreignIdFor(Company::class)->constrained();
+            $table->foreignIdFor(Company::class)->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

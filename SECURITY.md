@@ -2,7 +2,7 @@
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability in the Lartavel project, please report it by sending an email to the project maintainers at [testnihir@gmail.com]. Do not create a public GitHub issue for the security vulnerability.
+If you discover a security vulnerability in the Lartavel project, please report it by sending an email to the project maintainers at [sysadmin@example.com]. Do not create a public GitHub issue for the security vulnerability.
 
 Include the following details in your email:
 
@@ -28,6 +28,6 @@ This project has adopted a [Code of Conduct](CODE_OF_CONDUCT.md). Please review 
 
 Thank you for helping keep Lartavel secure!
 
-Nihir Zala
+SysAdmin
 
-[testnihir@gmail.com]: mailto:testnihir@gmail.com
+[syadmin@example.com]: mailto:sysadmin@example.com

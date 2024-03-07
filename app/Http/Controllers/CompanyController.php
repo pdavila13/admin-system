@@ -40,6 +40,7 @@ class CompanyController extends Controller
             'cif'=>$request->cif,
             'description'=>$request->description,
         ]);
+        
         return redirect()->route('admin.company.index')->with('success','Company created successfully.');
     }
 
@@ -70,6 +71,6 @@ class CompanyController extends Controller
     public function destroy($id)
     {
         Company::where('id',decrypt($id))->delete();
-        return redirect()->route('admin.company.index')->with('error','Company deleted successfully.');   
+        return redirect()->route('admin.company.index')->with('success','Company deleted successfully.');   
     }
 }

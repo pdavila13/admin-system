@@ -30,14 +30,13 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="company">Company</label>
-                                        <select name="company" id="company" class="form-control" required>
+                                        <select name="company_id" id="company" class="form-control" required>
                                             <option value="" selected disabled>Select company</option>
                                             @foreach ($company as $com)
-                                                <option {{ old($com->id) == $com->id ? 'selected' : '' }}
-                                                    value="{{ $com->id }}">{{ $com->name }}</option>
+                                                <option {{ old('company_id') == $com->id ? 'selected' : '' }} value="{{ $com->id }}">{{ $com->name }}</option>
                                             @endforeach
                                         </select>
-                                        @error('company')
+                                        @error('company_id')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -72,27 +71,4 @@
             </div>
         </div>
     </div>
-    @section('js')
-        <script>
-            $("#company").on('change', function() {
-                let company = $("#company").val();
-                $("#submit").attr('disabled', 'disabled');
-                $("#submit").html('Please wait');
-                $.ajax({
-                    url: "{{ route('admin.getsubcategory') }}",
-                    type: 'GET',
-                    data: {
-                        company: company,
-                    },
-                    success: function(data) {
-                        if (data) {
-                            $("#submit").removeAttr('disabled', 'disabled');
-                            $("#submit").html('Save');
-                            $("#subcompany").html(data);
-                        }
-                    }
-                });
-            });
-        </script>
-    @endsection
 </x-admin>

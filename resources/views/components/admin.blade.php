@@ -1,8 +1,8 @@
 <!--
 /*!
  *   AdminLTE With Laravel
- *   Author: Nihir Zala
- *   Website: nihirz.netlify.app
+ *   Author: Dep. Sistemes
+ *   Website: 
  *   License: Open source - MIT <https://opensource.org/licenses/MIT>
  */
 -->
@@ -120,8 +120,7 @@
         <div class="float-right d-none d-sm-block">
             <b>Version</b> 3.2.0
         </div>
-        <strong>Copyright © 2023-{{ date('Y') }} <a href="https://github.com/ZalaNihir/adminlte-laravel10">Zala
-                Nihir</a>.</strong> All rights reserved.
+        <strong>Copyright © 2023-{{ date('Y') }} <a href="https://wiki.parcsanitari.local/wiki/Sistemes">Sysadmin</a>.</strong> All rights reserved.
     </footer>
     <!-- ./wrapper -->
 

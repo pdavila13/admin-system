@@ -30,18 +30,9 @@ class Sidebar extends Component
         
         $PermissionCount = Permission::count();
         view()->share('PermissionCount',$PermissionCount);
-        
-        $CategoryCount = Category::count();
-        view()->share('CategoryCount',$CategoryCount);
 
         $CompanyCount = Company::count();
         view()->share('CompanyCount',$CompanyCount);
-        
-        $SubCategoryCount = SubCateory::count();
-        view()->share('SubCategoryCount',$SubCategoryCount);
-        
-        $CollectionCount = Collection::count();
-        view()->share('CollectionCount',$CollectionCount);
         
         $GroupVpnCount = GroupVpn::count();
         view()->share('GroupVpnCount',$GroupVpnCount);

@@ -2,8 +2,6 @@
 
 namespace App\View\Components;
 
-//use App\Models\Category;
-use App\Models\Collection;
 use App\Models\GroupVpn;
 use App\Models\Company;
 use App\Models\Petition;
@@ -21,18 +19,12 @@ class Dashboard extends Component
     {
         $user = User::count();
         view()->share('user',$user);
-        
-        //$category = Category::count();
-        //view()->share('category',$category);
 
         $company = Company::count();
         view()->share('company',$company);
         
         $group_vpn = GroupVpn::count();
         view()->share('group_vpn',$group_vpn);
-        
-        $collection = Collection::count();
-        view()->share('collection',$collection);
 
         $petition = Petition::count();
         view()->share('petition',$petition);

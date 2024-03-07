@@ -9,10 +9,10 @@
                     <div class="card-header">
                         <h3 class="card-title">Edit VPN</h3>
                         <div class="card-tools">
-                            <a href="{{ route('admin.company.index') }}" class="btn btn-info btn-sm">Back</a>
+                            <a href="{{ route('admin.group_vpn.index') }}" class="btn btn-info btn-sm">Back</a>
                         </div>
                     </div>
-                    <form class="needs-validation" novalidate action="{{ route('admin.company.update',$data) }}" method="POST"
+                    <form class="needs-validation" novalidate action="{{ route('admin.group_vpn.update',$data) }}" method="POST"
                         enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
@@ -21,78 +21,47 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="name" class="form-label">Name</label>
-                                        <input type="text" name="name" id="name" value="{{ $data->name }}"
-                                            class="form-control" required>
+                                        <label for="name">Group Name</label>
+                                        <input type="text" class="form-control" id="name" name="name" value="{{ $data->name }}">
                                         @error('name')
-                                            <span>{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="collection">Collection</label>
-                                        <select name="collection" id="collection" class="form-control" required>
-                                            <option value="" selected disabled>Select collection</option>
-                                            @foreach ($collection as $collect)
-                                                <option {{ $data->collection_id == $collect->id ? 'selected' : '' }}
-                                                    value="{{ $collect->id }}">{{ $collect->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('collection')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="category" class="form-label">Category</label>
-                                        <select name="category" id="category" class="form-control">
-                                            <option value="" selected disabled>select the category</option>
-                                            @foreach ($category as $cat)
-                                                <option {{ $data->category_id == $cat->id ? 'selected' : '' }}
-                                                    value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                        <label for="company">Company</label>
+                                        <select name="company_id" id="company" class="form-control" readonly>
+                                            <option value="" selected disabled>Select company</option>
+                                            @foreach ($company as $com)
+                                                <option {{ $data->company_id  == $com->id ? 'selected' : '' }} value="{{ $com->id }}">{{ $com->name }}</option>
                                             @endforeach
                                         </select>
+                                        <!-- Campo oculto para enviar el valor de company_id -->
+                                        <input type="hidden" name="company_id" value="{{ $data->company_id }}">
+                                        @error('company_id')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                </div>
+                                </div>                                                     
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="subcategory" class="form-label">Sub Category</label>
-                                        <select name="subcategory" id="subcategory" class="form-control">
-                                            @foreach ($subcategory as $item)
-                                                <option {{ $data->sub_category_id == $item->id ? 'selected' : '' }} value="{{ $item->id }}">{{ $item->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="image" class="form-label">Image</label>
-                                        <input type="file" name="image" id="image" class="form-control">
-                                        <a href="javascript:void(0)" data-toggle="modal"
-                                        data-target="#modal-default" >View Image</a>
-                                        @error('image')
-                                            <span>{{ $message }}</span>
+                                        <label for="network" class="form-label">Network</label>
+                                        <input type="network" class="form-control" name="network" required
+                                            value="{{ $data->network }}">
+                                        @error('network')
+                                            <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="company-images" class="form-label">Product Slider Images</label>
-                                        <input type="file" name="company_images" id="company-images"
-                                            class="form-control" multiple>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="row">$company
-                                        @foreach ($companyImages as $companyImage)
-                                            <div class="col-lg-2">
-                                                <a href="{{ route('admin.remove.image',$companyImage->id) }}" onclick="return confirm('Are you sure want to remove image?')">
-                                                    <img src="{{ asset('company-slider-images/'.$companyImage->image) }}" alt="">
-                                                </a>
-                                            </div>
-                                        @endforeach
+                                        <label for="description" class="form-label">Description</label>
+                                        <input type="description" class="form-control" name="description" required
+                                            value="{{ $data->description }}">
+                                        @error('description')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -105,54 +74,4 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal-default">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">View Image</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <img src="{{ asset('company-image/' . $data->image) }}" alt="" class="w-full modal-img">
-                    <span class="text-muted">If you want to change image just add new image otherwise leave it.</span>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-@section('css')
-    <style>
-        img.w-full.modal-img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-}
-    </style>
-@endsection
-    @section('js')
-        <script>
-            $("#category").on('change', function() {
-                let category = $("#category").val();
-                $("#submit").attr('disabled', 'disabled');
-                $("#submit").html('Please wait');
-                $.ajax({
-                    url: "{{ route('admin.getsubcategory') }}",
-                    type: 'GET',
-                    data: {
-                        category: category,
-                    },
-                    success: function(data) {
-                        if (data) {
-                            $("#submit").removeAttr('disabled', 'disabled');
-                            $("#submit").html('Save');
-                            $("#subcategory").html(data);
-                        }
-                    }
-                });
-            });
-        </script>
-    @endsection
 </x-admin>
