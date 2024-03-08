@@ -17,6 +17,7 @@ class PetitionTypeSeeder extends Seeder
             'VPN3e', 
             'Firewall JX', 
             'Firewall NUS',
+            'Excepció de seguretat'
         ];
 
         foreach ($petitionTypes as $petitionTypeName) {

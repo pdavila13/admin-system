@@ -73,14 +73,14 @@
 
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="created_at" class="form-label">Date</label>
+                                        <label for="datepicker" class="form-label">Date</label>
                                         <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
-                                            <input type="text" name="created_at" id="created_at" class="form-control datetimepicker-input" data-target="#datetimepicker4" value="{{ old('created_at') }}">
+                                            <input type="text" name="datepicker" id="datepicker" class="form-control datetimepicker-input" data-target="#datetimepicker4" value="{{ old('datepicker') ?? $currentDate }}">
                                             <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                             </div>
                                         </div>
-                                        @error('created_at')
+                                        @error('datepicker')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -112,9 +112,12 @@
     </div>
     @section('js')
         <script>
-            $(function () {
+            $(document).ready(function() {
+                var currentDate = moment().format('DD-MM-YYYY');
+                $('#datepicker').val(currentDate);
+
                 $('#datetimepicker4').datetimepicker({
-                    format: 'L'
+                    format: 'DD-MM-YYYY'
                 });
             });
         </script>

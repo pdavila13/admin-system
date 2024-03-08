@@ -21,13 +21,90 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="number" class="form-label">Petition Number</label>
-                                        <input type="text" id="number" name="number"
-                                            placeholder="Enter petition number" required value="{{ $data->petition_number }}">
+                                        <label for="company">Company</label>
+                                        <select name="company_id" id="company" class="form-control" readonly>
+                                            <option value="" selected disabled>Select company</option>
+                                            @foreach ($company as $com)
+                                                <option {{ $data->company_id  == $com->id ? 'selected' : '' }} value="{{ $com->id }}">{{ $com->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <!-- Campo oculto para enviar el valor de company_id -->
+                                        <input type="hidden" name="company_id" value="{{ $data->company_id }}">
+                                        @error('company_id')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    @error('number')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="petitionType">Petition type</label>
+                                        <select name="petition_type_id" id="petition_type_id" class="form-control">
+                                            <option value="" selected disabled>Select petition type</option>
+                                            @foreach ($petitionType as $pet_type)
+                                                <option {{ $data->petition_type_id == $pet_type->id ? 'selected' : '' }} value="{{ $pet_type->id }}">{{ $pet_type->name }}</option>
+                                            @endforeach
+                                        </select>
+                                            @error('petitionType')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="petition_number" class="form-label">Petition Number</label>
+                                        <input type="text" name="petition_number" id="petition_number" value="{{ $data->petition_number }}" class="form-control" >
+                                        @error('petition_number')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="user">Technical system</label>
+                                        <select name="user_id" id="user_id" class="form-control" >
+                                            <option value="" selected disabled>Select petition type</option>
+                                            @foreach ($user as $sys_adm)
+                                                <option {{ $data->user_id == $sys_adm->id ? 'selected' : '' }} value="{{ $sys_adm->id }}">{{ $sys_adm->name }}</option>
+                                            @endforeach
+                                        </select>
+                                            @error('user')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="datepicker" class="form-label">Date</label>
+                                        <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+                                            <input type="text" name="datepicker" id="datepicker" class="form-control datetimepicker-input" data-target="#datetimepicker4" 
+                                            value="{{ DateTime::createFromFormat('Y-m-d H:i:s', $data->datepicker)->format('d-m-Y') }}">
+                                            <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                        @error('datepicker')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="state">Status</label>
+                                        <select name="state_id" id="state_id" class="form-control" >
+                                            <option value="" selected disabled>Select state</option>
+                                            @foreach ($state as $stat)
+                                                <option {{ $data->state_id == $stat->id ? 'selected' : '' }} value="{{ $stat->id }}">{{ $stat->name }}</option>
+                                            @endforeach
+                                        </select>
+                                            @error('state')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -39,4 +116,14 @@
             </div>
         </div>
     </div>
+    @section('js')
+        <script>
+            $(document).ready(function() {
+                $('#datetimepicker4').datetimepicker({
+                    format: 'DD-MM-YYYY',
+                    defaultDate: new Date(),
+                });
+            });
+        </script>
+    @endsection
 </x-admin>

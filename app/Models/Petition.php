@@ -15,7 +15,7 @@ class Petition extends Model
         'company_id',
         'petition_type_id',
         'user_id',
-        //'created_at',
+        'datepicker',
         'state_id'
     ];
 

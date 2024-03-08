@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\User;
 use App\Models\Petition;
-use App\Models\State;
 use App\Models\PetitionType;
+use App\Models\State;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+
 
 class PetitionController extends Controller
 {
@@ -39,7 +41,8 @@ class PetitionController extends Controller
      */
     public function create()
     {
-        return view('admin.petition.create');
+        $currentDate = Carbon::now()->format('d-m-Y');
+        return view('admin.petition.create', ['currentDate' => $currentDate]);
     }
 
     /**
@@ -52,43 +55,74 @@ class PetitionController extends Controller
             'company_id'=>'required',
             'petition_type_id'=>'required',
             'user_id'=>'required',
-            //'created_at'=>'required',
+            'datepicker'=>'required|date',
             'state_id'=>'required'
         ]);
+        //$datepicker = Carbon::createFromFormat('Y-m-d', $request->datepicker);
+        $datepicker = Carbon::createFromFormat('d-m-Y', $request->datepicker);
 
         Petition::create([
             'company_id'=>$request->company_id,
             'petition_type_id'=>$request->petition_type_id,
             'petition_number'=>$request->petition_number,
             'user_id'=>$request->user_id,
-            //'created_at'=>$request->created_at,
+            'datepicker'=>$datepicker,
             'state_id'=>$request->state_id
         ]);
 
         return redirect()->route('admin.petition.index')->with('success','Petition created successfully.');
     }
 
-    public function edit($petition)
+    /**
+     * Display the specified resource.
+     */
+    public function show($id)
     {
-        $data = Petition::where('id',decrypt($petition))->first();
+        $data = Petition::where('id', decrypt($id))->first();
+        return view('admin.petition.show', compact('data'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
+    {
+        $data = Petition::where('id', decrypt($id))->first();
         return view('admin.petition.edit',compact('data'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'petition_number'=>'required|max:255',
+            'petition_number' => 'required|max:255',
+            'company_id' => 'required',
+            'petition_type_id' => 'required',
+            'user_id' => 'required',
+            'datepicker' => 'required|date',
+            'state_id' => 'required'
         ]);
 
-        Petition::where('id', $request->id)->update([
-            'petition_number'=>$request->petition_number,
+        $datepicker = Carbon::createFromFormat('d-m-Y', $request->datepicker);
+
+        $petition = Petition::findOrFail($id);
+        $petition->update([
+            'company_id' => $request->company_id,
+            'petition_type_id' => $request->petition_type_id,
+            'petition_number' => $request->petition_number,
+            'user_id' => $request->user_id,
+            'datepicker' => $datepicker,
+            'state_id' => $request->state_id
         ]);
-        return redirect()->route('admin.petition.index')->with('info','Petition updated successfully.');   
+
+        return redirect()->route('admin.petition.index')->with('info', 'Petition updated successfully.');   
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy($id)
     {
         Petition::where('id',decrypt($id))->delete();

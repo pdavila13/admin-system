@@ -33,7 +33,11 @@
                             <td>{{ $petition->petitionType->name }}</td>
                             <td>{{ $petition->petition_number }}</td>
                             <td>{{ $petition->user->name }}</td>
-                            <td>{{ $petition->created_at }}</td>
+                            <td>
+                                @if($petition->datepicker)
+                                    {{ DateTime::createFromFormat('Y-m-d H:i:s', $petition->datepicker)->format('d-m-Y') }}
+                                @endif
+                            </td>
                             <td class="petition-state">
                                 @if ($petition->state->id == '3')
                                     <span class="badge badge-success">Success</span>
@@ -44,7 +48,7 @@
                                 @endif
                             </td>
                             <td class="petition-actions text-right">
-                                <a class="btn btn-primary btn-sm" href="#">
+                                <a href="{{ route('admin.petition.show', encrypt($petition->id)) }}" class="btn btn-primary btn-sm">
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 <a href="{{ route('admin.petition.edit', encrypt($petition->id)) }}" class="btn btn-info btn-sm">
