@@ -23,6 +23,7 @@ class PetitionFactory extends Factory
             'petition_type_id' => $this->faker->numberBetween(1, 3),
             'user_id' => $this->faker->numberBetween(1, 3),
             'state_id' => $this->faker->numberBetween(1, 3),
+            'datepicker' => $this->faker->dateTime($max = 'now'),
         ];
     }
 }

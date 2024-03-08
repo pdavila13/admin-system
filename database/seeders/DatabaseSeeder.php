@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CompanySeeder::class);
         $this->call(GroupVpn3eSeeder::class);
         $this->call(UserT3Seeder::class);
-        $this->call(PetitionType::class);
-        $this->call(State::class);
-        $this->call(Petition::class);
+        $this->call(PetitionTypeSeeder::class);
+        $this->call(StateSeeder::class);
+        $this->call(PetitionSeeder::class);
     }
 }

@@ -13,13 +13,13 @@ class PetitionTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        $petitionType = [
+        $petitionTypes = [
             'VPN3e', 
             'Firewall JX', 
             'Firewall NUS',
         ];
 
-        foreach ($petitionType as $petitionTypeName) {
+        foreach ($petitionTypes as $petitionTypeName) {
             PetitionType::create(['name' => $petitionTypeName]);
         }
     }
