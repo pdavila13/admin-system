@@ -53,14 +53,6 @@ class GroupVpnController extends Controller
             'description'=>$request->description,
             'company_id'=>$request->company_id
         ]);
-        /*
-        $group_vpn = new GroupVpn();
-        $group_vpn->name = $request->name;
-        $group_vpn->network = $request->network;
-        $group_vpn->description = $request->description;
-        $group_vpn->company_id = $request->company_id;
-
-        $group_vpn->save();*/
 
         return redirect()->route('admin.group_vpn.index')->with('success', 'GroupVpn created successfully.');
     }
