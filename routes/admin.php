@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -9,7 +7,6 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\GroupVpnController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\PetitionController;
-use App\Http\Controllers\SubCateoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(function () {
