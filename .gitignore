@@ -6,8 +6,6 @@
 /storage/*.key
 /vendor
 .env
-.env.backup
-.env.production
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
@@ -17,11 +15,3 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-./collection-image
-collection-image
-./collection-pdf
-collection-pdf
-./product-slider-images
-product-slider-images
-./product-image
-product-image
