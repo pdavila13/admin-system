@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->string('mode')->default('dark');
             $table->string('avatar')->nullable();
-            $table->string('username');
+            $table->string('username')->unique();
             $table->rememberToken();
             $table->timestamps();
         });

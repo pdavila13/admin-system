@@ -27,8 +27,8 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
+            'username' => 'required|string',
+            'password' => 'required|string',
         ];
     }
 
@@ -41,6 +41,23 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
+        $credentials = [
+            'samaccountname' => $this->username,
+            'password' => $this->password,
+            'fallback' => [
+                'username' => $this->username,
+                'password' => $this->password,
+            ],
+        ];
+    
+        if (! Auth::attempt($credentials, $this->filled('remember'))) {
+            RateLimiter::hit($this->throttleKey());
+    
+            throw ValidationException::withMessages([
+                'username' => __('auth.failed'),
+            ]);
+        }
+        /*
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
@@ -48,6 +65,7 @@ class LoginRequest extends FormRequest
                 'email' => trans('auth.failed'),
             ]);
         }
+        */
 
         RateLimiter::clear($this->throttleKey());
     }
@@ -81,5 +99,18 @@ class LoginRequest extends FormRequest
     public function throttleKey(): string
     {
         return Str::transliterate(Str::lower($this->input('email')).'|'.$this->ip());
+    }
+
+    public function username()
+    {
+        return 'username';
+    }
+
+    protected function credentials(Request $request)
+    {
+        return [
+            'samaccountname' => $request->username,
+            'password' => $request->password,
+        ];
     }
 }

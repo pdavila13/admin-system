@@ -4,24 +4,25 @@
     @endsection
     <div class="login-box">
         <!-- /.login-logo -->
+        <div class="login-logo">
+            <a href="/" class="h1"><b>{{ config('app.name') }}</a>
+        </div>
         <div class="card card-outline card-primary">
-            <div class="card-header text-center">
-                <a href="/" class="h1"><b>{{ config('app.name') }}</a>
-            </div>
-            <div class="card-body">
+            <!-- /.card-header text-center" -->
+            <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
 
                 <form action="{{ route('login') }}" method="POST">
                     @csrf
                     <div class="input-group mb-3">
-                        <input id="email" class="form-control" type="email" name="email" :value="old('email')"
+                        <input id="username" class="form-control" type="username" name="username" :value="old('username')"
                             required autofocus autocomplete="username">
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
+                                <span class="fas fa-user"></span>
                             </div>
                         </div>
-                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                        <x-input-error :messages="$errors->get('username')" class="mt-2" />
                     </div>
                     <div class="input-group mb-3">
                         <input id="password" class="form-control" type="password" name="password" required
@@ -49,12 +50,14 @@
                         <!-- /.col -->
                     </div>
                 </form>
+                <!--
                 <p class="mb-1">
                     <a href="{{ route('password.request') }}">I forgot my password</a>
                 </p>
                 <p class="mb-0">
                     <a href="{{ route('register') }}" class="text-center">Register a new Account</a>
                 </p>
+                -->
             </div>
             <!-- /.card-body -->
         </div>
