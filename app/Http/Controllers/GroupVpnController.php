@@ -14,8 +14,8 @@ class GroupVpnController extends Controller
      */
     public function __construct()
     {
-        $data = GroupVpn::orderBy('id','DESC')->get();
-        view()->share('data',$data);
+        $company = Company::orderBy('id','DESC')->get();
+        view()->share('company',$company);
     }
 
     /**
@@ -23,7 +23,8 @@ class GroupVpnController extends Controller
      */
     public function index()
     {
-        return view('admin.groups_vpn.index');
+        $data = GroupVpn::orderBy('id','DESC')->get();
+        return view('admin.groups_vpn.index',compact('data'));
     }
 
     /**

@@ -52,7 +52,7 @@
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 <a href="{{ route('admin.petition.edit', encrypt($petition->id)) }}" class="btn btn-info btn-sm">
-                                    <i class="fas fa-pencil-alt"></i>
+                                    <i class="fas fa-edit"></i>
                                 </a>
                                 <form action="{{ route('admin.petition.destroy', encrypt($petition->id)) }}" method="POST" onsubmit="return confirm('Are sure want to delete?')" style="display: inline;">
                                     @method('DELETE')
@@ -84,7 +84,7 @@
                 $('#petitionTable').DataTable({
                     "paging": true,
                     "searching": true,
-                    "ordering": false,
+                    "ordering": true,
                     "responsive": true,
                 });
             });

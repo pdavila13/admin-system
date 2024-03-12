@@ -8,56 +8,37 @@
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.user.index') }}" class="nav-link {{ Route::is('admin.user.index') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-user"></i>
-                <p>Users
-                    <span class="badge badge-info right">{{$userCount}}</span>
-                </p>
+                <i class="nav-icon fas fa-user"></i> Users
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.role.index') }}" class="nav-link {{ Route::is('admin.role.index') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-user-tag"></i>
-                <p>Role
-                    <span class="badge badge-success right">{{$RoleCount}}</span>
-                </p>
+                <i class="nav-icon fas fa-user-tag"></i> Roles
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.permission.index') }}" class="nav-link {{ Route::is('admin.permission.index') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-hat-cowboy"></i>
-                <p>Permission
-                    <span class="badge badge-danger right">{{$PermissionCount}}</span>
-                </p>
+                <i class="nav-icon fas fa-hat-cowboy"></i> Permissions
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.company.index') }}" class="nav-link {{ Route::is('admin.company.index') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-th"></i>
-                <p>Company
-                    <span class="badge badge-warning right">{{$CompanyCount}}</span>
-                </p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('admin.petition.index') }}" class="nav-link {{ Route::is('admin.petition.index') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-list"></i>
-                <p>Petitions
-                    <span class="badge badge-secondary right">{{$PetitionCount}}</span>
-                </p>
+                <i class="nav-icon fas fa-th"></i> Companies
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.group_vpn.index') }}" class="nav-link {{ Route::is('admin.group_vpn.index') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-list-alt"></i>
-                <p>Grups VPN
-                    <span class="badge badge-warning right">{{$GroupVpnCount}}</span>
-                </p>
+                <i class="nav-icon fas fa-list-alt"></i> Grups VPN
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('admin.petition.index') }}" class="nav-link {{ Route::is('admin.petition.index') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-list"></i> Petitions
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.profile.edit') }}" class="nav-link {{ Route::is('admin.profile.edit') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-id-card"></i>
-                <p>Profile</p>
+                <i class="nav-icon fas fa-id-card"></i> Profile
             </a>
         </li>
     </ul>

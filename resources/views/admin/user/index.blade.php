@@ -13,7 +13,6 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Created</th>
-                        <th>Action</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -24,16 +23,16 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->created_at }}</td>
-                            <td>
-                                <a href="{{ route('admin.user.edit', encrypt($user->id)) }}"
-                                    class="btn btn-sm btn-primary">Edit</a>
-                            </td>
-                            <td>
-                                <form action="{{ route('admin.user.destroy', encrypt($user->id)) }}" method="POST"
-                                    onsubmit="return confirm('Are sure want to delete?')">
+                            <td class="user-actions text-right">
+                                <a href="{{ route('admin.user.edit', encrypt($user->id)) }}" class="btn btn-info btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form action="{{ route('admin.user.destroy', encrypt($user->id)) }}" method="POST" onsubmit="return confirm('Are sure want to delete?')" style="display: inline;">
                                     @method('DELETE')
                                     @csrf
-                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
                                 </form>
                             </td>
                         </tr>

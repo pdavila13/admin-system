@@ -13,7 +13,6 @@
                     <tr>
                         <th>Name</th>
                         <th>Created</th>
-                        <th>Action</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -22,19 +21,17 @@
                         <tr>
                             <td>{{ $role->name }}</td>
                             <td>{{ $role->created_at }}</td>
-                            <td>
-                                <a href="{{ route('admin.role.edit',encrypt($role->id)) }}" class="btn btn-sm btn-secondary">
-                                    <i class="far fa-edit"></i>
+                            <td class="role-actions text-right">
+                                <a href="{{ route('admin.role.edit', encrypt($role->id)) }}" class="btn btn-info btn-sm">
+                                    <i class="fas fa-edit"></i>
                                 </a>
-                            </td>
-                            <td>
-                                <form action="{{ route('admin.role.destroy',encrypt($role->id)) }}" method="POST" onclick="confirm('Are you sure')">
+                                <form action="{{ route('admin.role.destroy', encrypt($role->id)) }}" method="POST" onsubmit="return confirm('Are sure want to delete?')" style="display: inline;">
                                     @method('DELETE')
                                     @csrf
-                                    <button type="submit" class="btn btn-danger">
-                                        <i class="fas fa-trash-alt"></i>
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i>
                                     </button>
-                            </form>
+                                </form>
                             </td>
                         </tr>
                     @endforeach

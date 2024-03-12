@@ -76,11 +76,11 @@
                             <img src="{{ Auth::user()->avatar }}" class="img-circle elevation-2" alt="User Image">
                         @else
                             <img src="{{ asset('admin/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
-                                alt="User Image">/
+                                alt="User Image">
                         @endif
                     </div>
                     <div class="info">
-                        <a href="{{ route('admin.dashboard') }}" class="d-block">{{ config('app.name') }}</a>
+                        <a href="{{ route('admin.dashboard') }}" class="d-block">{{ Auth::user()->name }}</a>
                     </div>
                 </div>
                 <!-- Sidebar Menu -->

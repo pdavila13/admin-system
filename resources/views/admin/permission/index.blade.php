@@ -15,7 +15,6 @@
                     <tr>
                         <th>Name</th>
                         <th>Created</th>
-                        <th>Action</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -24,19 +23,15 @@
                         <tr>
                             <td>{{ $permission->name }}</td>
                             <td>{{ $permission->created_at }}</td>
-                            <td>
-                                <a href="{{ route('admin.permission.edit', encrypt($permission->id)) }}"
-                                    class="btn btn-sm btn-secondary">
-                                    <i class="far fa-edit"></i>
+                            <td class="permission-actions text-right">
+                                <a href="{{ route('admin.permission.edit', encrypt($permission->id)) }}" class="btn btn-info btn-sm">
+                                    <i class="fas fa-edit"></i>
                                 </a>
-                            </td>
-                            <td>
-                                <form action="{{ route('admin.permission.destroy', encrypt($permission->id)) }}"
-                                    method="POST" onclick="confirm('Are you sure')">
+                                <form action="{{ route('admin.permission.destroy', encrypt($permission->id)) }}" method="POST" onsubmit="return confirm('Are sure want to delete?')" style="display: inline;">
                                     @method('DELETE')
                                     @csrf
-                                    <button type="submit" class="btn btn-danger">
-                                        <i class="fas fa-trash-alt"></i>
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
                             </td>

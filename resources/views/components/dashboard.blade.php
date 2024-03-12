@@ -18,7 +18,7 @@
                 <p>Total Companies</p>
             </div>
             <div class="icon">
-                <i class="fas fa-list-alt"></i>
+                <i class="fas fa-building"></i>
             </div>
             <a href="{{ route('admin.company.index') }}" class="small-box-footer">View <i class="fas fa-arrow-circle-right"></i></a>
         </div>
@@ -30,7 +30,7 @@
                 <p>Total Groups VPN</p>
             </div>
             <div class="icon">
-                <i class="fas fas fa-th"></i>
+                <i class="fas fas fa-object-group"></i>
             </div>
             <a href="{{ route('admin.group_vpn.index') }}" class="small-box-footer">View <i class="fas fa-arrow-circle-right"></i></a>
         </div>
@@ -42,7 +42,7 @@
                 <p>Total Petitions</p>
             </div>
             <div class="icon">
-                <i class="fas fas fa-file-pdf"></i>
+                <i class="fas fas fa-list"></i>
             </div>
             <a href="{{ route('admin.petition.index') }}" class="small-box-footer">View <i class="fas fa-arrow-circle-right"></i></a>
         </div>

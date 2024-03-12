@@ -16,7 +16,6 @@
                         <th>Name</th>
                         <th>CIF</th>
                         <th>Description</th>
-                        <th>Action</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -26,14 +25,16 @@
                             <td>{{ $com->name }}</td>
                             <td>{{ $com->cif }}</td>
                             <td>{{ $com->description }}</td>
-                            <td class="text-right"><a href="{{ route('admin.company.edit', encrypt($com->id)) }}"
-                                    class="btn btn-sm btn-primary">Edit</a></td>
-                            <td class="text-right">
-                                <form action="{{ route('admin.company.destroy', encrypt($com->id)) }}" method="POST" 
-                                    onsubmit="return confirm('Are sure want to delete?')">
+                            <td class="company-actions text-right">
+                                <a href="{{ route('admin.company.edit', encrypt($com->id)) }}" class="btn btn-info btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form action="{{ route('admin.company.destroy', encrypt($com->id)) }}" method="POST" onsubmit="return confirm('Are sure want to delete?')" style="display: inline;">
                                     @method('DELETE')
                                     @csrf
-                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
                                 </form>
                             </td>
                         </tr>
