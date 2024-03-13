@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignIdFor(PetitionType::class)->constrained();
             $table->foreignIdFor(State::class)->constrained();
             $table->foreignIdFor(User::class)->constrained();
+            $table->string('description')->nullable();
             $table->dateTime('datepicker')->nullable();
             $table->timestamps();
         });

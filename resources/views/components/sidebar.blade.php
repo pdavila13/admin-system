@@ -23,12 +23,12 @@
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.company.index') }}" class="nav-link {{ Route::is('admin.company.index') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-th"></i> Companies
+                <i class="nav-icon fas fa-building"></i> Companies
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.group_vpn.index') }}" class="nav-link {{ Route::is('admin.group_vpn.index') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-list-alt"></i> Grups VPN
+                <i class="nav-icon fas fa-object-group"></i> Grups VPN
             </a>
         </li>
         <li class="nav-item">
