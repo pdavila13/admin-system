@@ -18,10 +18,10 @@ return new class extends Migration
         Schema::create('petitions', function (Blueprint $table) {
             $table->id();
             $table->string('petition_number');
-            $table->foreignIdFor(Company::class)->constrained();
-            $table->foreignIdFor(PetitionType::class)->constrained();
-            $table->foreignIdFor(State::class)->constrained();
-            $table->foreignIdFor(User::class)->constrained();
+            $table->foreignIdFor(Company::class)->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignIdFor(PetitionType::class)->constrained()->onUpdate('cascade');
+            $table->foreignIdFor(State::class)->constrained()->onUpdate('cascade');
+            $table->foreignIdFor(User::class)->constrained()->onUpdate('cascade');
             $table->string('description')->nullable();
             $table->dateTime('datepicker')->nullable();
             $table->timestamps();

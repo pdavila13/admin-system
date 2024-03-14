@@ -16,7 +16,8 @@ class Petition extends Model
         'petition_type_id',
         'user_id',
         'datepicker',
-        'state_id'
+        'state_id',
+        'description'
     ];
 
     public function company(): BelongsTo

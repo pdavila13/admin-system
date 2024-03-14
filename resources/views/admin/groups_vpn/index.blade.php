@@ -23,7 +23,7 @@
                 <tbody>
                     @foreach ($data as $group_vpn)
                         <tr>
-                            <td>{{ $group_vpn->company_id}}</td>
+                            <td>{{ $group_vpn->company->name}}</td>
                             <td>{{ $group_vpn->name }}</td>
                             <td>{{ $group_vpn->network }}</td>
                             <td>{{ $group_vpn->description }}</td>

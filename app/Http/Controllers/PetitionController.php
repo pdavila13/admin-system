@@ -67,7 +67,8 @@ class PetitionController extends Controller
             'petition_number'=>$request->petition_number,
             'user_id'=>$request->user_id,
             'datepicker'=>$datepicker,
-            'state_id'=>$request->state_id
+            'state_id'=>$request->state_id,
+            'description'=>$request->description
         ]);
 
         return redirect()->route('admin.petition.index')->with('success','Petition created successfully.');

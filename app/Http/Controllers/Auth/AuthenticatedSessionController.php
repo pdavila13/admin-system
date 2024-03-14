@@ -26,10 +26,27 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
+        $ldapUser = Auth::user();
+        $memberOf = $ldapUser->getAttribute('memberof');
+        if (!is_array($memberOf)) {
+            $memberOf = [];
+        }
+        $role = 'user';
+        if (in_array('CN=Sistemes,OU=Administradors Informàtica,DC=parcsanitari,DC=local', $memberOf)) {
+            $role = 'admin';
+        }
+
+        $user = Auth::user();
+        $user->assignRole($role);
+
+        $username = $user->username;
+        $avatar = config('app.avatar_url') . $username;
+
+        $user->update(['avatar' => $avatar]);
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME)->with('success','Login successsfully.');
+        return redirect()->intended(RouteServiceProvider::HOME)->with('success', 'Login successfully.');
     }
 
     /**

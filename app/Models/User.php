@@ -7,13 +7,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use LdapRecord\Laravel\Auth\HasLdapUser;
 use LdapRecord\Laravel\Auth\LdapAuthenticatable;
 use LdapRecord\Laravel\Auth\AuthenticatesWithLdap;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements LdapAuthenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, AuthenticatesWithLdap;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, AuthenticatesWithLdap, HasLdapUser;
+
+    protected $guard_name = 'web';
+    
     /**
      * The attributes that are mass assignable.
      *

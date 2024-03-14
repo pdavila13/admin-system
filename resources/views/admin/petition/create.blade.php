@@ -100,6 +100,17 @@
                                             @enderror
                                     </div>
                                 </div>
+
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="description">Description</label>
+                                        <textarea type="text" class="form-control" id="description" name="description"
+                                            placeholder="Enter petition description">{{ old('description') }}</textarea>
+                                    </div>
+                                    @error('description')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                         <div class="card-footer">
