@@ -1,9 +1,9 @@
 <x-admin>
-    @section('title', 'Edit User')
+    @section('title')  {{ __('Edit user') }} @endsection
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Edit User</h3>
-            <div class="card-tools"><a href="{{ route('admin.user.index') }}" class="btn btn-sm btn-dark">Back</a></div>
+            <h3 class="card-title">{{ __('User data') }}</h3>
+            <div class="card-tools"><a href="{{ route('admin.user.index') }}" class="btn btn-sm btn-dark">{{ __('Back') }}</a></div>
         </div>
         <div class="card-body">
             <form action="{{ route('admin.user.update',$user) }}" method="POST">
@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label for="name" class="form-label">Name:*</label>
+                            <label for="name" class="form-label">{{ __('Name') }}</label>
                             <input type="text" class="form-control" name="name" required
                                 value="{{ $user->name }}">
                             @error('name')
@@ -23,7 +23,7 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label for="Email" class="form-label">Email:*</label>
+                            <label for="Email" class="form-label">{{ __('Email') }}</label>
                             <input type="email" class="form-control" name="email" required
                                 value="{{ $user->email }}">
                             @error('email')
@@ -33,9 +33,9 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label for="role" class="form-label">Role:*</label>
+                            <label for="role" class="form-label">{{ __('Role') }}</label>
                             <select name="role" id="role" class="form-control" required>
-                                <option value="" selected disabled>selecte the role</option>
+                                <option value="" selected disabled>{{ __('Selecte the role') }}</option>
                                 @foreach ($roles as $role)
                                     <option value="{{ $role->name }}"
                                         {{ $user->roles[0]['name'] === $role->name ? 'selected' : '' }}>{{ $role->name }}</option>
@@ -48,7 +48,7 @@
                     </div>
                     <div class="col-lg-12">
                         <div class="float-right">
-                            <button class="btn btn-primary" type="submit">Save</button>
+                            <button class="btn btn-primary" type="submit">{{ __('Save') }}</button>
                         </div>
                     </div>
                 </div>

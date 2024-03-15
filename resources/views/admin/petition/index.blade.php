@@ -1,24 +1,24 @@
 <x-admin>
     @section('title')
-        {{ 'Petition' }}
+        {{ __('Petitions') }}
     @endsection
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Petition Table</h3>
+            <h3 class="card-title">{{ __('List petitions') }}</h3>
             <div class="card-tools">
-                <a href="{{ route('admin.petition.create') }}" class="btn btn-sm btn-info">New</a>
+                <a href="{{ route('admin.petition.create') }}" class="btn btn-sm btn-info">{{ __('New') }}</a>
             </div>
         </div>
         <div class="card-body">
             <table class="table table-striped petitions" id="petitionTable">
                 <thead>
                     <tr>
-                        <th>Company</th>
-                        <th>Petition type</th>
-                        <th>Petition number</th>
-                        <th>SysAdmin</th>
-                        <th>Date</th>
-                        <th>Status</th>
+                        <th>{{ __('Company') }}</th>
+                        <th>{{ __('Petition type') }}</th>
+                        <th>{{ __('Petition number') }}</th>
+                        <th>{{ __('Technical System') }}</th>
+                        <th>{{ __('Date') }}</th>
+                        <th>{{ __('Status') }}</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -28,7 +28,7 @@
                             <td>
                                 {{ $petition->company->name }}
                                 <br>
-                                <small>Created {{ $petition->created_at }}</small>
+                                <small>{{ __('Created') }} {{ $petition->created_at }}</small>
                             </td>
                             <td>{{ $petition->petitionType->name }}</td>
                             <td>{{ $petition->petition_number }}</td>
@@ -40,11 +40,11 @@
                             </td>
                             <td class="petition-state">
                                 @if ($petition->state->id == '3')
-                                    <span class="badge badge-success">Success</span>
+                                    <span class="badge badge-success">{{ __('Success') }}</span>
                                 @elseif ($petition->state->id == '1')
-                                    <span class="badge badge-secondary">On Hold</span>
+                                    <span class="badge badge-secondary">{{ __('On Hold') }}</span>
                                 @elseif ($petition->state->id == '2')
-                                    <span class="badge badge-danger">Canceled</span>
+                                    <span class="badge badge-danger">{{ __('Canceled') }}</span>
                                 @endif
                             </td>
                             <td class="petition-actions text-right">
@@ -54,7 +54,7 @@
                                 <a href="{{ route('admin.petition.edit', encrypt($petition->id)) }}" class="btn btn-info btn-sm">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <form action="{{ route('admin.petition.destroy', encrypt($petition->id)) }}" method="POST" onsubmit="return confirm('Are sure want to delete?')" style="display: inline;">
+                                <form action="{{ route('admin.petition.destroy', encrypt($petition->id)) }}" method="POST" onsubmit="return confirm('{{ __('Are sure want to delete?') }}')" style="display: inline;">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm">

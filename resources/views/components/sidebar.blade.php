@@ -3,49 +3,49 @@
         <li class="nav-item">
             <a href="{{ route('admin.dashboard') }}" class="nav-link {{ Route::is('admin.dashboard') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>Dashboard</p>
+                <p>{{ __('Dashboard') }}</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.user.index') }}" class="nav-link {{ Route::is('admin.user.index') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-user"></i>
-                <p>Users</p>
+                <p>{{ __('Users') }}</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.role.index') }}" class="nav-link {{ Route::is('admin.role.index') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-user-tag"></i>
-                <p>Roles</p>
+                <p>{{ __('Roles') }}</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.permission.index') }}" class="nav-link {{ Route::is('admin.permission.index') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-hat-cowboy"></i>
-                <p>Permissions</p>
+                <p>{{ __('Permissions') }}</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.company.index') }}" class="nav-link {{ Route::is('admin.company.index') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-building"></i>
-                <p>Companies</p>
+                <p>{{ __('Companies') }}</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.group_vpn.index') }}" class="nav-link {{ Route::is('admin.group_vpn.index') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-object-group"></i>
-                <p>Grups VPN</p>
+                <p>{{ __('VPN Groups') }}</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.petition.index') }}" class="nav-link {{ Route::is('admin.petition.index') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-list"></i>
-                <p>Petitions</p>
+                <p>{{ __('Petitions') }}</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.profile.edit') }}" class="nav-link {{ Route::is('admin.profile.edit') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-id-card"></i>
-                <p>Profile</p>
+                <p>{{ __('Profile') }}</p>
             </a>
         </li>
     </ul>

@@ -26,8 +26,8 @@
         <div class="mb-3">
             <x-input-label for="Mode" class="form-label" :value="__('Mode')" />
             <select name="mode" id="Mode" class="form-control">
-                <option {{ Auth::user()->mode == 'dark' ? 'selected' : '' }} value="dark">Dark</option>
-                <option {{ Auth::user()->mode == 'light' ? 'selected' : '' }} value="light">Light</option>
+                <option {{ Auth::user()->mode == 'dark' ? 'selected' : '' }} value="dark">{{ __('Dark') }}</option>
+                <option {{ Auth::user()->mode == 'light' ? 'selected' : '' }} value="light">{{ __('Light') }}</option>
             </select>
             <x-input-error class="mt-2" :messages="$errors->get('mode')" />
         </div>

@@ -1,6 +1,6 @@
 <x-admin>
     @section('title')
-        {{ 'Edit Your Profile' }}
+        {{ __('Profile Information') }}
     @endsection
     <div class="container">
         <div class="p-3 mb-3">

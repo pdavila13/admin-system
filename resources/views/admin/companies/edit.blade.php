@@ -1,15 +1,15 @@
 <x-admin>
     @section('title')
-        {{ 'Edit Company' }}
+        {{ __('Edit company') }}
     @endsection
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Edit Company</h3>
+                        <h3 class="card-title">{{ __('Company data') }}</h3>
                         <div class="card-tools">
-                            <a href="{{ route('admin.company.index') }}" class="btn btn-info btn-sm">Back</a>
+                            <a href="{{ route('admin.company.index') }}" class="btn btn-info btn-sm">{{ __('Back') }}</a>
                         </div>
                     </div>
                     <form class="needs-validation" novalidate action="{{ route('admin.company.update',$data) }}" method="POST">
@@ -18,7 +18,7 @@
                         <input type="hidden" name="id" value="{{ $data->id }}">
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="name">Company Name</label>
+                                <label for="name">{{ __('Company Name') }}</label>
                                 <input type="text" class="form-control" id="name" name="name"
                                     placeholder="Enter company name" required value="{{ $data->name }}">
                             </div>
@@ -27,7 +27,7 @@
                             @enderror
 
                             <div class="form-group">
-                                <label for="cif">CIF</label>
+                                <label for="cif">{{ __('CIF') }}</label>
                                 <input type="text" class="form-control" id="cif" name="cif"
                                     placeholder="Enter company cif" required value="{{ $data->cif }}">
                             </div>
@@ -36,7 +36,7 @@
                             @enderror
 
                             <div class="form-group">
-                                <label for="description">Description</label>
+                                <label for="description">{{ __('Description') }}</label>
                                 <textarea type="text" class="form-control" id="description" name="description"
                                     placeholder="Enter company description">{{ $data->description }}</textarea>
                             </div>
@@ -45,7 +45,7 @@
                             @enderror
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary float-right">Update</button>
+                            <button type="submit" class="btn btn-primary float-right">{{ __('Update') }}</button>
                         </div>
                     </form>
                 </div>

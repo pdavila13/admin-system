@@ -1,6 +1,6 @@
 <x-admin>
     @section('title')
-        {{ 'Dashboard' }}
+        {{ __('Dashboard') }}
     @endsection
     <x-dashboard />
 </x-admin>

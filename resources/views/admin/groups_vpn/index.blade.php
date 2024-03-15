@@ -1,22 +1,22 @@
 <x-admin>
     @section('title')
-        {{ 'VPN GROUPS' }}
+        {{ __('VPN Groups') }}
     @endsection
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">VPN Groups Table</h3>
+            <h3 class="card-title">{{ __('VPN Groups List') }}</h3>
             <div class="card-tools">
-                <a href="{{ route('admin.group_vpn.create') }}" class="btn btn-sm btn-info">New</a>
+                <a href="{{ route('admin.group_vpn.create') }}" class="btn btn-sm btn-info">{{__('New') }}</a>
             </div>
         </div>
         <div class="card-body">
             <table class="table table-striped" id="group_vpnTable">
                 <thead>
                     <tr>
-                        <th>Company</th>
-                        <th>Name</th>
-                        <th>Network</th>
-                        <th>Description</th>
+                        <th>{{ __('Company') }}</th>
+                        <th>{{ __('Name') }}</th>
+                        <th>{{ __('Network') }}</th>
+                        <th>{{ __('Description') }}</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -31,7 +31,7 @@
                                 <a href="{{ route('admin.group_vpn.edit', encrypt($group_vpn->id)) }}" class="btn btn-info btn-sm">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <form action="{{ route('admin.group_vpn.destroy', encrypt($group_vpn->id)) }}" method="POST" onsubmit="return confirm('Are sure want to delete?')" style="display: inline;">
+                                <form action="{{ route('admin.group_vpn.destroy', encrypt($group_vpn->id)) }}" method="POST" onsubmit="return confirm('{{ __('Are sure want to delete?') }}')" style="display: inline;">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm">

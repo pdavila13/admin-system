@@ -1,20 +1,20 @@
 <x-admin>
     @section('title')
-        {{ 'Permission' }}
+        {{ __('Permissions') }}
     @endsection
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Permission</h3>
+            <h3 class="card-title">{{ __('List permissions') }}</h3>
             <div class="card-tools">
-                <a href="{{ route('admin.permission.create') }}" class="btn btn-sm btn-primary">Add</a>
+                <a href="{{ route('admin.permission.create') }}" class="btn btn-sm btn-primary">{{ __('Add') }}</a>
             </div>
         </div>
         <div class="card-body">
             <table class="table table-striped" id="collectionTable">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Created</th>
+                        <th>{{ __('Name') }}</th>
+                        <th>{{ __('Created') }}</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -27,7 +27,7 @@
                                 <a href="{{ route('admin.permission.edit', encrypt($permission->id)) }}" class="btn btn-info btn-sm">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <form action="{{ route('admin.permission.destroy', encrypt($permission->id)) }}" method="POST" onsubmit="return confirm('Are sure want to delete?')" style="display: inline;">
+                                <form action="{{ route('admin.permission.destroy', encrypt($permission->id)) }}" method="POST" onsubmit="return confirm('{{ __('Are sure want to delete?') }}')" style="display: inline;">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm">
@@ -38,7 +38,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="text-center bg-danger">Permission not created</td>
+                            <td colspan="4" class="text-center bg-danger">{{ __('Permission not created') }}</td>
                         </tr>
                     @endforelse
                 </tbody>

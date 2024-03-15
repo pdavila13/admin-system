@@ -10,7 +10,7 @@
         <div class="card card-outline card-primary">
             <!-- /.card-header text-center" -->
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
+                <p class="login-box-msg">{{ __('Sign in to start your session') }}</p>
 
                 <form action="{{ route('login') }}" method="POST">
                     @csrf
@@ -39,13 +39,13 @@
                             <div class="icheck-primary">
                                 <input type="checkbox" name="remember" id="remember">
                                 <label for="remember">
-                                    Remember Me
+                                    {{ __('Remember me') }}
                                 </label>
                             </div>
                         </div>
                         <!-- /.col -->
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                            <button type="submit" class="btn btn-primary btn-block">{{ __('Log In') }}</button>
                         </div>
                         <!-- /.col -->
                     </div>
