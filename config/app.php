@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Translation\TranslationServiceProvider as BaseTranslationServiceProvider;
+use LaravelLang\JsonFallback\TranslationServiceProvider as JsonTranslationServiceProvider;
 
 return [
 
@@ -85,7 +87,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => env('APP_LOCALE', 'en'),
 
     /*
     |--------------------------------------------------------------------------
@@ -171,6 +173,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        BaseTranslationServiceProvider::class => JsonTranslationServiceProvider::class,
     ])->toArray(),
 
     /*
