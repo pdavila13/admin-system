@@ -8,37 +8,44 @@
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.user.index') }}" class="nav-link {{ Route::is('admin.user.index') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-user"></i> Users
+                <i class="nav-icon fas fa-user"></i>
+                <p>Users</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.role.index') }}" class="nav-link {{ Route::is('admin.role.index') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-user-tag"></i> Roles
+                <i class="nav-icon fas fa-user-tag"></i>
+                <p>Roles</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.permission.index') }}" class="nav-link {{ Route::is('admin.permission.index') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-hat-cowboy"></i> Permissions
+                <i class="nav-icon fas fa-hat-cowboy"></i>
+                <p>Permissions</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.company.index') }}" class="nav-link {{ Route::is('admin.company.index') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-building"></i> Companies
+                <i class="nav-icon fas fa-building"></i>
+                <p>Companies</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.group_vpn.index') }}" class="nav-link {{ Route::is('admin.group_vpn.index') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-object-group"></i> Grups VPN
+                <i class="nav-icon fas fa-object-group"></i>
+                <p>Grups VPN</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.petition.index') }}" class="nav-link {{ Route::is('admin.petition.index') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-list"></i> Petitions
+                <i class="nav-icon fas fa-list"></i>
+                <p>Petitions</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('admin.profile.edit') }}" class="nav-link {{ Route::is('admin.profile.edit') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-id-card"></i> Profile
+                <i class="nav-icon fas fa-id-card"></i>
+                <p>Profile</p>
             </a>
         </li>
     </ul>

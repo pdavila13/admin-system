@@ -47,4 +47,20 @@
             <a href="{{ route('admin.petition.index') }}" class="small-box-footer">View <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
+
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header border-transparent">
+                <h3 class="card-title">Latest Petitions</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

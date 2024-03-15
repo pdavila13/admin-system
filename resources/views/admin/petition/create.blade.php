@@ -60,12 +60,9 @@
                                     <div class="form-group">
                                         <label for="user_id">Technical system</label>
                                         <select name="user_id" id="user_id" class="form-control" >
-                                            <option value="" selected disabled>Select petition type</option>
-                                            @foreach ($user as $sys_adm)
-                                                <option {{ old('user_id') == $sys_adm->id ? 'selected' : '' }} value="{{ $sys_adm->id }}">{{ $sys_adm->name }}</option>
-                                            @endforeach
+                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
                                         </select>
-                                            @error('user')
+                                            @error('user_id')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                     </div>

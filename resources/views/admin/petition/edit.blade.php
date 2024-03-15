@@ -66,7 +66,7 @@
                                         <label for="user">Technical system</label>
                                         <select name="user_id" id="user_id" class="form-control" >
                                             <option value="" selected disabled>Select petition type</option>
-                                            @foreach ($user as $sys_adm)
+                                            @foreach ($users as $sys_adm)
                                                 <option {{ $data->user_id == $sys_adm->id ? 'selected' : '' }} value="{{ $sys_adm->id }}">{{ $sys_adm->name }}</option>
                                             @endforeach
                                         </select>
