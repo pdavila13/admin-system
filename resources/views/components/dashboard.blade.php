@@ -27,7 +27,7 @@
         <div class="small-box bg-primary">
             <div class="inner">
                 <h3>{{$group_vpn}}</h3>
-                <p>{{ __('Groups VPN') }}
+                <p>{{ __('VPN Groups') }}
             </div>
             <div class="icon">
                 <i class="fas fas fa-object-group"></i>
