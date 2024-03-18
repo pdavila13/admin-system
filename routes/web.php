@@ -18,6 +18,12 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('locale/{locale}', function ($locale) {
+    //App:setlocale($locale);
+    session()->put('locale', $locale);
+    return Redirect::back();
+});
+
 // Auth routes
 require __DIR__.'/auth.php';
 // Admin Routes
