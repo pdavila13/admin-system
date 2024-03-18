@@ -6,7 +6,7 @@
         <div class="card-header">
             <h3 class="card-title">{{ __('VPN Groups List') }}</h3>
             <div class="card-tools">
-                <a href="{{ route('admin.group_vpn.create') }}" class="btn btn-sm btn-info">{{__('New') }}</a>
+                <a href="{{ route('admin.group_vpn.create') }}" class="btn btn-sm btn-primary">{{__('New') }}</a>
             </div>
         </div>
         <div class="card-body">
@@ -51,8 +51,8 @@
                 $('#group_vpnTable').DataTable({
                     "paging": true,
                     "searching": true,
-                    "ordering": true,
-                    "responsive": true,
+                    "ordering": false,
+                    "responsive": false,
                 });
             });
         </script>

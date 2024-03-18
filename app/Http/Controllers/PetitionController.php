@@ -9,6 +9,7 @@ use App\Models\PetitionType;
 use App\Models\State;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class PetitionController extends Controller
@@ -21,8 +22,8 @@ class PetitionController extends Controller
         $petitionType = PetitionType::orderBy('id','DESC')->get();
         view()->share('petitionType',$petitionType);
 
-        $user = User::orderBy('id','DESC')->get();
-        view()->share('user',$user);
+        $users = User::orderBy('id','DESC')->get();
+        view()->share('users',$users);
 
         $state = State::orderBy('id','DESC')->get();
         view()->share('state',$state);
@@ -41,8 +42,20 @@ class PetitionController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
+
+        if (!$user) {
+            return redirect()->route('login');
+        }
+
         $currentDate = Carbon::now()->format('d-m-Y');
-        return view('admin.petition.create', ['currentDate' => $currentDate]);
+        return view('admin.petition.create', [
+            'currentDate' => $currentDate,
+            'user' => $user,
+            'company' => Company::orderBy('id', 'DESC')->get(),
+            'petitionType' => PetitionType::orderBy('id', 'DESC')->get(),
+            'state' => State::orderBy('id', 'DESC')->get(),
+        ]);
     }
 
     /**
@@ -115,7 +128,8 @@ class PetitionController extends Controller
             'petition_number' => $request->petition_number,
             'user_id' => $request->user_id,
             'datepicker' => $datepicker,
-            'state_id' => $request->state_id
+            'state_id' => $request->state_id,
+            'description'=>$request->description
         ]);
 
         return redirect()->route('admin.petition.index')->with('info', 'Petition updated successfully.');   

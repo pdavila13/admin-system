@@ -53,6 +53,9 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('admin/plugins/select2/css/select2.min.css') }}">
 
+    <!-- Flag icon -->
+    <link rel="stylesheet" href="{{ asset('admin/plugins/flag-icon-css/css/flag-icon.min.css') }}">
+
     @yield('css')
 </head>
 

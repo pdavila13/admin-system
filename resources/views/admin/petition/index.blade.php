@@ -6,7 +6,7 @@
         <div class="card-header">
             <h3 class="card-title">{{ __('List petitions') }}</h3>
             <div class="card-tools">
-                <a href="{{ route('admin.petition.create') }}" class="btn btn-sm btn-info">{{ __('New') }}</a>
+                <a href="{{ route('admin.petition.create') }}" class="btn btn-sm btn-primary">{{ __('New') }}</a>
             </div>
         </div>
         <div class="card-body">
@@ -28,7 +28,7 @@
                             <td>
                                 {{ $petition->company->name }}
                                 <br>
-                                <small>{{ __('Created') }} {{ $petition->created_at }}</small>
+                                <small>{{ $petition->description }}</small>
                             </td>
                             <td>{{ $petition->petitionType->name }}</td>
                             <td>{{ $petition->petition_number }}</td>
@@ -78,14 +78,15 @@
             }
         </style>
     @endsection
+    
     @section('js')
         <script>
             $(function() {
                 $('#petitionTable').DataTable({
                     "paging": true,
                     "searching": true,
-                    "ordering": true,
-                    "responsive": true,
+                    "ordering": false,
+                    "responsive": false,
                 });
             });
         </script>
