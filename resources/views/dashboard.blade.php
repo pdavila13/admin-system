@@ -2,5 +2,8 @@
     @section('title')
         {{ __('Dashboard') }}
     @endsection
-    <x-dashboard />
+    <div class="row">
+        <x-dashboard />
+        <x-latest-petitions />
+    </div>
 </x-admin>
