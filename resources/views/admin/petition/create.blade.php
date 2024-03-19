@@ -102,7 +102,7 @@
                                     <div class="form-group">
                                         <label for="description">{{ __('Description') }}</label>
                                         <textarea type="text" class="form-control" id="description" name="description"
-                                            placeholder="">{{ old('description') }}</textarea>
+                                            placeholder="" rows="4">{{ old('description') }}</textarea>
                                     </div>
                                     @error('description')
                                         <span class="text-danger">{{ $message }}</span>

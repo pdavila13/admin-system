@@ -110,7 +110,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label for="description">{{ __('Description') }}</label>
-                                        <textarea type="text" class="form-control" id="description" name="description">{{ $data->description }}</textarea>
+                                        <textarea type="text" class="form-control" id="description" name="description" rows="4">{{ $data->description }}</textarea>
                                     </div>
                                     @error('description')
                                         <span class="text-danger">{{ $message }}</span>
