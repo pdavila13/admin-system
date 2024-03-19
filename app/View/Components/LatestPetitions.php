@@ -9,13 +9,13 @@ use Illuminate\View\Component;
 
 class LatestPetitions extends Component
 {
+    public $petitions;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($petitions)
     {
-        $petitions = Petition::orderBy('id','DESC')->get();
-        view()->share('petitions',$petitions);
+        $this->petitions = $petitions;
     }
 
     /**

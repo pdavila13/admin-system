@@ -11,10 +11,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $currentDate = Carbon::now();
-
-        $petitions = DB::table('petitions')
-                    ->where('datepicker', '>=', DB::raw('DATE_SUB(CURDATE(), INTERVAL 30 DAY)'))
+        $petitions = Petition::where('datepicker', '>=', DB::raw('DATE_SUB(CURDATE(), INTERVAL 30 DAY)'))
                     ->get();
 
         return view('dashboard', compact('petitions'));
