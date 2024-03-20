@@ -33,7 +33,7 @@ class PetitionController extends Controller
      */
     public function index()
     {
-        $data = Petition::orderBy('id','DESC')->get();
+        $data = Petition::orderBy('datepicker','DESC')->get();
         return view('admin.petition.index',compact('data'));
     }
 

@@ -6,7 +6,7 @@
             <div class="card-tools"><a href="{{ route('admin.user.create') }}" class="btn btn-sm btn-primary disabled">{{ __('Add') }}</a></div>
         </div>
         <div class="card-body">
-            <table class="table table-striped" id="userTable">
+            <table class="table table-striped" id="userTable" style="width:100%">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -44,12 +44,18 @@
     @section('js')
         <script>
             $(function() {
-                $('#userTable').DataTable({
-                    "paging": true,
-                    "searching": true,
-                    "ordering": true,
-                    "responsive": true,
-                });
+                var selectedLanguage = 'ca';
+                var dataTableConfig = {
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    responsive: true,
+                    language: {
+                        url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/' + selectedLanguage + '.json'
+                    }
+                };
+
+                $('#userTable').DataTable(dataTableConfig);
             });
         </script>
     @endsection

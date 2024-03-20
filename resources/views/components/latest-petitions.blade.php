@@ -6,7 +6,7 @@
         </div>
         
         <div class="card-body">
-            <table class="table table-bordered table-hover">
+            <table class="table table-striped petitions" id="latestPetitionTable" style="width:100%">
                 <thead>
                     <tr>
                         <th>{{ __('Company') }}</th>
@@ -18,8 +18,12 @@
                 </thead>
                 <tbody>
                     @foreach ($petitions as $petition)
-                        <tr data-widget="expandable-table" aria-expanded="false">
-                            <td>{{ $petition->company->name }}</td>
+                        <tr>
+                            <td>
+                                {{ $petition->company->name }}
+                                <br>
+                                <small>{{ $petition->description }}</small>
+                            </td>
                             <td>{{ $petition->petitionType->name }}</td>
                             <td>{{ $petition->petition_number }}</td>
                             <td>
@@ -37,32 +41,39 @@
                                 @endif
                             </td>
                         </tr>
-                        <tr class="expandable-body">
-                            <td colspan="5">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="text-muted">
-                                            <p class="text-sm">
-                                                <b class="d-block">{{ __('Description') }}</b>
-                                            </p>
-                                            <p>{!! nl2br(e($petition->description)) !!}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="text-muted">
-                                            <p class="text-sm">
-                                                <b class="d-block">{{ __('Technical system') }}</b>
-                                            </p>
-                                            <p>{{ $petition->user->name }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
+    @section('css')
+        <style>
+            .petition-state .petition-actions {
+                text-align: center;
+            }
+            .petitions td {
+                vertical-align: middle;
+            }
+        </style>
+    @endsection
+    
+    @section('js')
+        <script>
+            $(function() {
+                var selectedLanguage = 'ca';
+                var dataTableConfig = {
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    responsive: true,
+                    language: {
+                        url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/' + selectedLanguage + '.json'
+                    }
+                };
+
+                $('#latestPetitionTable').DataTable(dataTableConfig);
+            });
+        </script>
+    @endsection
 </div>
 

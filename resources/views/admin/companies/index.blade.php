@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="card-body">
-            <table class="table table-striped" id="companyTable">
+            <table class="table table-striped" id="companyTable" style="width:100%">
                 <thead>
                     <tr>
                         <th>{{ __('Name') }}</th>
@@ -46,12 +46,18 @@
     @section('js')
         <script>
             $(function() {
-                $('#companyTable').DataTable({
-                    "paging": true,
-                    "searching": true,
-                    "ordering": false,
-                    "responsive": false,
-                });
+                var selectedLanguage = 'ca';
+                var dataTableConfig = {
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    responsive: true,
+                    language: {
+                        url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/' + selectedLanguage + '.json'
+                    }
+                };
+
+                $('#companyTable').DataTable(dataTableConfig);
             });
         </script>
     @endsection

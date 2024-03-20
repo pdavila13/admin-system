@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="card-body">
-            <table class="table table-striped" id="roleTable">
+            <table class="table table-striped" id="roleTable" style="width:100%">
                 <thead>
                     <tr>
                         <th>{{ __('Name') }}</th>
@@ -42,12 +42,18 @@
     @section('js')
         <script>
             $(function() {
-                $('#roleTable').DataTable({
-                    "paging": true,
-                    "searching": true,
-                    "ordering": true,
-                    "responsive": true,
-                });
+                var selectedLanguage = 'ca';
+                var dataTableConfig = {
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    responsive: true,
+                    language: {
+                        url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/' + selectedLanguage + '.json'
+                    }
+                };
+
+                $('#roleTable').DataTable(dataTableConfig);
             });
         </script>
     @endsection

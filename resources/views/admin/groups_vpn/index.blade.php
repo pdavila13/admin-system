@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="card-body">
-            <table class="table table-striped" id="group_vpnTable">
+            <table class="table table-striped" id="group_vpnTable" style="width:100%">
                 <thead>
                     <tr>
                         <th>{{ __('Company') }}</th>
@@ -48,12 +48,18 @@
     @section('js')
         <script>
             $(function() {
-                $('#group_vpnTable').DataTable({
-                    "paging": true,
-                    "searching": true,
-                    "ordering": false,
-                    "responsive": false,
-                });
+                var selectedLanguage = 'ca';
+                var dataTableConfig = {
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    responsive: true,
+                    language: {
+                        url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/' + selectedLanguage + '.json'
+                    }
+                };
+
+                $('#group_vpnTable').DataTable(dataTableConfig);
             });
         </script>
     @endsection
