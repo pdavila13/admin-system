@@ -56,6 +56,10 @@ return [
             'throw' => false,
         ],
 
+        'shared' => [
+            'driver' => 'local',
+            'root' => env('FILESYSTEM_SHARE'),
+        ],
     ],
 
     /*

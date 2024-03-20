@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Company;
+use Carbon\Carbon;
 use App\Models\User;
+use App\Models\State;
+use App\Models\Company;
 use App\Models\Petition;
 use App\Models\PetitionType;
-use App\Models\State;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 
 class PetitionController extends Controller
@@ -92,8 +93,12 @@ class PetitionController extends Controller
      */
     public function show($id)
     {
-        $data = Petition::where('id', decrypt($id))->first();
-        return view('admin.petition.show', compact('data'));
+        $petition = Petition::findOrFail(decrypt($id));
+        $companyName = $petition->company->name;
+        $folderPath = env('FILESYSTEM_SHARE') . $companyName;
+
+        $files = Storage::allFiles($folderPath);
+        return view('admin.petition.show', compact('petition', 'files'));
     }
 
     /**

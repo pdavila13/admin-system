@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
@@ -34,12 +35,21 @@ class CompanyController extends Controller
             'name'=>'required|max:255',
             'cif'=>'required|max:9',
         ]);
+
+        $companyName = $request->name;
+        $companyDirectory = env('FILESYSTEM_SHARE') . $companyName;
+
+        if (Storage::exists($companyDirectory)) {
+            return back()->withInput()->with('error', 'The company directory already exists.');
+        }
         
         Company::create([
             'name'=>$request->name,
             'cif'=>$request->cif,
             'description'=>$request->description,
         ]);
+
+        Storage::makeDirectory($companyDirectory);
         
         return redirect()->route('admin.company.index')->with('success','Company created successfully.');
     }
