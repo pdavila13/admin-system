@@ -62,7 +62,7 @@
                                     <tr>
                                         <th>{{ __('File name') }}</th>
                                         <th>{{ __('File size') }}</th>
-                                        <!--<th></th>-->
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -70,22 +70,19 @@
                                         <tr>
                                             <td>{{ basename($file) }}</td>
                                             <td>{{ round(Storage::size($file) / 1024, 4) }} kb</td>
-                                            <!--
                                             <td class="text-right py-0 align-middle">
                                                 <div class="btn-group btn-group-sm">
                                                     <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                                                    <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                                 </div>
                                             </td>
-                                            --> 
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
-                    </div>                    
+                    </div>           
                 </div>
             </div>
-        </div>   
+        </div>
     </div>
 </x-admin>

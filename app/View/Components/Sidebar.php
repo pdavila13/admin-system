@@ -2,11 +2,8 @@
 
 namespace App\View\Components;
 
-use App\Models\Category;
-use App\Models\Collection;
 use App\Models\Company;
 use App\Models\GroupVpn;
-use App\Models\SubCateory;
 use App\Models\Petition;
 use App\Models\User;
 use Closure;

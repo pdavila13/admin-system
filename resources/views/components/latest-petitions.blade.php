@@ -14,6 +14,7 @@
                         <th>{{ __('Petition number') }}</th>
                         <th>{{ __('Date') }}</th>
                         <th>{{ __('Status') }}</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,6 +40,12 @@
                                 @elseif ($petition->state->id == '2')
                                     <span class="badge badge-danger">{{ __('Canceled') }}</span>
                                 @endif
+                            </td>
+                            <td class="text-right py-0 align-middle">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{{ route('admin.petition.show', encrypt($petition->id)) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('admin.petition.edit', encrypt($petition->id)) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
