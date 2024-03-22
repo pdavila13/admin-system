@@ -67,9 +67,11 @@
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-{{ Auth::user()->mode }}-primary elevation-4">
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-
+            <a href="{{ route('admin.dashboard') }}" class="brand-link text-center">
+                <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
+            </a>
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user (optional) -->
@@ -84,6 +86,16 @@
                     </div>
                     <div class="info">
                         <a href="{{ route('admin.dashboard') }}" class="d-block">{{ Auth::user()->name }}</a>
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <div class="input-group" data-widget="sidebar-search">
+                        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-sidebar">
+                                <i class="fas fa-search fa-fw"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <!-- Sidebar Menu -->

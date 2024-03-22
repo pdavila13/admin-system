@@ -4,12 +4,6 @@
             <h3 class="card-title">{{ __('Applications') }}</h3>
         </div>
         <div class="card-body">
-            <a href="{{ env('INVENTARY_URL') }}" class="btn btn-app" target="_blank">
-                <i class="fas fa-barcode"></i> {{ __('Inventory') }}
-            </a>
-            <a href="{{ env('PHONE_URL') }}" class="btn btn-app" target="_blank">
-                <i class="fas fa-phone"></i> {{ __('Phones') }}
-            </a>
             <a href="{{ env('ORACLE_URL') }}" class="btn btn-app" target="_blank">
                 <i class="fas fa-th"></i> {{ __('Oracle Tablespaces') }}
             </a>

@@ -31,7 +31,13 @@
                                 <small>{{ $petition->description }}</small>
                             </td>
                             <td>{{ $petition->petitionType->name }}</td>
-                            <td>{{ $petition->petition_number }}</td>
+                            <td>
+                                @if ($petition->petitionType->name == 'Firewall JX')
+                                    <a href="{{ env('TASKS_URL') . $petition->petition_number }}" target="_blank">{{ $petition->petition_number }}</a>
+                                @else
+                                    {{ $petition->petition_number }}
+                                @endif
+                            </td>
                             <td>{{ $petition->user->name }}</td>
                             <td>
                                 @if($petition->datepicker)
