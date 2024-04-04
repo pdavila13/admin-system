@@ -8,8 +8,7 @@
     <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="true">
-                <i class="flag-icon flag-icon-es-ca"></i>
-            </a>
+                <i class="fa fa-language" aria-hidden="true"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right p-0">
                 <a href="{{ url('locale/ca') }}" class="dropdown-item active">
@@ -28,13 +27,9 @@
                 @csrf
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <input type="submit" name="submit" value="{{ __('Log Out') }}" class="btn btn-primary btn-sm">
-                    {{-- <a :href="route('logout')"
-                        onclick="event.preventDefault();
-                                    this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </a> --}}
+                    <input type="submit" name="submit" value="{{ __('Log Out') }}" class="btn btn-primary">
                 </form>
+            </form>
         </li>
     </ul>
 </nav>

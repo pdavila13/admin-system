@@ -14,36 +14,50 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label for="name" class="form-label">{{ __('Name') }}</label>
-                            <input type="text" class="form-control" name="name" required
-                                value="{{ $user->name }}">
-                            @error('name')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                </div>
+                                <input type="text" class="form-control" name="name" required
+                                    value="{{ $user->name }}">
+                                @error('name')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label for="Email" class="form-label">{{ __('Email') }}</label>
-                            <input type="email" class="form-control" name="email" required
-                                value="{{ $user->email }}">
-                            @error('email')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                </div>
+                                <input type="email" class="form-control" name="email" required value="{{ $user->email }}">
+                                @error('email')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>    
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label for="role" class="form-label">{{ __('Role') }}</label>
-                            <select name="role" id="role" class="form-control" required>
-                                <option value="" selected disabled>{{ __('Selecte the role') }}</option>
-                                @foreach ($roles as $role)
-                                    <option value="{{ $role->name }}"
-                                        {{ $user->roles[0]['name'] === $role->name ? 'selected' : '' }}>{{ $role->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('role')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                                </div>
+                                <select name="role" id="role" class="form-control" required>
+                                    <option value="" selected disabled>{{ __('Selecte the role') }}</option>
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->name }}"
+                                            {{ $user->roles[0]['name'] === $role->name ? 'selected' : '' }}>{{ $role->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('role')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-12">

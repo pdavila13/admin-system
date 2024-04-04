@@ -10,6 +10,9 @@
             <a href="{{ env('CHECKMK_URL') }}" class="btn btn-app" target="_blank">
                 <i class="fas fa-check"></i> {{ __('Check MK') }}
             </a>
+            <a href="{{ env('WIKI_URL') }}" class="btn btn-app" target="_blank">
+                <i class="fas fa-book"></i> {{ __('Wiki') }}
+            </a>
             <a href="{{ env('VCENTER_URL') }}" class="btn btn-app" target="_blank">
                 <i class="fas fa-unlock"></i> {{ __('vCenter') }}
             </a>

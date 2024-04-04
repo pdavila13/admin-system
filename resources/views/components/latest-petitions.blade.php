@@ -50,7 +50,7 @@
                             <td class="text-right py-0 align-middle">
                                 <div class="btn-group btn-group-sm">
                                     <a href="{{ route('admin.petition.show', encrypt($petition->id)) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                                    <a href="{{ route('admin.petition.edit', encrypt($petition->id)) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                    <a href="{{ route('admin.petition.edit', encrypt($petition->id)) }}" class="btn btn-primary" data-toggle="modal" data-target="modal-lg"><i class="fas fa-edit"></i></a>
                                 </div>
                             </td>
                         </tr>
@@ -86,6 +86,10 @@
 
                 $('#latestPetitionTable').DataTable(dataTableConfig);
             });
+
+            $('#myModal').on('shown.bs.modal', function () {
+                $('#myInput').trigger('focus')
+            })
         </script>
     @endsection
 </div>

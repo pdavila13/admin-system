@@ -22,12 +22,17 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label for="name" class="form-label">{{__('Name') }}</label>
-                                        <input type="text" class="form-control" name="name" id="name"
-                                            required="" value="{{ old('name') }}">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-hat-cowboy"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" name="name" id="name"
+                                                required="" value="{{ old('name') }}">
                                             @error('name')
                                                 <span>{{ $message }}</span>
                                             @enderror
-                                        <div class="invalid-feedback">{{ __('Permission name field is required.') }}</div>
+                                            <div class="invalid-feedback">{{ __('Permission name field is required.') }}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

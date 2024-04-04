@@ -19,15 +19,15 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="company">{{ __('Company') }}</label>
-                                        <select name="company_id" id="company" class="form-control" required>
+                                        <select class="form-control select2 select2-bootstrap4" name="company_id" id="company" required>
                                             <option value="" selected disabled>{{ __('Select company') }}</option>
                                             @foreach ($company as $com)
                                                 <option {{ old('company_id') == $com->id ? 'selected' : '' }} value="{{ $com->id }}">{{ $com->name }}</option>
                                             @endforeach
                                         </select>
-                                            @error('company_id')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
+                                        @error('company_id')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -126,6 +126,10 @@
 
                 $('#datetimepicker4').datetimepicker({
                     format: 'DD-MM-YYYY'
+                });
+
+                $('.select2').select2({
+                    theme: 'bootstrap4'
                 });
             });
         </script>

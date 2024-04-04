@@ -31,7 +31,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="company">{{ __('Company') }}</label>
-                                        <select name="company_id" id="company" class="form-control" readonly>
+                                        <select class="form-control select2 select2-bootstrap4" name="company_id" id="company" class="form-control">
                                             <option value="" selected disabled>{{ __('Select company') }}</option>
                                             @foreach ($company as $com)
                                                 <option {{ $data->company_id  == $com->id ? 'selected' : '' }} value="{{ $com->id }}">{{ $com->name }}</option>
@@ -47,7 +47,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="network" class="form-label">{{ __('Network') }}</label>
-                                        <input type="network" class="form-control" name="network" required
+                                        <input type="text" class="form-control" name="network" required
                                             value="{{ $data->network }}">
                                         @error('network')
                                             <span class="text-danger">{{ $message }}</span>
@@ -57,7 +57,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="description" class="form-label">{{ __('Description') }}</label>
-                                        <input type="description" class="form-control" name="description" required
+                                        <input type="text" class="form-control" name="description" required
                                             value="{{ $data->description }}">
                                         @error('description')
                                             <span class="text-danger">{{ $message }}</span>
@@ -74,4 +74,13 @@
             </div>
         </div>
     </div>
+    @section('js')
+        <script>
+            $(document).ready(function() {
+                $('.select2').select2({
+                    theme: 'bootstrap4'
+                });
+            });
+        </script>
+    @endsection
 </x-admin>
