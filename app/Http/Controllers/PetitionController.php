@@ -72,7 +72,6 @@ class PetitionController extends Controller
             'datepicker'=>'required|date',
             'state_id'=>'required'
         ]);
-        //$datepicker = Carbon::createFromFormat('Y-m-d', $request->datepicker);
         $datepicker = Carbon::createFromFormat('d-m-Y', $request->datepicker);
 
         Petition::create([
@@ -95,9 +94,12 @@ class PetitionController extends Controller
     {
         $petition = Petition::findOrFail(decrypt($id));
         $companyName = $petition->company->name;
-        $folderPath = env('FILESYSTEM_SHARE') . $companyName;
+        $folderPath = config('fs_share') . $companyName;
 
-        $files = Storage::allFiles($folderPath);
+        $files = collect(Storage::allFiles($folderPath))->filter(function($file) use ($folderPath) {
+            return strpos($file, $folderPath) === 0;
+        });
+
         return view('admin.petition.show', compact('petition', 'files'));
     }
 

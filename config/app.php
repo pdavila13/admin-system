@@ -63,6 +63,8 @@ return [
     
     'avatar_url' => env('AVATAR_URL'),
 
+    'fs_share' => env('FILESYSTEM_SHARE'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
