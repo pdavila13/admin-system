@@ -22,25 +22,43 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="petition_number">{{ __('Petition number') }}</label>
-                                <input type="text" id="petition_number" class="form-control" value="{{ $petition->petition_number }}" disabled>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="petition_number">{{ __('Petition number') }}</label>
+                                        <input type="text" id="petition_number" class="form-control" value="{{ $petition->petition_number }}" disabled>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="petitionType">{{ __('Petition type') }}</label>
+                                        <input type="text" id="petitionType" class="form-control" value="{{ $petition->petitionType->name }}" disabled>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="description">{{ __('Description') }}</label>
-                                <textarea id="description" class="form-control" rows="4" disabled>{{ $petition->description }}</textarea>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="state">{{ __('Status') }}</label>
+                                        <input type="text" id="state" class="form-control" value="{{ $petition->state->name }}" disabled>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="user">{{ __('Technical System') }}</label>
+                                        <input type="text" id="user" class="form-control" value="{{ $petition->user->name }}" disabled>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="petitionType">{{ __('Petition type') }}</label>
-                                <input type="text" id="petitionType" class="form-control" value="{{ $petition->petitionType->name }}" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label for="state">{{ __('Status') }}</label>
-                                <input type="text" id="state" class="form-control" value="{{ $petition->state->name }}" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label for="user">{{ __('Technical system') }}</label>
-                                <input type="text" id="user" class="form-control" value="{{ $petition->user->name }}" disabled>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="description">{{ __('Description') }}</label>
+                                        <textarea id="description" class="form-control" rows="4" disabled>{{ $petition->description }}</textarea>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>    
