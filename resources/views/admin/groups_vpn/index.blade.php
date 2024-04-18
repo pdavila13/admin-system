@@ -24,7 +24,9 @@
                     @foreach ($data as $group_vpn)
                         <tr>
                             <td>{{ $group_vpn->company->name}}</td>
-                            <td>{{ $group_vpn->name }}</td>
+                            <td>
+                                <a href="{{ env('GROUP_VPN_URL') . $group_vpn->name }}" target="_blank">{{ $group_vpn->name }}</a>
+                            </td>
                             <td>{{ $group_vpn->network }}</td>
                             <td>{{ $group_vpn->description }}</td>
                             <td class="group_vpn-actions text-right">
