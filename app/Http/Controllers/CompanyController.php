@@ -14,8 +14,8 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $data = Company::orderBy('id','DESC')->get();
-        return view('admin.companies.index',compact('data'));
+        $data = Company::where('active', 1)->orderBy('id', 'DESC')->get();
+        return view('admin.companies.index', compact('data'));
     }
 
     /**
@@ -23,7 +23,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view('admin.companies.create');
+        return view('admin.companies.modal.create');
     }
 
     /**
@@ -54,23 +54,26 @@ class CompanyController extends Controller
         return redirect()->route('admin.company.index')->with('success','Company created successfully.');
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     */
     public function edit($company)
     {
-        $data = Company::where('id',decrypt($company))->first();
-        return view('admin.companies.edit',compact('data'));
+        $id = decrypt($company);
+        $data = Company::findOrFail($id);
+        return view('admin.companies.modal.edit', compact('data'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'name'=>'required|max:255',
             'cif'=>'required|max:9',
         ]);
-
-        Company::where('id', $request->id)->update([
+        Company::where('id', $id)->update([
             'name'=>$request->name,
             'cif'=>$request->cif,
             'description'=>$request->description,
@@ -78,9 +81,18 @@ class CompanyController extends Controller
         return redirect()->route('admin.company.index')->with('info','Company updated successfully.');   
     }
 
+    /**
+     * Desactive the specified resource from storage.
+     */
     public function destroy($id)
     {
-        Company::where('id',decrypt($id))->delete();
-        return redirect()->route('admin.company.index')->with('success','Company deleted successfully.');   
+        $companyId = decrypt($id);
+    
+        $company = Company::findOrFail($companyId);
+
+        $company->active = 0;
+        $company->save();
+
+        return redirect()->route('admin.company.index')->with('success', 'Company deactivated successfully.');
     }
 }

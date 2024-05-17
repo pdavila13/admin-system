@@ -6,7 +6,7 @@
         <div class="card-header">
             <h3 class="card-title">{{ __('List companies') }}</h3>
             <div class="card-tools">                
-                <a href="{{ route('admin.company.create') }}" class="btn btn-sm btn-primary">{{ __('New') }}</a>
+                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalCompanyCreate">{{ __('New') }}</a>
             </div>
         </div>
         <div class="card-body">
@@ -20,22 +20,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($data as $com)
+                    @foreach ($data as $company)
                         <tr>
-                            <td>{{ $com->name }}</td>
-                            <td>{{ $com->cif }}</td>
-                            <td>{{ $com->description }}</td>
+                            <td>{{ $company->name }}</td>
+                            <td>{{ $company->cif }}</td>
+                            <td>{{ $company->description }}</td>
                             <td class="company-actions text-right">
-                                <a href="{{ route('admin.company.edit', encrypt($com->id)) }}" class="btn btn-info btn-sm">
+                                <a href="#" class="btn btn-info btn-xs" data-toggle="modal" data-target="#ModalCompanyEdit{{ $company->id }}">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <form action="{{ route('admin.company.destroy', encrypt($com->id)) }}" method="POST" onsubmit="return confirm('{{ __('Are sure want to delete?') }}')" style="display: inline;">
-                                    @method('DELETE')
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
+                                <a href="#" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#ModalCompanyDelete{{ $company->id }}">
+                                    <i class="fas fa-ban"></i>
+                                </a>
                             </td>
                         </tr>
                     @endforeach
@@ -43,6 +39,15 @@
             </table>
         </div>
     </div>
+
+    <!-- Incluir modal de edición para cada empresa -->
+    @foreach ($data as $company)
+        @include('admin.companies.modal.edit', ['company' => $company])
+        @include('admin.companies.modal.delete')
+    @endforeach
+
+    @include('admin.companies.modal.create')
+
     @section('js')
         <script>
             $(function() {
