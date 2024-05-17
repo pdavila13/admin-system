@@ -23,7 +23,10 @@ class GroupVpnController extends Controller
      */
     public function index()
     {
-        $data = GroupVpn::orderBy('id','DESC')->get();
+        $data = GroupVpn::whereHas('company', function ($query) {
+            $query->where('active', 1);
+        })->orderBy('id', 'DESC')->get();
+        
         return view('admin.groups_vpn.index',compact('data'));
     }
 
@@ -33,7 +36,7 @@ class GroupVpnController extends Controller
     public function create()
     {
         $company = Company::orderBy('id','DESC')->get();
-        return view('admin.groups_vpn.create', compact('company'));
+        return view('admin.groups_vpn.modal.create', compact('company'));
     }
 
     /**
@@ -65,7 +68,7 @@ class GroupVpnController extends Controller
     {
         $data = GroupVpn::where('id', decrypt($id))->first();
         $company = Company::orderBy('id','DESC')->get();
-        return view('admin.groups_vpn.edit', compact('data', 'company'));
+        return view('admin.groups_vpn.modal.edit', compact('data', 'company'));
     }
 
 

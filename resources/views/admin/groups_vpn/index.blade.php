@@ -6,7 +6,7 @@
         <div class="card-header">
             <h3 class="card-title">{{ __('VPN Groups List') }}</h3>
             <div class="card-tools">
-                <a href="{{ route('admin.group_vpn.create') }}" class="btn btn-sm btn-primary">{{__('New') }}</a>
+                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalGroupVPNCreate">{{ __('New') }}</a>
             </div>
         </div>
         <div class="card-body">
@@ -24,22 +24,16 @@
                     @foreach ($data as $group_vpn)
                         <tr>
                             <td>{{ $group_vpn->company->name}}</td>
-                            <td>
-                                <a href="{{ env('GROUP_VPN_URL') . $group_vpn->name }}" target="_blank">{{ $group_vpn->name }}</a>
-                            </td>
+                            <td><a href="{{ env('GROUP_VPN_URL') . $group_vpn->name }}" target="_blank">{{ $group_vpn->name }}</a></td>
                             <td>{{ $group_vpn->network }}</td>
                             <td>{{ $group_vpn->description }}</td>
                             <td class="group_vpn-actions text-right">
-                                <a href="{{ route('admin.group_vpn.edit', encrypt($group_vpn->id)) }}" class="btn btn-info btn-sm">
+                                <a href="#" class="btn btn-info btn-xs" data-toggle="modal" data-target="#ModalGroupVPNEdit{{ $group_vpn->id }}">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <form action="{{ route('admin.group_vpn.destroy', encrypt($group_vpn->id)) }}" method="POST" onsubmit="return confirm('{{ __('Are sure want to delete?') }}')" style="display: inline;">
-                                    @method('DELETE')
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
+                                <a href="#" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#ModalGroupVPNDelete{{ $group_vpn->id }}">
+                                    <i class="fas fa-trash"></i>
+                                </a>
                             </td>
                         </tr>
                     @endforeach
@@ -47,6 +41,7 @@
             </table>
         </div>
     </div>
+
     @section('js')
         <script>
             $(function() {
@@ -65,4 +60,11 @@
             });
         </script>
     @endsection
+
+    @include('admin.groups_vpn.modal.create')
+
+    @foreach ($data as $group_vpn)
+        @include('admin.groups_vpn.modal.edit', ['group_vpn' => $group_vpn])
+        @include('admin.groups_vpn.modal.delete')
+    @endforeach
 </x-admin>
