@@ -57,6 +57,11 @@
                 };
 
                 $('#group_vpnTable').DataTable(dataTableConfig);
+
+                $('.select2').select2({
+                    dropdownParent: $("#ModalGroupVPNCreate")
+                });
+
             });
         </script>
     @endsection

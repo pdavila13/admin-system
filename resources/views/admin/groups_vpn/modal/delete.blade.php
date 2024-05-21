@@ -10,10 +10,10 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>   
-                <div class="modal-body">You sure you want to disable <b>{{ $group_vpn->name }}</b>?</div>
+                <div class="modal-body">You sure you want to delete <b>{{ $group_vpn->name }}</b>?</div>
                 <div class="modal-footer">
                     <button type="button" class="btn gray btn-outline-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
-                    <button type="submit" class="btn btn-outline-danger">{{ __('Disable') }}</button>
+                    <button type="submit" class="btn btn-outline-danger">{{ __('Delete') }}</button>
                 </div>
             </div>
         </div>

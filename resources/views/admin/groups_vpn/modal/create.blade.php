@@ -1,6 +1,6 @@
 <form class="needs-validation" novalidate action="{{ route('admin.group_vpn.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
-    <div class="modal fade text-left" id="ModalGroupVPNCreate" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal face text-left" id="ModalGroupVPNCreate" role="dialog" aria-hidden="true" data-focus="false">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -67,13 +67,3 @@
         </div>
     </div>
 </form>
-
-@section('js')
-    <script>
-        $(document).ready(function() {
-            $('.select2').select2({
-                theme: 'bootstrap4'
-            });
-        });
-    </script>
-@endsection

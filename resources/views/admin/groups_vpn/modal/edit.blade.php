@@ -2,7 +2,7 @@
     @csrf
     @method('PUT')
     <input type="hidden" name="id" value="{{ $group_vpn->id }}">
-    <div class="modal fade text-left" id="ModalGroupVPNEdit{{$group_vpn->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="ModalGroupVPNEdit{{$group_vpn->id}}" class="modal fade text-left" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -26,7 +26,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="company">{{ __('Company') }}</label>
-                                <select class="form-control select2 select2-bootstrap4" name="company_id" id="company" class="form-control">
+                                <select class="form-control select2 select2-bootstrap4 initialize-select2" name="company_id" id="company" class="form-control">
                                     <option value="" selected disabled>{{ __('Select company') }}</option>
                                     @foreach ($company as $com)
                                         @if ($com->active == 1)
@@ -71,13 +71,3 @@
         </div>
     </div>
 </form>
-
-@section('js')
-    <script>
-        $(document).ready(function() {
-            $('.select2').select2({
-                theme: 'bootstrap4'
-            });
-        });
-    </script>
-@endsection

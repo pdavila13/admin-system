@@ -71,13 +71,4 @@
             </div>
         </div>
     </div>
-    @section('js')
-        <script>
-            $(document).ready(function() {
-                $('.select2').select2({
-                    theme: 'bootstrap4'
-                });
-            });
-        </script>
-    @endsection
 </x-admin>
