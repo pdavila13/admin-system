@@ -74,9 +74,9 @@ class PetitionTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PetitionType $petitionType)
+    public function destroy($id)
     {
         PetitionType::where('id',decrypt($id))->delete();
-        return redirect()->route('admin.petition_type.index')->with('error','Petition type deleted successfully.');
+        return redirect()->route('admin.petition_type.index')->with('success','Petition type deleted successfully.');   
     }
 }

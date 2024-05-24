@@ -29,13 +29,26 @@ class PetitionController extends Controller
         $state = State::orderBy('id','DESC')->get();
         view()->share('state',$state);
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = Petition::orderBy('datepicker','DESC')->get();
-        return view('admin.petition.index',compact('data'));
+        $data = Petition::orderBy('datepicker', 'DESC')->get();
+
+        // Crear una colección para almacenar archivos asociados a cada petición
+        $petitionsWithFiles = $data->map(function ($petition) {
+            $companyName = $petition->company->name;
+            $folderPath = config('fs_share') . $companyName;
+            $files = collect(Storage::allFiles($folderPath))->filter(function($file) use ($folderPath) {
+                return strpos($file, $folderPath) === 0;
+            });
+            $petition->files = $files;
+            return $petition;
+        });
+
+        return view('admin.petition.index', compact('data', 'petitionsWithFiles'));
     }
 
     /**
@@ -50,7 +63,7 @@ class PetitionController extends Controller
         }
 
         $currentDate = Carbon::now()->format('d-m-Y');
-        return view('admin.petition.create', [
+        return view('admin.petition.modal.create', [
             'currentDate' => $currentDate,
             'user' => $user,
             'company' => Company::orderBy('id', 'DESC')->get(),
@@ -72,6 +85,7 @@ class PetitionController extends Controller
             'datepicker'=>'required|date',
             'state_id'=>'required'
         ]);
+
         $datepicker = Carbon::createFromFormat('d-m-Y', $request->datepicker);
 
         Petition::create([
@@ -100,7 +114,7 @@ class PetitionController extends Controller
             return strpos($file, $folderPath) === 0;
         });
 
-        return view('admin.petition.show', compact('petition', 'files'));
+        return view('admin.petition.modal.show', compact('petition', 'files'));
     }
 
     /**
@@ -109,7 +123,7 @@ class PetitionController extends Controller
     public function edit($id)
     {
         $data = Petition::where('id', decrypt($id))->first();
-        return view('admin.petition.edit',compact('data'));
+        return view('admin.petition.modal.edit',compact('data'));
     }
 
     /**
@@ -139,7 +153,7 @@ class PetitionController extends Controller
             'description'=>$request->description
         ]);
 
-        return redirect()->route('admin.petition.index')->with('info', 'Petition updated successfully.');   
+        return redirect()->route('admin.petition.index')->with('success', 'Petition updated successfully.');   
     }
 
     /**
@@ -148,6 +162,6 @@ class PetitionController extends Controller
     public function destroy($id)
     {
         Petition::where('id',decrypt($id))->delete();
-        return redirect()->route('admin.petition.index')->with('error','Petition deleted successfully.');   
+        return redirect()->route('admin.petition.index')->with('success','Petition deleted successfully.');   
     }
 }

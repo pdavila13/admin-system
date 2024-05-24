@@ -3,68 +3,60 @@
         {{ __('Petition detail') }}
     @endsection
     <div class="card">
+        <!--
         <div class="card-header">
-            <h3 class="card-title">{{ __('Company') }}: {{ $petition->company->name }}</h3>
+            <h3 class="card-title">Title</h3>
             <div class="card-tools">
                 <a href="{{ route('admin.petition.index') }}" class="btn btn-info btn-sm">{{ __('Back') }}</a>
             </div>
-        </div>
+        </div>-->
         <div class="card-body">
             <div class="row">
-                <div class="col-md-6">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">{{ __('General') }}</h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
+                <div class="col-12 col-md-12 col-lg-6 order-2 order-md-2">
+                    <h3 class="text-primary">{{ $petition->company->name }}</h3>
+                    <p class="text-muted">{{ $petition->company->description }}</p>
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            <div class="text-muted">
+                                <b class="d-block">{{ __('Petition number') }}</b>
+                                <p class="text-sm">{{ $petition->petition_number }}</p>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="petition_number">{{ __('Petition number') }}</label>
-                                        <input type="text" id="petition_number" class="form-control" value="{{ $petition->petition_number }}" disabled>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="petitionType">{{ __('Petition type') }}</label>
-                                        <input type="text" id="petitionType" class="form-control" value="{{ $petition->petitionType->name }}" disabled>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="state">{{ __('Status') }}</label>
-                                        <input type="text" id="state" class="form-control" value="{{ $petition->state->name }}" disabled>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="user">{{ __('Technical System') }}</label>
-                                        <input type="text" id="user" class="form-control" value="{{ $petition->user->name }}" disabled>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="description">{{ __('Description') }}</label>
-                                        <textarea id="description" class="form-control" rows="4" disabled>{{ $petition->description }}</textarea>
-                                    </div>
-                                </div>
+                        <div class="col">
+                            <div class="text-muted">
+                                <b class="d-block">{{ __('Petition type') }}</b>
+                                <p class="text-sm">{{ $petition->petitionType->name }}</p>
                             </div>
                         </div>
-                    </div>    
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="text-muted">
+                                <b class="d-block">{{ __('Status') }}</b>
+                                <p class="text-sm">{{ $petition->state->name }}</p>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="text-muted">
+                                <b class="d-block">{{ __('Technical System') }}</b>
+                                <p class="text-sm">{{ $petition->user->name }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="text-muted">
+                                <b class="d-block">{{ __('Description') }}</b>
+                                <p class="text-sm">{{ $petition->company->description }}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="col-md-6">
+                <div class="col-12 col-md-12 col-lg-6 order-1 order-md-2">
                     <div class="card card-info">
                         <div class="card-header">
                             <h3 class="card-title">{{ __('Files') }}</h3>
@@ -101,6 +93,12 @@
                     </div>           
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <a href="{{ route('admin.petition.index') }}" class="btn btn-secondary">{{ __('Back') }}</a>
         </div>
     </div>
 </x-admin>

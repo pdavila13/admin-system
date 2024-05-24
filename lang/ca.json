@@ -280,10 +280,13 @@
     "Petitions": "Peticions",
     "Petition data": "Dades de la petició",
     "Create petition": "Crear petició",
+    "Create new petition": "Crear nova petició",
     "Edit petition": "Editar petició",
     "List petitions": "Llista de peticions",
+    "Show petition": "Mostrar petició",
     "Latest petitions": "Últimes peticions",
     "Petition detail": "Detall petició",
+    "Petition delete": "Eliminar petició",
     "Select petition type": "Seleccionar tipus de petició",
     "Petition type": "Tipus de petició",
     "Petition number": "Número de petició",
@@ -304,5 +307,6 @@
     "Applications": "Aplicacions",
     "Inventory": "Inventari",
     "Phones": "Telèfons",
-    "Language": "Idioma"
+    "Language": "Idioma",
+    "You sure you want to delete": "¿Segur que vols esborrar?"
 }

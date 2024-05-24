@@ -6,7 +6,7 @@
         <div class="card-header">
             <h3 class="card-title">{{ __('List petitions') }}</h3>
             <div class="card-tools">
-                <a href="{{ route('admin.petition.create') }}" class="btn btn-sm btn-primary">{{ __('New') }}</a>
+                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalPetitionCreate">{{ __('New') }}</a>
             </div>
         </div>
         <div class="card-body">
@@ -54,19 +54,15 @@
                                 @endif
                             </td>
                             <td class="petition-actions text-right">
-                                <a href="{{ route('admin.petition.show', encrypt($petition->id)) }}" class="btn btn-primary btn-sm">
+                                <a href="#" class="btn btn-success btn-xs" data-toggle="modal" data-target="#ModalPetitionShow{{ $petition->id }}">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <a href="{{ route('admin.petition.edit', encrypt($petition->id)) }}" class="btn btn-info btn-sm">
+                                <a href="#" class="btn btn-info btn-xs" data-toggle="modal" data-target="#ModalPetitionEdit{{ $petition->id }}">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <form action="{{ route('admin.petition.destroy', encrypt($petition->id)) }}" method="POST" onsubmit="return confirm('{{ __('Are sure want to delete?') }}')" style="display: inline;">
-                                    @method('DELETE')
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
+                                <a href="#" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#ModalPetitionDelete{{ $petition->id }}">
+                                    <i class="fas fa-trash"></i>
+                                </a>
                             </td>
                         </tr>
                     @endforeach
@@ -74,6 +70,7 @@
             </table>
         </div>
     </div>
+
     @section('css')
         <style>
             .petition-state .petition-actions {
@@ -87,7 +84,7 @@
     
     @section('js')
         <script>
-            $(function() {
+            $(document).ready(function() {
                 var selectedLanguage = 'ca';
                 var dataTableConfig = {
                     paging: true,
@@ -99,7 +96,40 @@
                     }
                 };
                 $('#petitionTable').DataTable(dataTableConfig);
+
+                $('#companySelect2').select2({ 
+                    dropdownParent: "#ModalPetitionCreate",
+                    theme: 'bootstrap4',
+                });
+
+                $('#ModalPetitionCreate').on('show.bs.modal', function() {
+                    var currentDate = moment().format('DD-MM-YYYY');
+                    $(this).find('.datetimepicker-input').val(currentDate);
+
+                    $(this).find('.datetimepicker').each(function() {
+                        $(this).datetimepicker({
+                            dropdownParent: $(this).closest('.modal'),
+                            format: 'DD-MM-YYYY',
+                            defaultDate: new Date(),
+                        });
+                    });
+                });
+
+                $('.datetimepicker').each(function() {
+                    $(this).datetimepicker({
+                        dropdownParent: $(this).closest('.modal'),
+                        format: 'DD-MM-YYYY',
+                    });
+                });
             });
         </script>
     @endsection
+
+    @include('admin.petition.modal.create')
+    
+    @foreach ($data as $petition)
+        @include('admin.petition.modal.edit', ['petition' => $petition])
+        @include('admin.petition.modal.show', ['petition' => $petition, 'files' => $petition->files])
+        @include('admin.petition.modal.delete', ['petition' => $petition])
+    @endforeach
 </x-admin>
