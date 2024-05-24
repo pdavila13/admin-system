@@ -1,4 +1,3 @@
-
 <div class="col-12">
     <div class="card">
         <div class="card-header">
@@ -49,8 +48,13 @@
                             </td>
                             <td class="text-right py-0 align-middle">
                                 <div class="btn-group btn-group-sm">
-                                    <a href="{{ route('admin.petition.show', encrypt($petition->id)) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                                    <a href="{{ route('admin.petition.edit', encrypt($petition->id)) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info btn-xs" data-toggle="modal" data-target="#ModalPetitionEdit{{ $petition->id }}">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+
+                                    @foreach ($petitions as $petition)
+                                        @include('admin.petition.modal.modal-edit', ['petition' => $petition])
+                                    @endforeach
                                 </div>
                             </td>
                         </tr>
@@ -59,41 +63,33 @@
             </table>
         </div>
     </div>
-    @section('css')
-        <style>
-            .petition-state .petition-actions {
-                text-align: center;
-            }
-            .petitions td {
-                vertical-align: middle;
-            }
-        </style>
-    @endsection
-    
-    @section('js')
-        <script>
-            $(function() {
-                var selectedLanguage = 'ca';
-                var dataTableConfig = {
-                    paging: true,
-                    searching: true,
-                    ordering: true,
-                    responsive: true,
-                    language: {
-                        url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/' + selectedLanguage + '.json'
-                    },
-                    order: [
-                        [3, 'asc']
-                    ]
-                };
-
-                $('#latestPetitionTable').DataTable(dataTableConfig);
-            });
-
-            $('#myModal').on('shown.bs.modal', function () {
-                $('#myInput').trigger('focus')
-            })
-        </script>
-    @endsection
 </div>
+    
+@section('js')
+    <script>
+        $(document).ready(function() {
+            var selectedLanguage = 'ca';
+            var dataTableConfig = {
+                paging: true,
+                searching: true,
+                ordering: true,
+                responsive: true,
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/' + selectedLanguage + '.json'
+                },
+                order: [
+                    [3, 'desc']
+                ]
+            };
 
+            $('#latestPetitionTable').DataTable(dataTableConfig);
+            
+            $('.datetimepicker').each(function() {
+                $(this).datetimepicker({
+                    dropdownParent: $(this).closest('.modal'),
+                    format: 'DD-MM-YYYY',
+                });
+            });
+        });
+    </script>
+@endsection
