@@ -6,7 +6,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">{{ __('Edit Company') }}</h4>
+                    <h4 class="modal-title">{{ __('Edit company') }}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>                    
@@ -15,7 +15,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="name">{{ __('Company Name') }}</label>
+                                <label for="name">{{ __('Company name') }}</label>
                                 <input type="text" class="form-control" id="name" name="name"
                                     placeholder="Enter company name" required value="{{ $company->name }}">
                             </div>

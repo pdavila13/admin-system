@@ -12,7 +12,7 @@ class DashboardController extends Controller
     public function index()
     {
         $petitions = Petition::where('datepicker', '>=', DB::raw('DATE_SUB(CURDATE(), INTERVAL 30 DAY)'))
-                    ->orderBy('updated_at','DESC')
+                    ->orderBy('datepicker','DESC')
                     ->get();
 
         return view('dashboard', compact('petitions'));
