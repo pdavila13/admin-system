@@ -6,6 +6,7 @@
                 <p>{{ __('Dashboard') }}</p>
             </a>
         </li>
+        <li class="nav-header">{{ __('MANAGEMENT') }}</li>
         <li class="nav-item">
             <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-cogs"></i>
@@ -65,7 +66,7 @@
                 </li>
             </ul>
         </li>
-
+        <li class="nav-header">{{ __('SETTING ACCOUNT') }}</li>
         <li class="nav-item">
             <a href="{{ route('admin.profile.edit') }}" class="nav-link {{ Route::is('admin.profile.edit') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-id-card"></i>
