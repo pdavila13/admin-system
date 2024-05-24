@@ -66,6 +66,30 @@
                 </li>
             </ul>
         </li>
+
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-puzzle-piece"></i>
+                <p>
+                    {{ __('Integrations') }}
+                    <i class="fas fa-angle-left right"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-medkit"></i>
+                        <p>{{ __('Medical equipment') }}</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-list"></i>
+                        <p>{{ __('Integration MQ') }}</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li class="nav-header">{{ __('SETTING ACCOUNT') }}</li>
         <li class="nav-item">
             <a href="{{ route('admin.profile.edit') }}" class="nav-link {{ Route::is('admin.profile.edit') ? 'active' : '' }}">
