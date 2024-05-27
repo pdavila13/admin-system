@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GroupVpnController;
 use App\Http\Controllers\PetitionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\PermissionController;
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(function () {
@@ -23,4 +24,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
     Route::resource('group_vpn',GroupVpnController::class);
     Route::resource('company',CompanyController::class);
     Route::resource('petition',PetitionController::class);
+
+    Route::resource('inventary',InventoryController::class);
 });

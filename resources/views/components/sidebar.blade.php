@@ -77,7 +77,7 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('admin.inventary.index') }}" class="nav-link {{ Route::is('admin.inventary.index') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-medkit"></i>
                         <p>{{ __('Medical equipment') }}</p>
                     </a>

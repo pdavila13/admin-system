@@ -65,8 +65,8 @@ return [
 
         'inventory' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
+            'host' => env('INVENTORY_DB_HOST', '127.0.0.1'),
+            'port' => env('INVENTORY_DB_PORT', '3306'),
             'database' => env('INVENTORY_DB_DATABASE', 'forge'),
             'username' => env('INVENTORY_DB_USERNAME', 'forge'),
             'password' => env('INVENTORY_DB_PASSWORD', ''),
