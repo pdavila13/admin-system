@@ -83,7 +83,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('admin.integration.index') }}" class="nav-link {{ Route::is('admin.integration.index') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-list"></i>
                         <p>{{ __('Integration MQ') }}</p>
                     </a>

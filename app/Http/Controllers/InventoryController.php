@@ -41,6 +41,57 @@ class InventoryController extends Controller
         return view('admin.inventory.index', ['dataFromFacade' => $dataFromFacade]);
     }
 
+    public function getModels($trademark)
+    {
+        $models = DB::connection('inventory')
+                    ->table('modelo')
+                    ->where('marca', $trademark)
+                    ->orderBy('def', 'ASC')
+                    ->get();
+
+        return response()->json($models);
+    }
+    
+    public function getCenters($zona)
+    {
+        $query = DB::connection('inventory')
+            ->table('centro')
+            ->join('zona', 'centro.zona', '=', 'zona.id')
+            ->select('centro.*')
+            ->orderBy('centro.def', 'ASC');
+
+        // Check the zona and apply additional conditions based on the area
+        if ($zona === 'HOSPI') {
+            $query->where(function ($query) {
+                $query->where('centro.zona', 'VLANS')
+                    ->where('centro.id', 'VlanRadiologia')
+                    ->orWhere(function ($query) {
+                        $query->where('centro.zona', 'GIPSS')
+                                ->where('centro.id', 'gipss_francoli');
+                    });
+            });
+        } else {
+            $query->where('zona.area', $zona);
+        }
+
+        $centers = $query->get();
+
+        return response()->json($centers);
+    }
+
+
+    public function getPlantas($centroId)
+    {
+        $plantas = DB::connection('inventory')
+            ->table('ubicacion')
+            ->where('id_centro', $centroId)
+            ->orderBy('planta')
+            ->orderBy('edifici')
+            ->get(['planta', 'edifici']);
+
+        return response()->json($plantas);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
