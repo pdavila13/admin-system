@@ -9,10 +9,14 @@
                 <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalIntegrationCreate">{{ __('New') }}</a>
             </div>
         </div>
+
+        @include('admin.integrations.modal.create')
+        
         <div class="card-body">
             <table class="table table-striped" id="integrationTable" style="width:100%">
                 <thead>
                     <tr>
+                        <th>{{ __('ID') }}</th>
                         <th>{{ __('Tipus') }}</th>
                         <th>{{ __('Centre') }}</th>
                         <th>{{ __('Description') }}</th>
@@ -25,6 +29,7 @@
                 <tbody>
                     @foreach ($dataFromFacadeElement as $item)
                         <tr>
+                            <td>{{ $item->id }}</td>
                             <td>{{ $item->tipus_aparell_descripcio }}</td>
                             <td>{{ $item->centro_def }}</td>
                             <td>{{ $item->def}}</td>
@@ -45,10 +50,11 @@
                             </td>
                             <td class="text-right">
                                 <a href="#" class="btn btn-success btn-xs"><i class="fas fa-eye"></i></a>
-                                <a href="#" class="btn btn-info btn-xs"><i class="fas fa-edit"></i></a>
+                                <a href="#" class="btn btn-info btn-xs" data-toggle="modal" data-target="#ModalIntegrationEdit{{ $item->id }}"><i class="fas fa-edit"></i></a>
                                 <a href="#" class="btn btn-danger btn-xs"><i class="fas fa-ban"></i></a>
                             </td>
                         </tr>
+                        @include('admin.integrations.modal.edit', ['item' => $item])
                     @endforeach
                 </tbody>
             </table>
@@ -82,8 +88,8 @@
 
                 $('#integrationTable').DataTable(dataTableConfig);
 
-                $('.select2').select2({
-                    dropdownParent: $("#ModalIntegrationCreate"),
+                $('#modality').select2({
+                    dropdownParent: $("#ModalIntegrationEdit"),
                     theme: 'bootstrap4'
                 });
 
@@ -98,12 +104,12 @@
                             defaultDate: new Date(),
                         });
                     });
-                });
 
-                $('.datetimepicker').each(function() {
-                    $(this).datetimepicker({
-                        dropdownParent: $(this).closest('.modal'),
-                        format: 'DD-MM-YYYY',
+                    $(this).find('.select2').each(function() {
+                        $(this).select2({
+                            dropdownParent: $(this).closest('.modal'),
+                            theme: 'bootstrap4'
+                        });
                     });
                 });
 
@@ -182,6 +188,4 @@
             });
         </script>
     @endsection
-
-    @include('admin.integrations.modal.create')
 </x-admin>

@@ -122,9 +122,9 @@
                                                             <label for="zona">{{ __('Zona') }}</label>
                                                             <select name="zona" id="zona" class="form-control select2-bootstrap4" required>
                                                                 <option value="" selected></option>
-                                                                <option value="HOSPI">HOSPI</option>
-                                                                <option value="TARRA">TARRA</option>
-                                                                <option value="REUS">REUS</option>
+                                                                @foreach ($dataFromFacadeArea as $area)
+                                                                    <option {{ old('zona') == $area->id ? 'selected' : '' }} value="{{ $area->id }}">{{ $area->def }}</option>
+                                                                @endforeach
                                                             </select>
                                                         </div>
                                                         @error('zona')

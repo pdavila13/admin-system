@@ -58,6 +58,7 @@ class InventoryController extends Controller
             ->table('centro')
             ->join('zona', 'centro.zona', '=', 'zona.id')
             ->select('centro.*')
+            ->where('centro.visible', '=', 1)
             ->orderBy('centro.def', 'ASC');
 
         // Check the zona and apply additional conditions based on the area
