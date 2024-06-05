@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Inventory\Elemento;
 use Illuminate\Support\Facades\DB;
 
 class InventoryController extends Controller
@@ -12,12 +13,10 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        //$dataFromFacade = DB::connection('inventory')->table('elemento')->where('perfil', '=', 56)->get();
-
-        $dataFromFacade = DB::connection('inventory')
-        ->table('elemento')
+        $dataFromFacade = Elemento::on('inventory')
+        ->with(['tipo','marca','modelo','centro','estat_integracio'])
         ->leftJoin('tipo', 'elemento.tipo', '=', 'tipo.id')
-        ->leftJoin('marca', 'elemento.marca', '=', 'marca.id')
+        ->leftJoin('marca', 'elemento.marca', '=', 'marca.ID')
         ->leftJoin('modelo', 'elemento.modelo', '=', 'modelo.id')
         ->leftJoin('centro', 'elemento.centro', '=', 'centro.id')
         ->leftJoin('estat_integracio', 'elemento.estat_integracio', '=', 'estat_integracio.idestat_integracio')
@@ -26,15 +25,13 @@ class InventoryController extends Controller
             'tipo.def as tipo_def',
             'elemento.codigo',
             'elemento.def',
-            'marca.def as marca_def',
+            'marca.DEF as marca_def',
             'modelo.def as modelo_def',
             'centro.def as centro_def',
             'elemento.aet',
             'elemento.modality',
-            'elemento.maquina_sap',
             'estat_integracio.descripcio as estat_integracio_descripcio'
         )
-        //->where('elemento.perfil', '=', 56)
         ->where('elemento.tipo', '=', 9)
         ->get();
 
@@ -51,7 +48,7 @@ class InventoryController extends Controller
 
         return response()->json($models);
     }
-    
+
     public function getCenters($zona)
     {
         $query = DB::connection('inventory')

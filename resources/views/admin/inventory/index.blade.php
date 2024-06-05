@@ -18,7 +18,6 @@
                         <th>{{ __('Center') }}</th>
                         <th>{{ __('AET') }}</th>
                         <th>{{ __('Modality') }}</th>
-                        <!--<th style="width:10px">{{ __('MQ SAP') }}</th>-->
                         <th>{{ __('State Int') }}</th>
                     </tr>
                 </thead>
@@ -33,7 +32,6 @@
                             <td>{{ $item->centro_def }}</td>
                             <td>{{ $item->aet}}</td>
                             <td>{{ $item->modality }}</td>
-                            <!--<td style="width:10px">{{ $item->maquina_sap }}</td>-->
                             <td>{{ $item->estat_integracio_descripcio }}</td>
                         </tr>
                     @endforeach
