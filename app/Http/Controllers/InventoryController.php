@@ -38,11 +38,11 @@ class InventoryController extends Controller
         return view('admin.inventory.index', ['dataFromFacade' => $dataFromFacade]);
     }
 
-    public function getModels($trademark)
+    public function getModels($marca)
     {
         $models = DB::connection('inventory')
                     ->table('modelo')
-                    ->where('marca', $trademark)
+                    ->where('marca', $marca)
                     ->orderBy('def', 'ASC')
                     ->get();
 
