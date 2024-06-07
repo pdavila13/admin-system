@@ -47,6 +47,7 @@ class CompanyController extends Controller
             'name'=>$request->name,
             'cif'=>$request->cif,
             'description'=>$request->description,
+            'active'=>1,
         ]);
 
         Storage::makeDirectory($companyDirectory);
@@ -77,6 +78,7 @@ class CompanyController extends Controller
             'name'=>$request->name,
             'cif'=>$request->cif,
             'description'=>$request->description,
+            'active'=>1,
         ]);
         return redirect()->route('admin.company.index')->with('info','Company updated successfully.');   
     }

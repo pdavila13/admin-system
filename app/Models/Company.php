@@ -15,7 +15,8 @@ class Company extends Model
     protected $fillable = [
         'name',
         'cif',
-        'description'
+        'description',
+        'active',
     ];
     
     public function groupVpn(): BelongsTo
