@@ -1,12 +1,10 @@
-<form class="needs-validation" novalidate action="{{ route('admin.integration.update', $item->id) }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    @method('PUT')
-    <input type="hidden" name="id" value="{{ $item->id }}">
-    <div class="modal fade text-left" id="ModalIntegrationEdit{{$item->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+{!! Form::model($dataFromFacadeElemento, ['route' => ['admin.integration.update', $dataFromFacadeElemento], 'method' => 'put']) !!}
+    {!! Form::hidden('id', $dataFromFacadeElemento->id) !!}
+    <div class="modal fade text-left" id="ModalIntegrationEdit{{$dataFromFacadeElemento->id}}" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">{{ __('Edit integration') }} {{ $item->id }}</h4>
+                    <h4 class="modal-title">{{ __('Edit integration') }} {{ $dataFromFacadeElemento->id }}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>                    
@@ -42,31 +40,25 @@
                                                         <div class="row">
                                                             <div class="col">
                                                                 <div class="form-group">
-                                                                    <label for="tipus_aparell">{{ __('Tipus aparell') }}</label>
-                                                                    <select name="tipus_aparell" id="tipus_aparell" class="form-control select2 select2-bootstrap4" required>
-                                                                        <option value="" selected disabled></option>
-                                                                        @foreach ($dataFromFacadeTypeOfDevice as $typeOfDevice)
-                                                                            <option {{ $item->id == $typeOfDevice->idtipus_aparell ? 'selected' : '' }} value="{{ $typeOfDevice->idtipus_aparell }}">{{ $typeOfDevice->descripcio }}</option>
-                                                                        @endforeach
-                                                                    </select>
+                                                                    {!! Form::label('tipus_aparell', __('Tipus aparell')) !!}
+                                                                    {!! Form::select('tipus_aparell', ['' => __('Selecciona un tipo')] + $dataFromFacadeTypeOfDevice->pluck('descripcio', 'idtipus_aparell')->toArray(), old('tipus_aparell'), ['class' => 'form-control select2 select2-bootstrap4', 'required' => 'required']) !!}
                                                                     @error('tipus_aparell')
                                                                         <span class="text-danger">{{ $message }}</span>
                                                                     @enderror
                                                                 </div>
-                                                                
+                                                            
                                                                 <div class="form-group">
-                                                                    <label for="modality">{{ __('Modality') }}</label>
-                                                                    <input type="text" name="modality" id="modality" class="form-control" value="{{ $item->modality }}"/>
+                                                                    {!! Form::label('modality', __('Modality')) !!}
+                                                                    {!! Form::select('modality[]', $dataFromFacadeModalities->pluck('modality', 'id')->toArray(), old('modality', []), ['class' => 'form-control select2 select2-bootstrap4', 'multiple' => 'multiple', 'required' => 'required']) !!}
+                                                                    @error('modality')
+                                                                        <span class="text-danger">{{ $message }}</span>
+                                                                    @enderror
                                                                 </div>
-                                                                @error('modality')
-                                                                    <span class="text-danger">{{ $message }}</span>
-                                                                @enderror
-
+            
                                                                 <div class="form-group">
-                                                                    <label for="fecha" class="form-label">{{ __('Date') }}</label>
+                                                                    {!! Form::label('fecha', __('Fecha'), ['class' => 'form-label']) !!}
                                                                     <div class="input-group date datetimepicker" data-target-input="nearest">
-                                                                        <input type="text" name="fecha" class="form-control datetimepicker-input" data-target=".datetimepicker" 
-                                                                        value="{{ $item->fecha }}">
+                                                                        {!! Form::text('fecha', old('fecha'), ['class' => 'form-control datetimepicker-input', 'data-target' => '.datetimepicker']) !!}
                                                                         <div class="input-group-append" data-target=".datetimepicker" data-toggle="datetimepicker">
                                                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                                         </div>
@@ -383,4 +375,4 @@
             </div>
         </div>
     </div>
-</form>
+{!! Form::close() !!}

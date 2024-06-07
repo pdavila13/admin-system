@@ -8,9 +8,9 @@
             <div class="card-tools">                
                 <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalIntegrationCreate">{{ __('New') }}</a>
             </div>
-        </div>
 
-        @include('admin.integrations.modal.create')
+            @include('admin.integrations.modal.create')
+        </div>
         
         <div class="card-body">
             <table class="table table-striped" id="integrationTable" style="width:100%">
@@ -27,34 +27,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($dataFromFacadeElement as $item)
+                    @foreach ($dataFromFacadeElement as $elemento)
                         <tr>
-                            <td>{{ $item->id }}</td>
-                            <td>{{ $item->tipus_aparell_descripcio }}</td>
-                            <td>{{ $item->centro_def }}</td>
-                            <td>{{ $item->def}}</td>
-                            <td>{{ $item->modality }}</td>
-                            <td>{{ $item->fecha }}</td>
+                            <td>{{ $elemento->id }}</td>
+                            <td>{{ $elemento->tipus_aparell_descripcio }}</td>
+                            <td>{{ $elemento->centro_def }}</td>
+                            <td>{{ $elemento->def}}</td>
+                            <td>{{ $elemento->modality }}</td>
+                            <td>{{ $elemento->fecha }}</td>
                             <td class="integration-state" >
-                                @if ($item->estat_integracio_descripcio == 'Evolutiu enviat')
+                                @if ($elemento->estat_integracio_descripcio == 'Evolutiu enviat')
                                     <span class="badge badge-success">{{ __('Evolutiu enviat') }}</span>
-                                @elseif ($item->estat_integracio_descripcio == 'Pendent configuració')
+                                @elseif ($elemento->estat_integracio_descripcio == 'Pendent configuració')
                                     <span class="badge badge-secondary">{{ __('Pendent configuració') }}</span>
-                                @elseif ($item->estat_integracio_descripcio == 'En producció')
+                                @elseif ($elemento->estat_integracio_descripcio == 'En producció')
                                     <span class="badge badge-primary">{{ __('En producció') }}</span>
-                                @elseif ($item->estat_integracio_descripcio == 'En proves')
+                                @elseif ($elemento->estat_integracio_descripcio == 'En proves')
                                     <span class="badge badge-warning">{{ __('En proves') }}</span>
-                                @elseif ($item->estat_integracio_descripcio == 'Pendent de baixa')
+                                @elseif ($elemento->estat_integracio_descripcio == 'Pendent de baixa')
                                     <span class="badge badge-danger">{{ __('Pendent baixa') }}</span>
                                 @endif
                             </td>
                             <td class="text-right">
                                 <a href="#" class="btn btn-success btn-xs"><i class="fas fa-eye"></i></a>
-                                <a href="#" class="btn btn-info btn-xs" data-toggle="modal" data-target="#ModalIntegrationEdit{{ $item->id }}"><i class="fas fa-edit"></i></a>
+                                <a href="{{route('admin.integration.edit', $elemento->id)}}" class="btn btn-info btn-xs"><i class="fas fa-edit"></i></a>
+                                {{-- <a href="#" class="btn btn-info btn-xs" data-toggle="modal" data-target="#ModalIntegrationEdit{{ $elemento->id }}"><i class="fas fa-edit"></i></a> --}}
                                 <a href="#" class="btn btn-danger btn-xs"><i class="fas fa-ban"></i></a>
                             </td>
                         </tr>
-                        @include('admin.integrations.modal.edit', ['item' => $item])
+                        {{-- @include('admin.integrations.modal.edit') --}}
                     @endforeach
                 </tbody>
             </table>
@@ -87,80 +88,65 @@
                 };
 
                 $('#integrationTable').DataTable(dataTableConfig);
+            });
 
-                $('#modality').select2({
-                    dropdownParent: $("#ModalIntegrationEdit"),
+            $('#ModalIntegrationCreate').on('shown.bs.modal', function () {
+                var currentDate = moment().format('DD-MM-YYYY');
+                $(this).find('.datetimepicker-input').val(currentDate);
+
+                $(this).find('.datetimepicker').each(function() {
+                    $(this).datetimepicker({
+                        dropdownParent: $(this).closest('.modal'),
+                        format: 'DD-MM-YYYY',
+                        defaultDate: new Date(),
+                    });
+                });
+
+                $(this).find('.select2').select2({
                     theme: 'bootstrap4'
                 });
 
-                $('#ModalIntegrationCreate').on('show.bs.modal', function() {
-                    var currentDate = moment().format('DD-MM-YYYY');
-                    $(this).find('.datetimepicker-input').val(currentDate);
-
-                    $(this).find('.datetimepicker').each(function() {
-                        $(this).datetimepicker({
-                            dropdownParent: $(this).closest('.modal'),
-                            format: 'DD-MM-YYYY',
-                            defaultDate: new Date(),
-                        });
-                    });
-
-                    $(this).find('.select2').each(function() {
-                        $(this).select2({
-                            dropdownParent: $(this).closest('.modal'),
-                            theme: 'bootstrap4'
-                        });
-                    });
-                });
-
-                $('#trademark').change(function() {
-                    var trademarkID = $(this).val();
-                    if (trademarkID) {
+                $(this).find('#marca').change(function() {
+                    var marcaID = $(this).val();
+                    if (marcaID) {
                         $.ajax({
-                            url: '{{ route("admin.get.models", ":trademarkID") }}'.replace(':trademarkID', trademarkID),
+                            url: '{{ route("admin.get.models", ":marcaID") }}'.replace(':marcaID', marcaID),
                             type: 'GET',
                             dataType: 'json',
                             success: function(data) {
-                                $('#model').empty().append('<option value="" selected></option>');
+                                $('#modelo').empty().append('<option value="" selected></option>');
                                 $.each(data, function(key, value) {
-                                    $('#model').append('<option value="'+ value.id +'">'+ value.def +'</option>');
+                                    $('#modelo').append('<option value="'+ value.id +'">'+ value.def +'</option>');
                                 });
                             }
                         });
                     } else {
-                        $('#model').empty().append('<option value="" selected></option>');
+                        $('#modelo').empty().append('<option value="" selected></option>');
                     }
                 });
 
-                $('#zona').change(function() {
+                $(this).find('#zona').change(function() {
                     var zona = $(this).val();
-                    
-                    // Selección automática del HIS
-                    if (zona === 'HOSPI') {
-                        $('#his').val('2'); // Selecciona SAP
-                    } else {
-                        $('#his').val('1'); // Selecciona ECAP
-                    }
-                    
+
                     if (zona) {
                         $.ajax({
                             url: '{{ route("admin.get.centers", ":zona") }}'.replace(':zona', zona),
                             type: 'GET',
                             dataType: 'json',
                             success: function(data) {
-                                $('#center').empty().append('<option value="" selected></option>');
+                                $('#centro').empty().append('<option value="" selected></option>');
                                 $.each(data, function(key, value) {
-                                    $('#center').append('<option value="'+ value.id +'">'+ value.def +'</option>');
+                                    $('#centro').append('<option value="'+ value.id +'">'+ value.def +'</option>');
                                 });
                             }
                         });
                     } else {
-                        $('#center').empty().append('<option value="" selected></option>');
+                        $('#centro').empty().append('<option value="" selected></option>');
                     }
                 });
 
 
-                $('#center').change(function() {
+                $(this).find('#centro').change(function() {
                     var centroId = $(this).val();
                     if (centroId) {
                         $.ajax({
@@ -183,8 +169,6 @@
                         $('#planta').empty().append('<option value="" selected></option>').prop('disabled', true);
                     }
                 });
-
-                $(":input").inputmask();
             });
         </script>
     @endsection
