@@ -86,7 +86,7 @@
                         </div>
                         
                         <div class="form-group">
-                            {!! Form::label('modelo', __('modelo')) !!}
+                            {!! Form::label('modelo', __('Model')) !!}
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-bookmark"></i></span>
@@ -185,23 +185,28 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <label for="his">{{ __('HIS') }}</label>
-                            <select name="his" id="his" class="form-control" required>
-                                <option value="" selected></option>
-                                <option value="1">ECAP</option>
-                                <option value="2">SAP</option>
-                            </select>
+                            {!! Form::label('his', __('HIS')) !!}
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-biohazard"></i></span>
+                                </div>
+                                {!! Form::select('his', ['' => __('Selecciona un HIS'), 'ECAP' => 'ECAP', 'SAP' => 'SAP'], old('his'), ['class' => 'form-control select2 select2-bootstrap4', 'required' => 'required']) !!}
+                            </div>
                         </div>
-                        @error('equip')
+                        @error('his')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
 
                         <div class="form-group">
-                            <label for="modality">{{ __('Nom servei') }}</label>
-                            <input type="text" class="form-control" id="modality" name="modality"
-                                placeholder="" required value="">
+                            {!! Form::label('servicio', __('Service name')) !!}
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-hand-holding-medical"></i></span>
+                                </div>
+                                {!! Form::text('servicio', old('servicio'), ['class' => 'form-control', 'required' => 'required']) !!}
+                            </div>
                         </div>
-                        @error('modality')
+                        @error('servicio')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -210,8 +215,8 @@
         </div>
     </div>
 
-    <div class="col-md-8">
-        <div class="card card-default">
+    <div class="col-md-4">
+        <div class="card card">
             <div class="card-header">
                 <h3 class="card-title">Informació addicional</h3>
             </div>
@@ -219,11 +224,28 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <label for="description">{{ __('Description') }}</label>
-                            <textarea type="text" class="form-control" id="description" name="description"
-                                placeholder="" style="height: 124px;"></textarea>
+                            {!! Form::label('estatus', __('Status')) !!}
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-info-circle"></i></span>
+                                </div>
+                                {!! Form::select('estatus', ['' => __('Selecciona un estat'), 'Actiu' => 'Actiu', 'Inactiu' => 'Inactiu'], old('estatus'), ['class' => 'form-control select2 select2-bootstrap4', 'required' => 'required']) !!}
+                            </div>
                         </div>
-                        @error('description')
+                        @error('estatus')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+
+                        <div class="form-group">
+                            {!! Form::label('comentari', __('Description')) !!}
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-notes-medical"></i></span>
+                                </div>
+                                {!! Form::textarea('comentari', old('comentari'), ['class' => 'form-control', 'required' => 'required', 'rows' => 1]) !!}
+                            </div>
+                        </div>
+                        @error('comentari')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
