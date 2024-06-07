@@ -6,6 +6,7 @@
 
 namespace App\Models\Inventory;
 
+use App\Models\Inventory\Elemento;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -32,4 +33,16 @@ class Ip extends Model
 		'ip3' => 'int',
 		'ip4' => 'int'
 	];
+
+	protected $fillable = [
+		'ip1',
+		'ip2',
+		'ip3',
+		'ip4'
+	];
+
+	public function elemento()
+	{
+		return $this->belongsTo(Elemento::class, 'id');
+	}
 }

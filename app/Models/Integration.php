@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Integration extends Model
 {
     use HasFactory;
+
+    protected $connection = 'inventory';
+	protected $table = 'elemento';
 }

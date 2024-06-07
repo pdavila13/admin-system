@@ -7,6 +7,7 @@
 namespace App\Models\Inventory;
 
 use Carbon\Carbon;
+use App\Models\Inventory\Ip;
 use App\Models\Inventory\Tipo;
 use App\Models\Inventory\Marca;
 use App\Models\Inventory\Centro;
@@ -125,5 +126,9 @@ class Elemento extends Model
 
 	public function estat_integracio() {
 		return $this->belongsTo(EstatIntegracio::class, 'estat_integracio', 'idestat_integracio');
+	}
+
+	public function ip() {
+		return $this->hasOne(Ip::class, 'id');
 	}
 }
