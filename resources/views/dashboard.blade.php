@@ -1,9 +1,13 @@
-<x-admin>
-    @section('title')
-        {{ __('Dashboard') }}
-    @endsection
+@extends('layouts.app')
+
+{{-- Customize layout sections --}}
+
+@section('subtitle', __('Dashboard'))
+@section('content_header_title', __('Dashboard'))
+
+{{-- Content body: main page content --}}
+@section('content_body')
     <div class="row">
-        <!--<x-dashboard />-->
         <x-external-link />
 
         @php
@@ -18,4 +22,4 @@
 
         <x-latest-petitions :petitions="$petitions" :companies="$companies" :petitionTypes="$petitionTypes" :users="$users" :states="$states" />
     </div>
-</x-admin>
+@stop
