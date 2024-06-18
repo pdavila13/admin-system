@@ -4,7 +4,7 @@
     @endsection
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <div class="card card-info">
+            <div class="card card-primary">
                 <div class="card-header">
                     <h3 class="card-title">{{ __('Create new element') }}</h3>
                     <div class="card-tools">                
@@ -20,7 +20,7 @@
                 </div>
 
                     <div class="card-footer">
-                        <button type="submit" id="submit" class="btn btn-info float-right">{{ __('Save') }}</button>
+                        <button type="submit" id="submit" class="btn btn-primary float-right">{{ __('Save') }}</button>
                     </div>
                 {!! Form::close() !!}
             </div>

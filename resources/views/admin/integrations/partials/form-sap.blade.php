@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-lg-6">
         <div class="form-group">
-            {!! Form::label('maquina_sap', __('Codi MQ')) !!}
+            {!! Form::label('maquina_sap', __('MQ code')) !!}
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-barcode"></i></span>

@@ -2,10 +2,10 @@
     <div class="col-md-3">
         <div class="row">
             <div class="col">
-                <h3 class="card-title">Dades de l'aparell</h3><br>
+                <h3 class="card-title">{{ __('Device data') }}</h3><br>
                 <hr>
                 <div class="form-group">
-                    {!! Form::label('def', __('Description equipment')) !!}
+                    {!! Form::label('def', __('Equipment description')) !!}
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-laptop-medical"></i></span>
@@ -18,12 +18,12 @@
                 </div>
 
                 <div class="form-group">
-                    {!! Form::label('tipus_aparell', __('Type equipment')) !!}
+                    {!! Form::label('tipus_aparell', __('Equipment type')) !!}
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-prescription"></i></span>
                         </div>
-                        {!! Form::select('tipus_aparell', ['' => __('Selecciona un tipo')] + $dataFromFacadeTypeOfDevice->pluck('descripcio', 'idtipus_aparell')->toArray(), old('tipus_aparell'), ['class' => 'form-control select2 select2-bootstrap4', 'required' => 'required']) !!}
+                        {!! Form::select('tipus_aparell', [''] + $dataFromFacadeTypeOfDevice->pluck('descripcio', 'idtipus_aparell')->toArray(), old('tipus_aparell'), ['class' => 'form-control select2 select2-bootstrap4', 'required' => 'required']) !!}
                     </div>
                     @error('tipus_aparell')
                         <span class="text-danger">{{ $message }}</span>
@@ -49,10 +49,10 @@
     <div class="col-md-3">
         <div class="row">
             <div class="col">
-                <h3 class="card-title">Dades del fabricant</h3><br>
+                <h3 class="card-title">{{ __('Manufacturer information') }}</h3><br>
                 <hr>
                 <div class="form-group">
-                    {!! Form::label('codigo', __('Nº Serie')) !!}
+                    {!! Form::label('codigo', __('Serial Number')) !!}
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-barcode"></i></span>
@@ -65,12 +65,12 @@
                 </div>
 
                 <div class="form-group">
-                    {!! Form::label('marca', __('Marca')) !!}
+                    {!! Form::label('marca', __('Trademark')) !!}
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
                         </div>
-                        {!! Form::select('marca', ['' => __('Selecciona una marca')] + $dataFromFacadeTrademark->pluck('DEF', 'ID')->toArray(), old('marca'), ['class' => 'form-control select2 select2-bootstrap4', 'required' => 'required']) !!}
+                        {!! Form::select('marca', [''] + $dataFromFacadeTrademark->pluck('DEF', 'ID')->toArray(), old('marca'), ['class' => 'form-control select2 select2-bootstrap4', 'required' => 'required']) !!}
                     </div>
                     @error('marca')
                         <span class="text-danger">{{ $message }}</span>
@@ -83,7 +83,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-bookmark"></i></span>
                         </div>
-                        {!! Form::select('modelo', ['' => __('Selecciona un modelo')] + $dataFromFacadeModel->pluck('def', 'id')->toArray(), old('modelo'), ['class' => 'form-control select2 select2-bootstrap4', 'required' => 'required']) !!}
+                        {!! Form::select('modelo', [''] + $dataFromFacadeModel->pluck('def', 'id')->toArray(), old('modelo'), ['class' => 'form-control select2 select2-bootstrap4', 'required' => 'required']) !!}
                     </div>
                     @error('modelo')
                         <span class="text-danger">{{ $message }}</span>
@@ -96,7 +96,7 @@
     <div class="col-md-3">
         <div class="row">
             <div class="col">
-                <h3 class="card-title">Ubicació</h3><br>
+                <h3 class="card-title">{{ __('Location') }}</h3><br>
                 <hr>
                 <div class="form-group">
                     {!! Form::label('area', 'Area') !!}
@@ -104,7 +104,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
                         </div>
-                        {!! Form::select('area', $dataFromFacadeArea->pluck('def', 'id'), $dataFromFacadeAreaFromElemento->area_id, ['class' => 'form-control select2 select2-bootstrap4', 'placeholder' => 'Seleccione un área']) !!}
+                        {!! Form::select('area', $dataFromFacadeArea->pluck('def', 'id'), $dataFromFacadeAreaFromElemento->area_id, ['class' => 'form-control select2 select2-bootstrap4', 'placeholder' => __(''), 'required' => 'required']) !!}
                     </div>
                     @error('area')
                         <span class="text-danger">{{ $message }}</span>
@@ -112,12 +112,12 @@
                 </div>
 
                 <div class="form-group">
-                    {!! Form::label('centro', __('Centre')) !!}
+                    {!! Form::label('centro', __('Center')) !!}
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-hospital-user"></i></span>
                         </div>
-                        {!! Form::select('centro', ['' => __('Selecciona un centro')] + $dataFromFacadeCenter->pluck('def', 'id')->toArray(), old('centro'), ['class' => 'form-control select2 select2-bootstrap4', 'required' => 'required']) !!}
+                        {!! Form::select('centro', [''] + $dataFromFacadeCenter->pluck('def', 'id')->toArray(), old('centro'), ['class' => 'form-control select2 select2-bootstrap4', 'required' => 'required']) !!}
                     </div>
                     @error('centro')
                         <span class="text-danger">{{ $message }}</span>
@@ -127,12 +127,12 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            {!! Form::label('ubicacio', __('Planta')) !!}
+                            {!! Form::label('ubicacio', __('Floor')) !!}
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-layer-group"></i></span>
                                 </div>
-                                {!! Form::select('ubicacio', ['' => __('Select')] + $dataFromFacadeFloor->toArray(), old('ubicacio'), ['class' => 'form-control select2 select2-bootstrap4', 'required' => 'required']) !!}
+                                {!! Form::select('ubicacio', [''] + $dataFromFacadeFloor->toArray(), old('ubicacio'), ['class' => 'form-control select2 select2-bootstrap4', 'required' => 'required']) !!}
                             </div>
                             @error('ubicacio')
                                 <span class="text-danger">{{ $message }}</span>
@@ -142,7 +142,7 @@
                     
                     <div class="col">
                         <div class="form-group">
-                            {!! Form::label('sala', __('Sala')) !!}
+                            {!! Form::label('sala', __('Room')) !!}
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-thumbtack"></i></span>
@@ -162,7 +162,7 @@
     <div class="col-md-3">
         <div class="row">
             <div class="col">
-                <h3 class="card-title">Servei</h3><br>
+                <h3 class="card-title">{{ __('Service') }}</h3><br>
                 <hr>
                 <div class="form-group">
                     {!! Form::label('his', __('HIS')) !!}
@@ -170,7 +170,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-biohazard"></i></span>
                         </div>
-                        {!! Form::select('his', ['' => __('Selecciona un HIS'), 'ECAP' => 'ECAP', 'SAP' => 'SAP'], old('his'), ['class' => 'form-control select2 select2-bootstrap4', 'required' => 'required']) !!}
+                        {!! Form::select('his', ['', 'ECAP' => 'ECAP', 'SAP' => 'SAP'], old('his'), ['class' => 'form-control select2 select2-bootstrap4', 'required' => 'required']) !!}
                     </div>
                 </div>
                 @error('his')
@@ -178,7 +178,7 @@
                 @enderror
 
                 <div class="form-group">
-                    {!! Form::label('comentari', __('Service name')) !!}
+                    {!! Form::label('comentari', __('Service description')) !!}
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-hand-holding-medical"></i></span>

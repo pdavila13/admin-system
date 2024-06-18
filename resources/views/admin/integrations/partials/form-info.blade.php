@@ -2,13 +2,13 @@
     <div class="col">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Network infomation</h3>
+                <h3 class="card-title">{{ __('Network information') }}</h3>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-4">
                         <div class="form-group">
-                            {!! Form::label('network', 'Network') !!}
+                            {!! Form::label('network', __('Network')) !!}
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-network-wired"></i></span>
@@ -19,7 +19,7 @@
 
                         <div class="form-group">
                             <div class="form-group">
-                                {!! Form::label('ip_address', 'IP Address') !!}
+                                {!! Form::label('ip_address', __('IP Address')) !!}
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-laptop"></i></span>
@@ -35,7 +35,7 @@
 
                     <div class="col-4">
                         <div class="form-group">
-                            {!! Form::label('gateway', 'Gateway') !!}
+                            {!! Form::label('gateway', __('Gateway')) !!}
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-door-open"></i></span>
@@ -45,7 +45,7 @@
                         </div>
 
                         <div class="form-group">
-                            {!! Form::label('netmask', 'Netmask') !!}
+                            {!! Form::label('netmask', __('Network mask')) !!}
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-mask"></i></span>
@@ -57,7 +57,7 @@
 
                     <div class="col-4">
                         <div class="form-group">
-                            {!! Form::label('switch_port', 'Switch port') !!}
+                            {!! Form::label('switch_port', __('Switch port')) !!}
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-ethernet"></i></span>
@@ -67,7 +67,7 @@
                         </div>
 
                         <div class="form-group">
-                            {!! Form::label('point', 'Point') !!}
+                            {!! Form::label('point', __('Point')) !!}
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-map"></i></span>
@@ -84,7 +84,7 @@
     <div class="col-md-4">
         <div class="card card-default">
             <div class="card-header">
-                <h3 class="card-title">Evolution infomation</h3>
+                <h3 class="card-title">{{ __('Evolutionary information') }}</h3>
             </div>
             <div class="card-body">
                 <div class="row justify-content-center">
@@ -103,7 +103,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="model">{{ __('Evolutiu') }}</label>
+                            <label for="model">{{ __('Evolutionary') }}</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-paper-plane"></i></span>

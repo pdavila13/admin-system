@@ -20,9 +20,9 @@
                         <th>{{ __('Centre') }}</th>
                         <th>{{ __('Description') }}</th>
                         <th>{{ __('Modality') }}</th>
-                        <th>{{ __('Data') }}</th>
-                        <th>{{ __('State Int') }}</th>
-                        <th></th>
+                        <th>{{ __('Date') }}</th>
+                        <th>{{ __('Status') }}</th>
+                        <th class="text-right">{{ __('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,7 +50,6 @@
                             <td class="text-right">
                                 <a href="#" class="btn btn-success btn-xs"><i class="fas fa-eye"></i></a>
                                 <a href="{{route('admin.integration.edit', $elemento)}}" class="btn btn-info btn-xs"><i class="fas fa-edit"></i></a>
-                                <a href="#" class="btn btn-danger btn-xs"><i class="fas fa-ban"></i></a>
                             </td>
                         </tr>
                         {{-- @include('admin.integrations.modal.edit') --}}
@@ -78,7 +77,7 @@
                 var dataTableConfig = {
                     paging: true,
                     searching: true,
-                    ordering: true,
+                    ordering: false,
                     responsive: true,
                     language: {
                         url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/' + selectedLanguage + '.json'

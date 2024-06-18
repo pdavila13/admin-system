@@ -56,7 +56,7 @@
                     </div>
 
                     <div class="card-footer">
-                        <button type="submit" id="submit" class="btn btn-info float-right">{{ __('Save') }}</button>
+                        <button type="submit" id="submit" class="btn btn-info float-right">{{ __('Save changes') }}</button>
                     </div>
                 {!! Form::close() !!}
             </div>

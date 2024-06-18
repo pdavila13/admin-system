@@ -1,11 +1,8 @@
 <x-admin>
     @section('title')
-        {{ __('Inventory') }}
+        {{ __('List inventory') }}
     @endsection
     <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">{{ __('List inventory') }}</h3>
-        </div>
         <div class="card-body">
             <table class="table table-striped" id="inventoryTable" style="width:100%">
                 <thead>
@@ -18,7 +15,7 @@
                         <th>{{ __('Center') }}</th>
                         <th>{{ __('AET') }}</th>
                         <th>{{ __('Modality') }}</th>
-                        <th>{{ __('State Int') }}</th>
+                        <th>{{ __('Status') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,7 +44,7 @@
                 var dataTableConfig = {
                     paging: true,
                     searching: true,
-                    ordering: true,
+                    ordering: false,
                     responsive: true,
                     language: {
                         url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/' + selectedLanguage + '.json'
