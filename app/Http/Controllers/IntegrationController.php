@@ -2,59 +2,61 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Integration;
-use function Ramsey\Uuid\v1;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Services\DataService;
+use App\Models\Inventory\Centro;
 use App\Models\Inventory\Elemento;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Inventory\TipusAparell;
 
 class IntegrationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function __construct()
+    private function getCommonData($integration = null)
     {
-        $dataFromFacadeTypeOfDevice = DB::connection('inventory')->table('tipus_aparell')->orderBy('descripcio','ASC')->get();
-        view()->share('dataFromFacadeTypeOfDevice',$dataFromFacadeTypeOfDevice);
+        $dataFromFacadeTypeOfDevice = DB::connection('inventory')->table('tipus_aparell')->orderBy('descripcio', 'ASC')->get();
+        $dataFromFacadeModalities = DB::connection('inventory')->table('modalities')->orderBy('modality', 'ASC')->get();
+        $dataFromFacadeTrademark = DB::connection('inventory')->table('marca')->where('tipo', '=', 9)->orderBy('DEF', 'ASC')->get();
+        $dataFromFacadeModel = DB::connection('inventory')->table('modelo')->where('tipo', '=', 9)->orderBy('DEF', 'ASC')->get();
+        $dataFromFacadeArea = DB::connection('inventory')->table('area')->whereNot('id', '=', 'STOCK')->orderBy('def', 'ASC')->get();
+        $dataFromFacadeCenter = DB::connection('inventory')->table('centro')->orderBy('def', 'ASC')->get();
+        $dataFromFacadeIntegrationState = DB::connection('inventory')->table('estat_integracio')->orderBy('descripcio', 'ASC')->get();
 
-        $dataFromFacadeModalities = DB::connection('inventory')->table('modalities')->orderBy('modality','ASC')->get();
-        view()->share('dataFromFacadeModalities',$dataFromFacadeModalities);
+        $dataFromFacadeFloor = $integration 
+            ? DB::connection('inventory')
+                ->table('ubicacion')
+                ->where('id_centro', $integration->centro)
+                ->orderBy('planta')
+                ->orderBy('edifici')
+                ->get(['planta', 'edifici'])
+                ->mapWithKeys(function($item) {
+                    $key = $item->planta . $item->edifici;
+                    return [$key => $key];
+                })
+            : DB::connection('inventory')
+                ->table('ubicacion')
+                ->orderBy('planta')
+                ->orderBy('edifici')
+                ->get(['planta', 'edifici'])
+                ->mapWithKeys(function($item) {
+                    $key = $item->planta . $item->edifici;
+                    return [$key => $key];
+                });
 
-        $dataFromFacadeTrademark = DB::connection('inventory')->table('marca')->where('tipo','=',9)->orderBy('DEF','ASC')->get();
-        view()->share('dataFromFacadeTrademark',$dataFromFacadeTrademark);
-        
-        $dataFromFacadeModel = DB::connection('inventory')->table('modelo')->where('tipo','=',9)->orderBy('DEF','ASC')->get();
-        view()->share('dataFromFacadeModel',$dataFromFacadeModel);
-
-        $dataFromFacadeArea = DB::connection('inventory')->table('area')->whereNot('id', '=', 'STOCK')->orderBy('def','ASC')->get();
-        view()->share('dataFromFacadeArea',$dataFromFacadeArea);
-
-        $dataFromFacadeCenter = DB::connection('inventory')->table('centro')->orderBy('def','ASC')->get();
-        view()->share('dataFromFacadeCenter',$dataFromFacadeCenter);
-
-        $dataFromFacadeIP = Elemento::on('inventory')
-            ->with(['tipo','marca','modelo','ip','centro'])
-            ->leftJoin('tipo', 'elemento.tipo', '=', 'tipo.id')
-            ->leftJoin('marca', 'elemento.marca', '=', 'marca.ID')
-            ->leftJoin('modelo', 'elemento.modelo', '=', 'modelo.id')
-            ->leftJoin('ip', 'elemento.id', '=', 'ip.id')
-            ->leftJoin('centro', 'elemento.centro', '=', 'centro.id')
-            ->select(
-                'elemento.id',
-                'tipo.def as tipo_def',
-                'elemento.def',
-                'marca.DEF as marca_def',
-                'modelo.def as modelo_def',
-                DB::raw("concat(ip.ip1,'.',ip.ip2,'.',ip.ip3,'.',ip.ip4) as ip"),
-                DB::raw("concat(centro.ip1,'.',centro.ip2,'.',centro.ip3,'.',centro.ip4) as centro_ip"),
-                DB::raw("concat(centro.mask1,'.',centro.mask2,'.',centro.mask3,'.',centro.mask4) as centro_mask")
-            )
-            ->where('elemento.tipo', '=', 9)
-            ->get();
-
-        view()->share('dataFromFacadeIP', $dataFromFacadeIP);
+        return compact(
+            'dataFromFacadeTypeOfDevice',
+            'dataFromFacadeModalities',
+            'dataFromFacadeTrademark',
+            'dataFromFacadeModel',
+            'dataFromFacadeArea',
+            'dataFromFacadeCenter',
+            'dataFromFacadeIntegrationState',
+            'dataFromFacadeFloor'
+        );
     }
 
     /**
@@ -62,25 +64,22 @@ class IntegrationController extends Controller
      */
     public function index()
     {
-        $dataFromFacadeElement = DB::connection('inventory')
-        ->table('elemento')
+        $dataFromFacadeElement = Elemento::select(
+            'elemento.id',
+            'elemento.centro',
+            'centro.def as centro_def',
+            'tipus_aparell.descripcio as tipus_aparell_def',
+            'estat_integracio.idestat_integracio as estat_integracio_id',
+            'elemento.def',
+            'elemento.tipo',
+            'elemento.marca',
+            'elemento.modelo',
+            'elemento.modality',
+            'elemento.fecha'
+        )
         ->leftJoin('centro', 'elemento.centro', '=', 'centro.id')
         ->leftJoin('tipus_aparell', 'elemento.tipus_aparell', '=', 'tipus_aparell.idtipus_aparell')
         ->leftJoin('estat_integracio', 'elemento.estat_integracio', '=', 'estat_integracio.idestat_integracio')
-        ->select(
-            'elemento.id',
-            'centro.def as centro_def',
-            'tipus_aparell.descripcio as tipus_aparell_descripcio',
-            'elemento.def',
-            'elemento.codigo',
-            'elemento.ubicacio',
-            'elemento.fecha',
-            'elemento.aet',
-            'elemento.modality',
-            'elemento.maquina_sap',
-            'elemento.ut',
-            'estat_integracio.descripcio as estat_integracio_descripcio'
-        )
         ->where('elemento.tipo', '=', 9)
         ->where('elemento.estat_integracio', '=', 3)
         ->get();
@@ -93,8 +92,10 @@ class IntegrationController extends Controller
      */
     public function create()
     {
-        //$dataFromFacadeTypeOfDevice = DB::connection('inventory')->table('tipus_aparell')->get();
-        //return view('admin.integrations.modal.create', compact('dataFromFacadeTypeOfDevice'));
+        $commonData = $this->getCommonData();
+        $commonData['dataFromFacadeAreaFromElemento'] = (object) ['area_id' => null];
+
+        return view('admin.integrations.create', $commonData);
     }
 
     /**
@@ -102,15 +103,49 @@ class IntegrationController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'codigo' => 'required',
+            'def' => 'required',
+            'tipus_aparell' => 'required',
+            'marca' => 'required',
+            'modelo' => 'required',
+            'centro' => 'required',
+            'modality' => 'required',
+            'sala' => 'required',
+            'his' => 'required',
+            'comentari' => 'required',
+        ]);
 
+        $user = Auth::user();
 
+        Elemento::create([
+            'tipo' => 9,
+            'codigo' => $request['codigo'],
+            'def' => $request['def'],
+            'estado' => 1,
+            'marca' => $request['marca'],
+            'modelo' => $request['modelo'],
+            'centro' => $request['centro'],
+            'ubicacio' => $request['ubicacio'],
+            'usuario' => $user->username,
+            'fecha' => Carbon::now(),
+            'perfil' => 56,
+            'comentari' => $request['comentari'],
+            'tipus_aparell' => $request['tipus_aparell'],
+            'modality' => $request['modality'],
+            // 'modality_data' => json_encode($request['modality_data']),
+            'estat_integracio' => 3,
+            'sala' => $request['sala'],
+            'his' => $request['his'],
+        ]);
 
+        return redirect()->route('admin.integration.index')->with('success', 'Element created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Elemento $elemento)
     {
         //
     }
@@ -118,39 +153,96 @@ class IntegrationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Integration $integration)
+    public function edit(Elemento $integration)
     {
-        $elemento = Elemento::find($integration);
-
-        // // Obtener el elemento a editar
-        // $dataFromFacadeElement = DB::connection('inventory')->table('elemento')->where('id', $elemento)->first();
-
-        // // Verificar si el elemento existe
-        // if (!$dataFromFacadeElement) {
-        //     return redirect()->route('admin.integrations.index')->with('error', 'Element not found.');
-        // }
-
-        // // Obtener los tipos de dispositivos
-        // $dataFromFacadeTypeOfDevice = DB::connection('inventory')->table('tipus_aparell')->get();
-
-        // Retornar la vista con los datos del elemento y los tipos de dispositivos
-        return view('admin.integrations.edit', compact('integration', 'elemento'));
+        Elemento::select(
+            'elemento.id',
+            'elemento.centro',
+            'elemento.codigo',
+            'centro.def as centro_def',
+            'tipus_aparell.descripcio as tipus_aparell_def',
+            'estat_integracio.idestat_integracio as estat_integracio_id',
+            'elemento.def',
+            'elemento.tipo',
+            'elemento.marca',
+            'elemento.modelo',
+            'elemento.modality',
+            'elemento.fecha',
+            'elemento.his',
+            'elemento.sala',
+            'elemento.comentari'
+        )
+        ->leftJoin('centro', 'elemento.centro', '=', 'centro.id')
+        ->leftJoin('tipus_aparell', 'elemento.tipus_aparell', '=', 'tipus_aparell.idtipus_aparell')
+        ->leftJoin('estat_integracio', 'elemento.estat_integracio', '=', 'estat_integracio.idestat_integracio')
+        ->where('elemento.tipo', '=', 9)
+        ->where('elemento.estat_integracio', '=', 3)
+        ->first();
+    
+        $commonData = $this->getCommonData($integration);
+    
+        $dataFromFacadeAreaFromElemento = DB::connection('inventory')
+            ->table('elemento')
+            ->select('area.id as area_id', 'area.def as area_def')
+            ->leftJoin('centro', 'elemento.centro', '=', 'centro.id')
+            ->leftJoin('zona', 'centro.zona', '=', 'zona.id')
+            ->leftJoin('area', 'zona.area', '=', 'area.id')
+            ->where('elemento.id', $integration->id)
+            ->first();
+    
+        $commonData['dataFromFacadeAreaFromElemento'] = $dataFromFacadeAreaFromElemento;
+    
+        $dataFromFacadeIP = Elemento::on('inventory')
+            ->with(['ip', 'centro'])
+            ->leftJoin('ip', 'elemento.id', '=', 'ip.id')
+            ->leftJoin('centro', 'elemento.centro', '=', 'centro.id')
+            ->select(
+                'elemento.id',
+                DB::raw("concat(ip.ip1,'.',ip.ip2,'.',ip.ip3,'.',ip.ip4) as ip"),
+                DB::raw("concat(centro.ip1,'.',centro.ip2,'.',centro.ip3,'.',centro.ip4) as centro_ip"),
+                DB::raw("concat(centro.mask1,'.',centro.mask2,'.',centro.mask3,'.',centro.mask4) as centro_mask")
+            )
+            ->get();
+    
+        $commonData['dataFromFacadeIP'] = $dataFromFacadeIP;
+    
+        return view('admin.integrations.edit', array_merge($commonData, compact('integration')));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Integration $integration)
+    public function update(Request $request, Elemento $elemento)
     {
         // $dataFromFacadeElement = DB::connection('inventory')->table('elemento')->findOrFail($id);
-        return redirect()->route('admin.integrations.index')->with('success', 'Element updated successfully.');
+        return redirect()->route('admin.integration.index')->with('success', 'Element updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function calculateGateway($ip, $mask)
     {
-        //
+        // Validar y separar las partes de la IP
+        $ipParts = explode('.', $ip);
+        if (count($ipParts) !== 4) {
+            throw new \Exception('IP address is not valid.');
+        }
+    
+        // Validar y separar las partes de la máscara
+        $maskParts = explode('.', $mask);
+        if (count($maskParts) !== 4) {
+            throw new \Exception('Subnet mask is not valid.');
+        }
+    
+        $networkParts = [];
+        for ($i = 0; $i < 4; $i++) {
+            $networkParts[] = intval($ipParts[$i]) & intval($maskParts[$i]);
+        }
+    
+        // Incrementar la última parte para obtener el gateway
+        $networkParts[3] += 1;
+    
+        // Combinar las partes de nuevo en una cadena de IP
+        $gateway = implode('.', $networkParts);
+    
+        return $gateway;
     }
 }

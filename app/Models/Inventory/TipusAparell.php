@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class TipusAparell extends Model
 {
+	protected $connection = 'inventory';
 	protected $table = 'tipus_aparell';
 	protected $primaryKey = 'idtipus_aparell';
 	public $incrementing = false;

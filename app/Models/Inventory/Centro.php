@@ -51,70 +51,24 @@ class Centro extends Model
 {
 	protected $connection = 'inventory';
 	protected $table = 'centro';
+	protected $primaryKey = 'id';
+	protected $keyType = 'string';
 	public $incrementing = false;
 	public $timestamps = false;
 
-	protected $casts = [
-		'ip1' => 'int',
-		'ip2' => 'int',
-		'ip3' => 'int',
-		'ip4' => 'int',
-		'mask1' => 'int',
-		'mask2' => 'int',
-		'mask3' => 'int',
-		'mask4' => 'int',
-		'codi_ctti' => 'int',
-		'latitud' => 'float',
-		'longitud' => 'float',
-		'visible' => 'int',
-		'vista' => 'int',
-		'id_rgeneral' => 'int'
-	];
-
-	protected $fillable = [
-		'zona',
-		'def',
-		'ip1',
-		'ip2',
-		'ip3',
-		'ip4',
-		'mask1',
-		'mask2',
-		'mask3',
-		'mask4',
-		'usuario',
-		'codi',
-		'codi_ctti',
-		'adresa',
-		'poblacio',
-		'telefon',
-		'codigo_ext',
-		'latitud',
-		'longitud',
-		'horari',
-		'velocitat',
-		'tipus_linea',
-		'codiclasse',
-		'centro_ref',
-		'visible',
-		'vista',
-		'id_rgeneral',
-		'consultori_de',
-		'tipus_centre'
-	];
-
-	public function zona()
+	public function elemento()
 	{
-		return $this->belongsTo(Zona::class, 'zona');
+		return $this->hasOne(Elemento::class, 'centro');
+		//return $this->hasMany(Elemento::class, 'centro');
 	}
 
-	public function ubicaciones()
-	{
-		return $this->hasMany(Ubicacion::class, 'centro');
-	}
+	// public function zona()
+	// {
+	// 	return $this->belongsTo(Zona::class, 'zona');
+	// }
 
-	public function elementos()
-	{
-		return $this->hasMany(Elemento::class, 'centro', 'id');
-	}
+	// public function ubicaciones()
+	// {
+	// 	return $this->hasMany(Ubicacion::class, 'id_centro', 'id');
+	// }
 }

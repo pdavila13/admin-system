@@ -40,7 +40,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-door-open"></i></span>
                                 </div>
-                                {!! Form::text('gateway', null, ['class' => 'form-control']) !!}
+                                {!! Form::text('gateway', null, ['class' => 'form-control', 'readonly' => 'readonly']) !!}
                             </div>
                         </div>
 

@@ -54,18 +54,26 @@ class Elemento extends Model
 {
 	protected $connection = 'inventory';
 	protected $table = 'elemento';
+	protected $primaryKey = 'id';
+	protected $keyType = 'int';
 	public $timestamps = false;
 
 	protected $casts = [
 		'tipo' => 'int',
+		'codigo' => 'string',
+		'def' => 'string',
+		'estado' => 'int',
 		'marca' => 'int',
 		'modelo' => 'int',
-		'centro' => 'int',
+		'centro' => 'string',
+		'ubicacio' => 'string',
+		'usuario' => 'string',
 		'fecha' => 'datetime',
 		'perfil' => 'int',
+		'comentari' => 'string',
 		'tipus_aparell' => 'int',
-		'estat_integracio' => 'int',
-		'v' => 'int'
+		'modality_data' => 'json',
+		'estat_integracio' => 'int'
 	];
 
 	protected $fillable = [
@@ -80,20 +88,18 @@ class Elemento extends Model
 		'usuario',
 		'fecha',
 		'perfil',
+		'comentari',
 		'tipus_aparell',
-		'aet',
 		'modality',
-		'maquina_sap',
-		'ut',
-		'codi_evolutiu',
+		'modality_data',
 		'estat_integracio',
-		'roseta',
-		'switch'
+		'sala',
+		'his'
 	];
 
-	public function centro()
-	{
+	public function centro() {
 		return $this->belongsTo(Centro::class, 'centro', 'id');
+		//return $this->belongsTo(Centro::class);
 	}
 
 	public function marca()
@@ -117,11 +123,11 @@ class Elemento extends Model
 	}
 
 	public function tipusAparell() {
-		return $this->belongsTo(TipusAparell::class, 'tipus_aparell');
+		return $this->belongsTo(TipusAparell::class, 'tipus_aparell', 'idtipus_aparell');
 	}
 
-	public function modalities() {
-		return $this->hasMany(Modality::class, 'id');
+	public function modality() {
+		return $this->belongsTo(Modality::class, 'moda_id');
 	}
 
 	public function estat_integracio() {

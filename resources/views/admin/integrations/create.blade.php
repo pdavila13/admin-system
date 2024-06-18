@@ -6,54 +6,18 @@
         <div class="col-md-10">
             <div class="card card-info">
                 <div class="card-header">
-                    <h3 class="card-title">{{ __('Edit element') }}</h3>
+                    <h3 class="card-title">{{ __('Create new element') }}</h3>
                     <div class="card-tools">                
                         <a href="{{route('admin.integration.index')}}" class="btn btn-sm btn-dark">{{ __('Back') }}</a>
                     </div>
                 </div>
 
-                {!! Form::model($integration, ['route' => ['admin.integration.update', $integration], 'method' => 'PUT']) !!}
-                    <div class="card-body">
-                        <div class="card card-info card-outline card-tabs">
-                            <div class="card-header p-0 pt-1 border-bottom-0">
-                                <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" id="custom-tabs-three-electro-tab" data-toggle="pill" href="#custom-tabs-three-electro" role="tab" aria-controls="custom-tabs-three-electro" aria-selected="false">Electromedicina</a>
-                                    </li>
-                                    
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="custom-tabs-three-sap-tab" data-toggle="pill" href="#custom-tabs-three-sap" role="tab" aria-controls="custom-tabs-three-sap" aria-selected="false">Oficina SAP</a>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="custom-tabs-three-info-tab" data-toggle="pill" href="#custom-tabs-three-info" role="tab" aria-controls="custom-tabs-three-info" aria-selected="false">Informàtica</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            
-                            <div class="card-body">
-                                <div class="tab-content" id="custom-tabs-three-tabElectro">
-                                    <div class="tab-pane fade active show" id="custom-tabs-three-electro" role="tabpanel" aria-labelledby="custom-tabs-three-electro-tab">
-                                        <div class="container-fluid">
-                                            @include('admin.integrations.partials.form-electro')
-                                        </div>
-                                    </div>
-
-                                    <div class="tab-pane fade" id="custom-tabs-three-sap" role="tabpanel" aria-labelledby="custom-tabs-three-sap-tab">
-                                        <div class="container-fluid">
-                                            @include('admin.integrations.partials.form-sap')
-                                        </div>
-                                    </div>
-
-                                    <div class="tab-pane fade" id="custom-tabs-three-info" role="tabpanel" aria-labelledby="custom-tabs-three-info-tab">
-                                        <div class="container-fluid">
-                                            @include('admin.integrations.partials.form-info')
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                {!! Form::open(['route' => 'admin.integration.store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                <div class="card-body">
+                    <div class="container-fluid">
+                        @include('admin.integrations.partials.form-electro')
                     </div>
+                </div>
 
                     <div class="card-footer">
                         <button type="submit" id="submit" class="btn btn-info float-right">{{ __('Save') }}</button>

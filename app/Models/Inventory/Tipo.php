@@ -51,7 +51,7 @@ class Tipo extends Model
 
 	public function elementos()
 	{
-		return $this->hasMany(Elemento::class, 'tipo', 'id');
+		return $this->hasMany(Elemento::class);
 	}
 
 	public function marcas()

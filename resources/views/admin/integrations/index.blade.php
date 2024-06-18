@@ -5,11 +5,10 @@
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">{{ __('List integrations') }}</h3>
-            <div class="card-tools">                
-                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalIntegrationCreate">{{ __('New') }}</a>
+            <div class="card-tools">
+                <a href="{{ route('admin.integration.create') }}" class="btn btn-sm btn-primary">{{ __('New') }}</a>
+                {{-- <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalIntegrationCreate">{{ __('New') }}</a> --}}
             </div>
-
-            @include('admin.integrations.modal.create')
         </div>
         
         <div class="card-body">
@@ -17,7 +16,7 @@
                 <thead>
                     <tr>
                         <th>{{ __('ID') }}</th>
-                        <th>{{ __('Tipus') }}</th>
+                        <th>{{ __('Tipus Aparell') }}</th>
                         <th>{{ __('Centre') }}</th>
                         <th>{{ __('Description') }}</th>
                         <th>{{ __('Modality') }}</th>
@@ -30,28 +29,27 @@
                     @foreach ($dataFromFacadeElement as $elemento)
                         <tr>
                             <td>{{ $elemento->id }}</td>
-                            <td>{{ $elemento->tipus_aparell_descripcio }}</td>
+                            <td>{{ $elemento->tipus_aparell_def }}</td>
                             <td>{{ $elemento->centro_def }}</td>
                             <td>{{ $elemento->def}}</td>
                             <td>{{ $elemento->modality }}</td>
                             <td>{{ $elemento->fecha }}</td>
                             <td class="integration-state" >
-                                @if ($elemento->estat_integracio_descripcio == 'Evolutiu enviat')
+                                @if ($elemento->estat_integracio_id == '1')
                                     <span class="badge badge-success">{{ __('Evolutiu enviat') }}</span>
-                                @elseif ($elemento->estat_integracio_descripcio == 'Pendent configuració')
+                                @elseif ($elemento->estat_integracio_id == '2')
                                     <span class="badge badge-secondary">{{ __('Pendent configuració') }}</span>
-                                @elseif ($elemento->estat_integracio_descripcio == 'En producció')
+                                @elseif ($elemento->estat_integracio_id == '4')
                                     <span class="badge badge-primary">{{ __('En producció') }}</span>
-                                @elseif ($elemento->estat_integracio_descripcio == 'En proves')
+                                @elseif ($elemento->estat_integracio_id == '3')
                                     <span class="badge badge-warning">{{ __('En proves') }}</span>
-                                @elseif ($elemento->estat_integracio_descripcio == 'Pendent de baixa')
+                                @elseif ($elemento->estat_integracio_id == '5')
                                     <span class="badge badge-danger">{{ __('Pendent baixa') }}</span>
                                 @endif
                             </td>
                             <td class="text-right">
                                 <a href="#" class="btn btn-success btn-xs"><i class="fas fa-eye"></i></a>
-                                <a href="{{route('admin.integration.edit', $elemento->id)}}" class="btn btn-info btn-xs"><i class="fas fa-edit"></i></a>
-                                {{-- <a href="#" class="btn btn-info btn-xs" data-toggle="modal" data-target="#ModalIntegrationEdit{{ $elemento->id }}"><i class="fas fa-edit"></i></a> --}}
+                                <a href="{{route('admin.integration.edit', $elemento)}}" class="btn btn-info btn-xs"><i class="fas fa-edit"></i></a>
                                 <a href="#" class="btn btn-danger btn-xs"><i class="fas fa-ban"></i></a>
                             </td>
                         </tr>
@@ -103,7 +101,7 @@
                 });
 
                 $(this).find('.select2').select2({
-                    theme: 'bootstrap4'
+                    theme: 'bootstrap4',
                 });
 
                 $(this).find('#marca').change(function() {
