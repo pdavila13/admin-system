@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => env('APP_NAME'),
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => env('APP_NAME'),
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -110,7 +110,7 @@ return [
     */
 
     'preloader' => [
-        'enabled' => true,
+        'enabled' => false,
         'mode' => 'fullscreen',
         'img' => [
             'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
@@ -154,9 +154,9 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => null,
-    'layout_fixed_footer' => null,
+    'layout_fixed_sidebar' => true,
+    'layout_fixed_navbar' => true,
+    'layout_fixed_footer' => false,
     'layout_dark_mode' => null,
 
     /*
@@ -257,7 +257,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -311,81 +311,82 @@ return [
             'text' => 'search',
         ],
         [
-            'text' => 'blog',
-            'url' => 'admin/blog',
-            'can' => 'manage-blog',
+            'text' => 'Dashboard',
+            'route' => 'admin.dashboard',
+            'icon' => 'fas fa-fw fa-tachometer-alt',
+        ],
+        ['header' => 'management'],
+        [
+            'text' => 'general',
+            'icon' => 'fas fa-fw fa-cogs',
+            'submenu' => [
+                [
+                    'text' => 'users',
+                    'route' => 'admin.user.index',
+                    'icon' => 'fas fa-fw fa-user',
+                    'active' => ['admin/user*'],
+                ],
+                [
+                    'text' => 'roles',
+                    'route' => 'admin.role.index',
+                    'icon' => 'fas fa-fw fa-user-tag',
+                    'active' => ['admin/role*'],
+                ],
+                [
+                    'text' => 'permissions',
+                    'route' => 'admin.permission.index',
+                    'icon' => 'fas fa-fw fa-key',
+                    'active' => ['admin/permission*'],
+                ],
+            ],
         ],
         [
-            'text' => 'pages',
-            'url' => 'admin/pages',
-            'icon' => 'far fa-fw fa-file',
-            'label' => 4,
-            'label_color' => 'success',
+            'text' => 'external_companies',
+            'icon' => 'fas fa-fw fa-globe',
+            'submenu' => [
+                [
+                    'text' => 'companies',
+                    'route' => 'admin.company.index',
+                    'icon' => 'fas fa-fw fa-building',
+                    'active' => ['admin/company*'],
+                ],
+                [
+                    'text' => 'groups_vpn',
+                    'route' => 'admin.group_vpn.index',
+                    'icon' => 'fas fa-fw fa-object-group',
+                    'active' => ['admin/group_vpn*'],
+                ],
+                [
+                    'text' => 'petitions',
+                    'route' => 'admin.petition.index',
+                    'icon' => 'fas fa-fw fa-list',
+                    'active' => ['admin/petition*'],
+                ],
+            ],
+        ],
+        [
+            'text' => 'integrations',
+            'icon' => 'fas fa-fw fa-puzzle-piece',
+            'submenu' => [
+                [
+                    'text' => 'medic_devices',
+                    'route' => 'admin.inventary.index',
+                    'icon' => 'fas fa-fw fa-medkit',
+                    'active' => ['admin/inventary*'],
+                ],
+                [
+                    'text' => 'mq_integration',
+                    'route' => 'admin.integration.index',
+                    'icon' => 'fas fa-fw fa-list',
+                    'active' => ['admin/integration*'],
+                ],
+            ],
         ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text' => 'multilevel',
-            'icon' => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-            ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
-        ],
-        [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
-        ],
-        [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
+            'route' => 'admin.profile.edit',
+            'icon' => 'fas fa-fw fa-id-card',
         ],
     ],
 

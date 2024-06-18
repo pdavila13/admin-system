@@ -30,6 +30,6 @@ class Modality extends Model
 
 	public function elementos()
 	{
-		return $this->hasMany(Elemento::class, 'modality');
+		return $this->hasMany(Elemento::class, 'moda_id');
 	}
 }
