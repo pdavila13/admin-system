@@ -50,10 +50,14 @@
 <script>
 
     $(document).ready(function() {
-        // Add your common script logic here...
+        toastr.options = {
+            "progressBar": true,
+            "closeButton": true,
+        }
     });
 
 </script>
+<x-alert />
 @endpush
 
 {{-- Add common CSS customizations --}}

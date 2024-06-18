@@ -1,8 +1,13 @@
-<x-admin>
-    @section('title')  {{ __('Roles') }} @endsection
+@extends('layouts.app')
+
+{{-- Customize layout sections --}}
+@section('subtitle', __('Roles'))
+@section('content_header_title', __('List roles'))
+
+{{-- Content body: main page content --}}
+@section('content_body')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">{{ __('Roles') }}</h3>
             <div class="card-tools">
                 <a href="{{ route('admin.role.create') }}" class="btn btn-sm btn-primary">{{__('Add') }}</a>
             </div>
@@ -39,22 +44,24 @@
             </table>
         </div>
     </div>
-    @section('js')
-        <script>
-            $(function() {
-                var selectedLanguage = 'ca';
-                var dataTableConfig = {
-                    paging: true,
-                    searching: true,
-                    ordering: true,
-                    responsive: true,
-                    language: {
-                        url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/' + selectedLanguage + '.json'
-                    }
-                };
+@stop
 
-                $('#roleTable').DataTable(dataTableConfig);
-            });
-        </script>
-    @endsection
-</x-admin>
+{{-- Push extra scripts --}}
+@push('js')
+    <script>
+        $(function() {
+            var selectedLanguage = 'ca';
+            var dataTableConfig = {
+                paging: true,
+                searching: true,
+                ordering: true,
+                responsive: true,
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/' + selectedLanguage + '.json'
+                }
+            };
+
+            $('#roleTable').DataTable(dataTableConfig);
+        });
+    </script>
+@endpush
