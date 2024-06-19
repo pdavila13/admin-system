@@ -1,7 +1,11 @@
-<x-admin>
-    @section('title')
-        {{ __('Create group VPN') }}
-    @endsection
+@extends('layouts.app')
+
+{{-- Customize layout sections --}}
+@section('subtitle', __('Groups VPN') )
+@section('content_header_title', __('Create group VPN') )
+
+{{-- Content body: main page content --}}
+@section('content_body')
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
@@ -71,4 +75,15 @@
             </div>
         </div>
     </div>
-</x-admin>
+@stop
+
+{{-- Push extra scripts --}}
+@push('js')
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                theme: 'bootstrap4'
+            });
+        });
+    </script>
+@endpush
