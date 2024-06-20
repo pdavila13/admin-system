@@ -2,21 +2,22 @@
 
 {{-- Customize layout sections --}}
 @section('subtitle', __('Petitions'))
-@section('content_header_title', __('List petitions'))
+@section('content_header')
+    <a href="{{ route('admin.petition.create') }}" class="btn btn-sm btn-primary float-right"><i class="fas fa-plus"></i></a>
+    <h1 class="text-muted">{{ __('List petitions') }}</h1>
+@stop
 
 {{-- Content body: main page content --}}
 @section('content_body')
     <div class="card">
-        <div class="card-header">
+        {{-- <div class="card-header">
             <div class="card-tools">
-                <a href="{{ route('admin.petition.create') }}" class="btn btn-sm btn-primary">
-                    <i class="fas fa-plus"></i>
-                </a>
-                {{-- <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalPetitionCreate">{{ __('New') }}</a> --}}
+                
+                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalPetitionCreate">{{ __('New') }}</a>
             </div> 
 
-            {{-- @include('admin.petition.modal.create') --}}
-        </div>
+            {{-- @include('admin.petition.modal.create')
+        </div> --}}
         <div class="card-body">
             <table class="table table-striped petitions" id="petitionTable" style="width:100%">
                 <thead>
@@ -115,28 +116,28 @@
 
             $('#petitionTable').DataTable(dataTableConfig);
 
-            $('.modal').on('shown.bs.modal', function () {
-                $(this).find('.select2').select2({
-                    theme: 'bootstrap4',
-                });
+            // $('.modal').on('shown.bs.modal', function () {
+            //     $(this).find('.select2').select2({
+            //         theme: 'bootstrap4',
+            //     });
 
-                var currentDate = moment().format('DD-MM-YYYY');
-                $(this).find('.datetimepicker-input').val(currentDate);
+            //     var currentDate = moment().format('DD-MM-YYYY');
+            //     $(this).find('.datetimepicker-input').val(currentDate);
 
-                $(this).find('.datetimepicker').each(function() {
-                    $(this).datetimepicker({
-                        dropdownParent: $(this).closest('.modal'),
-                        format: 'DD-MM-YYYY',
-                    });
-                });
-            });
-
-            // $('.datetimepicker').each(function() {
-            //     $(this).datetimepicker({
-            //         dropdownParent: $(this).closest('.modal'),
-            //         format: 'DD-MM-YYYY',
+            //     $(this).find('.datetimepicker').each(function() {
+            //         $(this).datetimepicker({
+            //             dropdownParent: $(this).closest('.modal'),
+            //             format: 'DD-MM-YYYY',
+            //         });
             //     });
             // });
+
+            $('.datetimepicker').each(function() {
+                $(this).datetimepicker({
+                    dropdownParent: $(this).closest('.modal'),
+                    format: 'DD-MM-YYYY',
+                });
+            });
         });
     </script>
 @endpush
