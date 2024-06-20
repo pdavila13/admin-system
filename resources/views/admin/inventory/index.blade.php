@@ -1,7 +1,11 @@
-<x-admin>
-    @section('title')
-        {{ __('List inventory') }}
-    @endsection
+@extends('layouts.app')
+
+{{-- Customize layout sections --}}
+@section('subtitle', __('Inventory'))
+@section('content_header_title', __('List inventory'))
+
+{{-- Content body: main page content --}}
+@section('content_body')
     <div class="card">
         <div class="card-body">
             <table class="table table-striped" id="inventoryTable" style="width:100%">
@@ -36,23 +40,24 @@
             </table>
         </div>
     </div>
+@stop
 
-    @section('js')
-        <script>
-            $(function() {
-                var selectedLanguage = 'ca';
-                var dataTableConfig = {
-                    paging: true,
-                    searching: true,
-                    ordering: false,
-                    responsive: true,
-                    language: {
-                        url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/' + selectedLanguage + '.json'
-                    }
-                };
+{{-- Push extra scripts --}}
+@push('js')
+    <script>
+        $(document).ready(function() {
+            var selectedLanguage = 'ca';
+            var dataTableConfig = {
+                paging: true,
+                searching: true,
+                ordering: false,
+                responsive: true,
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/' + selectedLanguage + '.json'
+                }
+            };
 
-                $('#inventoryTable').DataTable(dataTableConfig);
-            });
-        </script>
-    @endsection
-</x-admin>
+            $('#inventoryTable').DataTable(dataTableConfig);
+        });
+    </script>
+@endpush
