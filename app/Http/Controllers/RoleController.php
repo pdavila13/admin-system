@@ -9,7 +9,7 @@ class RoleController extends Controller
 {
     public function index()
     {
-        $data = Role::orderBy('id','DESC')->get();
+        $data = Role::orderBy('id','ASC')->get();
         return view('admin.role.index', compact('data'));
     }
 

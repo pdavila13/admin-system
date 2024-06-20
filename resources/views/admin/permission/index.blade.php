@@ -27,13 +27,13 @@
                             <td>{{ $permission->name }}</td>
                             <td>{{ $permission->created_at }}</td>
                             <td class="permission-actions text-right">
-                                <a href="{{ route('admin.permission.edit', encrypt($permission->id)) }}" class="btn btn-info btn-sm">
+                                <a href="{{ route('admin.permission.edit', encrypt($permission->id)) }}" class="btn btn-info btn-xs">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <form action="{{ route('admin.permission.destroy', encrypt($permission->id)) }}" method="POST" onsubmit="return confirm('{{ __('Are sure want to delete?') }}')" style="display: inline;">
                                     @method('DELETE')
                                     @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm">
+                                    <button type="submit" class="btn btn-danger btn-xs">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>

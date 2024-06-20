@@ -18,7 +18,7 @@
                     <tr>
                         <th>{{ __('Name') }}</th>
                         <th>{{ __('Created') }}</th>
-                        <th></th>
+                        <th class="text-right">{{ __('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,13 +27,13 @@
                             <td>{{ $role->name }}</td>
                             <td>{{ $role->created_at }}</td>
                             <td class="role-actions text-right">
-                                <a href="{{ route('admin.role.edit', encrypt($role->id)) }}" class="btn btn-info btn-sm">
+                                <a href="{{ route('admin.role.edit', encrypt($role->id)) }}" class="btn btn-info btn-xs">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <form action="{{ route('admin.role.destroy', encrypt($role->id)) }}" method="POST" onsubmit="return confirm('Are sure want to delete?')" style="display: inline;">
                                     @method('DELETE')
                                     @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm">
+                                    <button type="submit" class="btn btn-danger btn-xs">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
@@ -54,7 +54,7 @@
             var dataTableConfig = {
                 paging: true,
                 searching: true,
-                ordering: true,
+                ordering: false,
                 responsive: true,
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/' + selectedLanguage + '.json'

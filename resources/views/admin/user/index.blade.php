@@ -15,7 +15,7 @@
                         <th>{{ __('Name') }}</th>
                         <th>{{ __('Email') }}</th>
                         <th>{{ __('Created') }}</th>
-                        <th></th>
+                        <th class="text-right">{{ __('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,13 +26,13 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->created_at }}</td>
                             <td class="user-actions text-right">
-                                <a href="{{ route('admin.user.edit', encrypt($user->id)) }}" class="btn btn-info btn-sm">
+                                <a href="{{ route('admin.user.edit', $user) }}" class="btn btn-info btn-xs">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <form action="{{ route('admin.user.destroy', encrypt($user->id)) }}" method="POST" onsubmit="return confirm('{{ __('Are sure want to delete?') }}')" style="display: inline;">
                                     @method('DELETE')
                                     @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm">
+                                    <button type="submit" class="btn btn-danger btn-xs">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
@@ -53,7 +53,7 @@
             var dataTableConfig = {
                 paging: true,
                 searching: true,
-                ordering: true,
+                ordering: false,
                 responsive: true,
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/' + selectedLanguage + '.json'
