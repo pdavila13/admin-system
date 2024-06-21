@@ -51,7 +51,7 @@
                             <td class="text-right">
                                 <a href="#" class="btn btn-success btn-xs"><i class="fas fa-eye"></i></a>
                                 @can('admin.integration.edit')
-                                    <a href="{{route('admin.integration.edit', $elemento)}}" class="btn btn-info btn-xs"><i class="fas fa-edit"></i></a>
+                                    <a id="edit-button" href="{{route('admin.integration.edit', $elemento)}}" class="btn btn-info btn-xs" data-role="{{ auth()->user()->getRoleNames()->first() }}"><i class="fas fa-edit"></i></a>
                                 @endcan
                             </td>
                         </tr>

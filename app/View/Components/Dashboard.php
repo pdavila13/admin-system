@@ -2,13 +2,12 @@
 
 namespace App\View\Components;
 
-use App\Models\GroupVpn;
-use App\Models\Company;
-use App\Models\Petition;
-use App\Models\User;
 use Closure;
-use Illuminate\Contracts\View\View;
+use App\Models\User;
 use Illuminate\View\Component;
+use App\Models\Inventory\Centro;
+use App\Models\Inventory\Elemento;
+use Illuminate\Contracts\View\View;
 
 class Dashboard extends Component
 {
@@ -20,14 +19,11 @@ class Dashboard extends Component
         $user = User::count();
         view()->share('user',$user);
 
-        $company = Company::count();
-        view()->share('company',$company);
-        
-        $group_vpn = GroupVpn::count();
-        view()->share('group_vpn',$group_vpn);
+        $element = Elemento::where('tipo','=',9)->count();
+        view()->share('element',$element);
 
-        $petition = Petition::count();
-        view()->share('petition',$petition);
+        $center = Centro::count();
+        view()->share('center',$center);
     }
 
     /**

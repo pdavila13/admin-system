@@ -11,38 +11,38 @@
     </div>
 </div>
 <div class="col-lg-3 col-6">
-    <div class="small-box bg-success">
+    <div class="small-box bg-secondary">
         <div class="inner">
-            <h3>{{$company}}</h3>
-            <p>{{ __('Companies') }}
+            <h3>50</h3>
+            <p>{{ __('Device type') }}
         </div>
         <div class="icon">
-            <i class="fas fa-building"></i>
+            <i class="fas fa-x-ray"></i>
         </div>
-        <a href="{{ route('admin.company.index') }}" class="small-box-footer">{{ __('View') }} <i class="fas fa-arrow-circle-right"></i></a>
+        <a href="{{ route('admin.inventary.index') }}" class="small-box-footer">{{ __('View') }} <i class="fas fa-arrow-circle-right"></i></a>
     </div>
 </div>
 <div class="col-lg-3 col-6">
     <div class="small-box bg-primary">
         <div class="inner">
-            <h3>{{$group_vpn}}</h3>
-            <p>{{ __('VPN Groups') }}
+            <h3>{{$center}}</h3>
+            <p>{{ __('Centers') }}
         </div>
         <div class="icon">
-            <i class="fas fas fa-object-group"></i>
+            <i class="fas fas fa-hospital"></i>
         </div>
-        <a href="{{ route('admin.group_vpn.index') }}" class="small-box-footer">{{ __('View') }} <i class="fas fa-arrow-circle-right"></i></a>
+        <a href="{{ route('admin.inventary.index') }}" class="small-box-footer">{{ __('View') }} <i class="fas fa-arrow-circle-right"></i></a>
     </div>
 </div>
 <div class="col-lg-3 col-6">
-    <div class="small-box bg-secondary">
+    <div class="small-box bg-success">
         <div class="inner">
-            <h3>{{$petition}}</h3>
-            <p>{{ __('Petitions') }}
+            <h3>{{$element}}</h3>
+            <p>{{ __('Elements') }}
         </div>
         <div class="icon">
-            <i class="fas fas fa-list"></i>
+            <i class="fas fas fa-laptop-medical"></i>
         </div>
-        <a href="{{ route('admin.petition.index') }}" class="small-box-footer">{{ __('View') }} <i class="fas fa-arrow-circle-right"></i></a>
+        <a href="{{ route('admin.inventary.index') }}" class="small-box-footer">{{ __('View') }} <i class="fas fa-arrow-circle-right"></i></a>
     </div>
 </div>
