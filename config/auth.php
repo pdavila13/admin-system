@@ -63,15 +63,15 @@ return [
         'users' => [
             'driver' => 'ldap',
             'model' => LdapRecord\Models\ActiveDirectory\User::class,
-            'rules' => [],
+            'rules' => [
+                App\Ldap\Rules\AllowedGroups::class,
+            ],
             'scopes' => [],
             'database' => [
                 'model' => App\Models\User::class,
                 'sync_passwords' => false,
                 'sync_attributes' => [
-                    'name' => 'cn',
-                    'email' => 'mail',
-                    'username' => 'samaccountname',
+                    \App\Ldap\Handlers\UserAttributeHandler::class,
                 ],
             ],
         ],
