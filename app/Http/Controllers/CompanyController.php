@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.company.index')->only('index');
+        $this->middleware('can:admin.company.create')->only('create','store');
+        $this->middleware('can:admin.company.edit')->only('edit','update');
+        $this->middleware('can:admin.company.delete')->only('destroy');
+    }
+    
     /**
      * Display a listing of the resource.
      */

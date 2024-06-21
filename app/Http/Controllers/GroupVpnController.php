@@ -14,8 +14,10 @@ class GroupVpnController extends Controller
      */
     public function __construct()
     {
-        $company = Company::orderBy('id','DESC')->get();
-        view()->share('company',$company);
+        $this->middleware('can:admin.group_vpn.index')->only('index');
+        $this->middleware('can:admin.group_vpn.create')->only('create','store');
+        $this->middleware('can:admin.group_vpn.edit')->only('edit','update');
+        $this->middleware('can:admin.group_vpn.delete')->only('destroy');
     }
 
     /**

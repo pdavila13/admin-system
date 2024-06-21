@@ -17,6 +17,12 @@ class PetitionController extends Controller
 {
     public function __construct()
     {
+
+        $this->middleware('can:admin.petition.index')->only('index');
+        $this->middleware('can:admin.petition.create')->only('create','store');
+        $this->middleware('can:admin.petition.edit')->only('edit','update');
+        $this->middleware('can:admin.petition.delete')->only('destroy');
+        
         $company = Company::orderBy('id','DESC')->get();
         view()->share('company',$company);
 

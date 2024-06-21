@@ -9,6 +9,14 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.user.index')->only('index');
+        $this->middleware('can:admin.user.create')->only('create','store');
+        $this->middleware('can:admin.user.edit')->only('edit','update');
+        $this->middleware('can:admin.user.delete')->only('destroy');
+    }
+
     public function index()
     {
         $data = User::orderBy('id','ASC')->get();

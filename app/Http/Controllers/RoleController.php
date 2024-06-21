@@ -7,6 +7,14 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.role.index')->only('index');
+        $this->middleware('can:admin.role.create')->only('create','store');
+        $this->middleware('can:admin.role.edit')->only('edit','update');
+        $this->middleware('can:admin.role.delete')->only('destroy');
+    }
+
     public function index()
     {
         $data = Role::orderBy('id','ASC')->get();

@@ -7,6 +7,14 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.permission.index')->only('index');
+        $this->middleware('can:admin.permission.create')->only('create','store');
+        $this->middleware('can:admin.permission.edit')->only('edit','update');
+        $this->middleware('can:admin.permission.delete')->only('destroy');
+    }
+    
     public function index()
     {
         $data = Permission::orderBy('id','ASC')->get();

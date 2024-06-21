@@ -3,7 +3,9 @@
 {{-- Customize layout sections --}}
 @section('subtitle', __('Integrations'))
 @section('content_header')
-    <a href="{{ route('admin.integration.create') }}" class="btn btn-sm btn-primary float-right"><i class="fas fa-plus"></i></a>
+    @can('admin.integration.create')
+        <a href="{{ route('admin.integration.create') }}" class="btn btn-sm btn-primary float-right"><i class="fas fa-plus"></i></a>
+    @endcan
     <h1 class="text-muted">{{ __('List integrations') }}</h1>
 @stop
 
@@ -48,7 +50,9 @@
                             </td>
                             <td class="text-right">
                                 <a href="#" class="btn btn-success btn-xs"><i class="fas fa-eye"></i></a>
-                                <a href="{{route('admin.integration.edit', $elemento)}}" class="btn btn-info btn-xs"><i class="fas fa-edit"></i></a>
+                                @can('admin.integration.edit')
+                                    <a href="{{route('admin.integration.edit', $elemento)}}" class="btn btn-info btn-xs"><i class="fas fa-edit"></i></a>
+                                @endcan
                             </td>
                         </tr>
                         {{-- @include('admin.integrations.modal.edit') --}}

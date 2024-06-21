@@ -13,6 +13,14 @@ use App\Models\Inventory\TipusAparell;
 
 class IntegrationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.integration.index')->only('index');
+        $this->middleware('can:admin.integration.create')->only('create', 'store');
+        $this->middleware('can:admin.integration.edit')->only('edit', 'update');
+        $this->middleware('can:admin.integration.delete')->only('destroy');
+    }
+    
     /**
      * Display a listing of the resource.
      */
