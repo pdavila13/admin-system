@@ -220,9 +220,43 @@ class IntegrationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Elemento $elemento)
+    public function update(Request $request, Elemento $integration)
     {
-        // $dataFromFacadeElement = DB::connection('inventory')->table('elemento')->findOrFail($id);
+        $request->validate([
+            'codigo' => 'required',
+            'def' => 'required',
+            'tipus_aparell' => 'required',
+            'marca' => 'required',
+            'modelo' => 'required',
+            'centro' => 'required',
+            'modality' => 'required',
+            'sala' => 'required',
+            'his' => 'required',
+            'comentari' => 'required',
+        ]);
+
+        $user = Auth::user();
+
+        Elemento::where('id', $integration->id)->updated([
+            'tipo' => 9,
+            'codigo' => $request['codigo'],
+            'def' => $request['def'],
+            'estado' => 1,
+            'marca' => $request['marca'],
+            'modelo' => $request['modelo'],
+            'centro' => $request['centro'],
+            'ubicacio' => $request['ubicacio'],
+            'usuario' => $user->username,
+            'fecha' => Carbon::now(),
+            'perfil' => 56,
+            'comentari' => $request['comentari'],
+            'tipus_aparell' => $request['tipus_aparell'],
+            'modality' => $request['modality'],
+            'estat_integracio' => 3,
+            'sala' => $request['sala'],
+            'his' => $request['his'],
+        ]);
+
         return redirect()->route('admin.integration.index')->with('success', 'Element updated successfully.');
     }
 
