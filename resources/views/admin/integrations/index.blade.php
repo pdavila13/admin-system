@@ -11,7 +11,7 @@
 
 {{-- Content body: main page content --}}
 @section('content_body')
-    <div class="card">        
+    <div class="card">     
         <div class="card-body">
             <table class="table table-striped" id="integrationTable" style="width:100%">
                 <thead>
@@ -37,21 +37,21 @@
                             <td>{{ $elemento->fecha }}</td>
                             <td class="integration-state" >
                                 @if ($elemento->estat_integracio_id == '1')
-                                    <span class="badge badge-success">{{ __('Evolutiu enviat') }}</span>
+                                    <span class="badge badge-primary">{{ __('High') }}</span>
                                 @elseif ($elemento->estat_integracio_id == '2')
-                                    <span class="badge badge-secondary">{{ __('Pendent configuració') }}</span>
-                                @elseif ($elemento->estat_integracio_id == '4')
-                                    <span class="badge badge-primary">{{ __('En producció') }}</span>
+                                    <span class="badge badge-secondary">{{ __('Send to eCAP') }}</span>
                                 @elseif ($elemento->estat_integracio_id == '3')
-                                    <span class="badge badge-warning">{{ __('En proves') }}</span>
+                                    <span class="badge badge-secondary">{{ __('Send to SAP') }}</span>
+                                @elseif ($elemento->estat_integracio_id == '4')
+                                    <span class="badge badge-info">{{ __('In tests') }}</span>
                                 @elseif ($elemento->estat_integracio_id == '5')
-                                    <span class="badge badge-danger">{{ __('Pendent baixa') }}</span>
+                                    <span class="badge badge-success">{{ __('Integrated') }}</span>
                                 @endif
                             </td>
                             <td class="text-right">
                                 <a href="#" class="btn btn-success btn-xs"><i class="fas fa-eye"></i></a>
                                 @can('admin.integration.edit')
-                                    <a id="edit-button" href="{{route('admin.integration.edit', $elemento)}}" class="btn btn-info btn-xs" data-role="{{ auth()->user()->getRoleNames()->first() }}"><i class="fas fa-edit"></i></a>
+                                    <a href="{{route('admin.integration.edit', $elemento)}}" class="btn btn-info btn-xs"><i class="fas fa-edit"></i></a>
                                 @endcan
                             </td>
                         </tr>
@@ -93,85 +93,85 @@
             $('#integrationTable').DataTable(dataTableConfig);
         });
 
-        $('#ModalIntegrationCreate').on('shown.bs.modal', function () {
-            var currentDate = moment().format('DD-MM-YYYY');
-            $(this).find('.datetimepicker-input').val(currentDate);
+        // $('#ModalIntegrationCreate').on('shown.bs.modal', function () {
+        //     var currentDate = moment().format('DD-MM-YYYY');
+        //     $(this).find('.datetimepicker-input').val(currentDate);
 
-            $(this).find('.datetimepicker').each(function() {
-                $(this).datetimepicker({
-                    dropdownParent: $(this).closest('.modal'),
-                    format: 'DD-MM-YYYY',
-                    defaultDate: new Date(),
-                });
-            });
+        //     $(this).find('.datetimepicker').each(function() {
+        //         $(this).datetimepicker({
+        //             dropdownParent: $(this).closest('.modal'),
+        //             format: 'DD-MM-YYYY',
+        //             defaultDate: new Date(),
+        //         });
+        //     });
 
-            $(this).find('.select2').select2({
-                theme: 'bootstrap4',
-            });
+        //     $(this).find('.select2').select2({
+        //         theme: 'bootstrap4',
+        //     });
 
-            $(this).find('#marca').change(function() {
-                var marcaID = $(this).val();
-                if (marcaID) {
-                    $.ajax({
-                        url: '{{ route("admin.get.models", ":marcaID") }}'.replace(':marcaID', marcaID),
-                        type: 'GET',
-                        dataType: 'json',
-                        success: function(data) {
-                            $('#modelo').empty().append('<option value="" selected></option>');
-                            $.each(data, function(key, value) {
-                                $('#modelo').append('<option value="'+ value.id +'">'+ value.def +'</option>');
-                            });
-                        }
-                    });
-                } else {
-                    $('#modelo').empty().append('<option value="" selected></option>');
-                }
-            });
+        //     $(this).find('#marca').change(function() {
+        //         var marcaID = $(this).val();
+        //         if (marcaID) {
+        //             $.ajax({
+        //                 url: '{{ route("admin.get.models", ":marcaID") }}'.replace(':marcaID', marcaID),
+        //                 type: 'GET',
+        //                 dataType: 'json',
+        //                 success: function(data) {
+        //                     $('#modelo').empty().append('<option value="" selected></option>');
+        //                     $.each(data, function(key, value) {
+        //                         $('#modelo').append('<option value="'+ value.id +'">'+ value.def +'</option>');
+        //                     });
+        //                 }
+        //             });
+        //         } else {
+        //             $('#modelo').empty().append('<option value="" selected></option>');
+        //         }
+        //     });
 
-            $(this).find('#zona').change(function() {
-                var zona = $(this).val();
+        //     $(this).find('#zona').change(function() {
+        //         var zona = $(this).val();
 
-                if (zona) {
-                    $.ajax({
-                        url: '{{ route("admin.get.centers", ":zona") }}'.replace(':zona', zona),
-                        type: 'GET',
-                        dataType: 'json',
-                        success: function(data) {
-                            $('#centro').empty().append('<option value="" selected></option>');
-                            $.each(data, function(key, value) {
-                                $('#centro').append('<option value="'+ value.id +'">'+ value.def +'</option>');
-                            });
-                        }
-                    });
-                } else {
-                    $('#centro').empty().append('<option value="" selected></option>');
-                }
-            });
+        //         if (zona) {
+        //             $.ajax({
+        //                 url: '{{ route("admin.get.centers", ":zona") }}'.replace(':zona', zona),
+        //                 type: 'GET',
+        //                 dataType: 'json',
+        //                 success: function(data) {
+        //                     $('#centro').empty().append('<option value="" selected></option>');
+        //                     $.each(data, function(key, value) {
+        //                         $('#centro').append('<option value="'+ value.id +'">'+ value.def +'</option>');
+        //                     });
+        //                 }
+        //             });
+        //         } else {
+        //             $('#centro').empty().append('<option value="" selected></option>');
+        //         }
+        //     });
 
 
-            $(this).find('#centro').change(function() {
-                var centroId = $(this).val();
-                if (centroId) {
-                    $.ajax({
-                        url: '{{ route("admin.get.plantas", ":centroId") }}'.replace(':centroId', centroId),
-                        type: 'GET',
-                        dataType: 'json',
-                        success: function(data) {
-                            $('#planta').empty().append('<option value="" selected></option>');
-                            if (data.length > 0) {
-                                $.each(data, function(key, planta) {
-                                    $('#planta').append('<option value="' + planta.planta + planta.edifici + '">' + planta.planta + ' ' + planta.edifici + '</option>');
-                                });
-                                $('#planta').prop('disabled', false);
-                            } else {
-                                $('#planta').prop('disabled', true);
-                            }
-                        }
-                    });
-                } else {
-                    $('#planta').empty().append('<option value="" selected></option>').prop('disabled', true);
-                }
-            });
-        });
+        //     $(this).find('#centro').change(function() {
+        //         var centroId = $(this).val();
+        //         if (centroId) {
+        //             $.ajax({
+        //                 url: '{{ route("admin.get.plantas", ":centroId") }}'.replace(':centroId', centroId),
+        //                 type: 'GET',
+        //                 dataType: 'json',
+        //                 success: function(data) {
+        //                     $('#planta').empty().append('<option value="" selected></option>');
+        //                     if (data.length > 0) {
+        //                         $.each(data, function(key, planta) {
+        //                             $('#planta').append('<option value="' + planta.planta + planta.edifici + '">' + planta.planta + ' ' + planta.edifici + '</option>');
+        //                         });
+        //                         $('#planta').prop('disabled', false);
+        //                     } else {
+        //                         $('#planta').prop('disabled', true);
+        //                     }
+        //                 }
+        //             });
+        //         } else {
+        //             $('#planta').empty().append('<option value="" selected></option>').prop('disabled', true);
+        //         }
+        //     });
+        // });
     </script>
 @endpush

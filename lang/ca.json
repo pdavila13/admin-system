@@ -346,6 +346,7 @@
     "Switch port": "Port de commutació",
     "Point": "Punt de connexió",
     "Evolutionary information": "Informació evolutiu",
-    "Evolutionary": "Evolutiu",
-    "MQ code": "Codi MQ"
+    "Evolutionary State": "Estat evolutiu",
+    "MQ code": "Codi MQ",
+    "MQ Description": "Descripció MQ"
 }

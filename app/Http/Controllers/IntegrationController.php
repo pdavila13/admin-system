@@ -89,7 +89,8 @@ class IntegrationController extends Controller
         ->leftJoin('tipus_aparell', 'elemento.tipus_aparell', '=', 'tipus_aparell.idtipus_aparell')
         ->leftJoin('estat_integracio', 'elemento.estat_integracio', '=', 'estat_integracio.idestat_integracio')
         ->where('elemento.tipo', '=', 9)
-        ->where('elemento.estat_integracio', '=', 3)
+        ->where('elemento.estat_integracio', '>=', 1)
+        ->orderBy('elemento.fecha', 'DESC')
         ->get();
 
         return view('admin.integrations.index', compact('dataFromFacadeElement'));
@@ -237,7 +238,7 @@ class IntegrationController extends Controller
 
         $user = Auth::user();
 
-        Elemento::where('id', $integration->id)->updated([
+        Elemento::where('id', $integration->id)->update([
             'tipo' => 9,
             'codigo' => $request['codigo'],
             'def' => $request['def'],
@@ -252,6 +253,10 @@ class IntegrationController extends Controller
             'comentari' => $request['comentari'],
             'tipus_aparell' => $request['tipus_aparell'],
             'modality' => $request['modality'],
+            'maquina_sap' => $request['maquina_sap'],
+            'maquina_sap_desc' => $request['maquina_sap_desc'],
+            'servei' => $request['servei'],
+            'ut' => $request['ut'],
             'estat_integracio' => 3,
             'sala' => $request['sala'],
             'his' => $request['his'],

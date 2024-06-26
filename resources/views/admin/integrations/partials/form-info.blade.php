@@ -24,7 +24,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-laptop"></i></span>
                                     </div>
-                                    {!! Form::select('ip_address', $dataFromFacadeIP->where('id', $integration->id)->pluck('ip', 'id')->toArray(), old('ip_address'), ['class' => 'form-control select2 select2-bootstrap4', 'required' => 'required']) !!}
+                                    {!! Form::select('ip_address', $dataFromFacadeIP->where('id', $integration->id)->pluck('ip', 'id')->toArray(), old('ip_address'), ['class' => 'form-control select2 select2-bootstrap4']) !!}
                                 </div>
                             </div>
                             @error('ip_address')
@@ -95,7 +95,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-tag"></i></span>
                                 </div>
-                                {!! Form::text('aet', old('aet'), ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::text('aet', old('aet'), ['class' => 'form-control']) !!}
                             </div>
                             @error('aet')
                                 <span class="text-danger">{{ $message }}</span>
@@ -103,11 +103,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="model">{{ __('Evolutionary') }}</label>
+                            {!! Form::label('estat_integracio', __('Evolutionary State')) !!}
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-paper-plane"></i></span>
                                 </div>
+
                                 <select name="evolutiu" id="evolutiu" class="form-control" required>
                                     <option value="1">Integrat</option>
                                     <option value="2">Enviat eCAP</option>
