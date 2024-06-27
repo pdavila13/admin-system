@@ -95,12 +95,12 @@
                 }
             });
 
-            $('#zona').change(function() {
-                var zona = $(this).val();
+            $('#area').change(function() {
+                var area = $(this).val();
                 
-                if (zona) {
+                if (area) {
                     $.ajax({
-                        url: '{{ route("admin.get.centers", ":zona") }}'.replace(':zona', zona),
+                        url: '{{ route("admin.get.centers", ":area") }}'.replace(':area', area),
                         type: 'GET',
                         dataType: 'json',
                         success: function(data) {

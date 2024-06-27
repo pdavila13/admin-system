@@ -348,5 +348,10 @@
     "Evolutionary information": "Informació evolutiu",
     "Evolutionary State": "Estat evolutiu",
     "MQ code": "Codi MQ",
-    "MQ Description": "Descripció MQ"
+    "MQ Description": "Descripció MQ",
+    "High": "Alta nova integració",
+    "Send to eCAP": "Enviat a eCAP",
+    "Send to SAP": "Enviat a SAP",
+    "In tests": "En proves",
+    "Integrated": "Integrat"
 }

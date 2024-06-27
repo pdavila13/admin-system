@@ -57,23 +57,29 @@
 
                     <div class="col-4">
                         <div class="form-group">
-                            {!! Form::label('switch_port', __('Switch port')) !!}
+                            {!! Form::label('switch', __('Switch port')) !!}
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-ethernet"></i></span>
                                 </div>
-                                {!! Form::text('switch_port', null, ['class' => 'form-control']) !!}
+                                {!! Form::text('switch', null, ['class' => 'form-control']) !!}
                             </div>
+                            @error('switch')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="form-group">
-                            {!! Form::label('point', __('Point')) !!}
+                            {!! Form::label('roseta', __('Point')) !!}
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-map"></i></span>
                                 </div>
-                                {!! Form::text('point', null, ['class' => 'form-control']) !!}
+                                {!! Form::text('roseta', null, ['class' => 'form-control']) !!}
                             </div>
+                            @error('roseta')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -90,14 +96,14 @@
                 <div class="row justify-content-center">
                     <div class="col">
                         <div class="form-group">
-                            {!! Form::label('aet', __('AET')) !!}
+                            {!! Form::label('codi_evolutiu', __('AET')) !!}
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-tag"></i></span>
                                 </div>
-                                {!! Form::text('aet', old('aet'), ['class' => 'form-control']) !!}
+                                {!! Form::text('codi_evolutiu', old('codi_evolutiu'), ['class' => 'form-control']) !!}
                             </div>
-                            @error('aet')
+                            @error('codi_evolutiu')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -108,14 +114,11 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-paper-plane"></i></span>
                                 </div>
-
-                                <select name="evolutiu" id="evolutiu" class="form-control" required>
-                                    <option value="1">Integrat</option>
-                                    <option value="2">Enviat eCAP</option>
-                                    <option value="3">Enviat SAP</option>
-                                    <option value="4">Pendent de proves</option>
-                                </select>
+                                {!! Form::select('estat_integracio', $dataFromFacadeIntegrationState->pluck('descripcio', 'idestat_integracio')->toArray(), old('estat_integracio'), ['class' => 'form-control select2 select2-bootstrap4']) !!}
                             </div>
+                            @error('estat_integracio')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                 </div>

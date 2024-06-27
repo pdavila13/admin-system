@@ -337,5 +337,11 @@
     "Point": "Punto de conexión",
     "Evolutionary information": "Información evolutivo",
     "Evolutionary": "Evolutivo",
-    "MQ code": "Código MQ"
+    "MQ code": "Código MQ",
+    "MQ Description": "Descripción MQ",
+    "High": "Alta nueva integración",
+    "Send to eCAP": "Enviado a eCAP",
+    "Send to SAP": "Enviado a SAP",
+    "In tests": "En pruebas",
+    "Integrated": "Integrado"
 }

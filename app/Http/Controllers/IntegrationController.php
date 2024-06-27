@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Services\DataService;
-use App\Models\Inventory\Centro;
 use App\Models\Inventory\Elemento;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Inventory\TipusAparell;
 
 class IntegrationController extends Controller
 {
@@ -108,6 +105,80 @@ class IntegrationController extends Controller
     }
 
     /**
+     * Auxiliar function to handle SAP data insertions
+     */
+    private function insertSAPData($user, $integration)
+    {
+        // Generate the edit URL for the integration
+        $editUrl = route('admin.integration.edit', ['id' => $integration->id]);
+
+        $solId = DB::connection('portalaplicacions')->table('sol_d_activitat')->insertGetId([
+            'SOL_NIVELL' => 10,
+            'SOL_DATA_ALTA' => Carbon::now(),
+            'SOL_ESTAT' => 1,
+            'SOL_NIF' => $user->username,
+            'SOL_SOLICITANT' => $user->name,
+            'SOL_DESCRIPCIO' => __('messages.sap_description') . $editUrl,
+            'SOL_ID_CENTRE' => 'suport',
+            'SOL_MAIL' => $user->email,
+            'SOL_TIPOLOGIA' => 2,
+        ]);
+
+        DB::connection('portalaplicacions')->table('sol_d_notes_tecnics')->insert([
+            'NOT_ID_REGISTRE' => $solId,
+            'NOT_ID_TECNIC' => $user->username,
+            'NOT_DATA' => Carbon::now(),
+            'NOT_NOTA' => 'ALTA',
+            'NOT_ES_PUBLICABLE' => 1,
+        ]);
+
+        DB::connection('portalaplicacions')->table('sol_d_assig_tecnics')->insert([
+            'ASSIG_ID_REGISTRE' => $solId,
+            'ASSIG_ID_TECNIC' => 'X0000007F',
+            'ASSIG_DATA_INICI' => Carbon::now(),
+            'ASSIG_NIF' => $user->username,
+            'ASSIG_MODIFICAT' => Carbon::now(),
+        ]);
+    }
+
+    /**
+     * Auxiliar function to handle ECAP data insertions
+     */
+    private function insertECAPData($user, $integration)
+    {
+        // Generate the edit URL for the integration
+        $editUrl = route('admin.integration.edit', ['id' => $integration->id]);
+
+        $solId = DB::connection('portalaplicacions')->table('sol_d_activitat')->insertGetId([
+            'SOL_NIVELL' => 6,
+            'SOL_DATA_ALTA' => Carbon::now(),
+            'SOL_ESTAT' => 1,
+            'SOL_NIF' => $user->username,
+            'SOL_SOLICITANT' => $user->name,
+            'SOL_DESCRIPCIO' => __('messages.ecap_description') . $editUrl,
+            'SOL_ID_CENTRE' => 'suport',
+            'SOL_MAIL' => $user->email,
+            'SOL_TIPOLOGIA' => 2,
+        ]);
+
+        DB::connection('portalaplicacions')->table('sol_d_notes_tecnics')->insert([
+            'NOT_ID_REGISTRE' => $solId,
+            'NOT_ID_TECNIC' => $user->username,
+            'NOT_DATA' => Carbon::now(),
+            'NOT_NOTA' => 'ALTA',
+            'NOT_ES_PUBLICABLE' => 1,
+        ]);
+
+        DB::connection('portalaplicacions')->table('sol_d_assig_tecnics')->insert([
+            'ASSIG_ID_REGISTRE' => $solId,
+            'ASSIG_ID_TECNIC' => 'X0000001R',
+            'ASSIG_DATA_INICI' => Carbon::now(),
+            'ASSIG_NIF' => $user->username,
+            'ASSIG_MODIFICAT' => Carbon::now(),
+        ]);
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -127,28 +198,44 @@ class IntegrationController extends Controller
 
         $user = Auth::user();
 
-        Elemento::create([
-            'tipo' => 9,
-            'codigo' => $request['codigo'],
-            'def' => $request['def'],
-            'estado' => 1,
-            'marca' => $request['marca'],
-            'modelo' => $request['modelo'],
-            'centro' => $request['centro'],
-            'ubicacio' => $request['ubicacio'],
-            'usuario' => $user->username,
-            'fecha' => Carbon::now(),
-            'perfil' => 56,
-            'comentari' => $request['comentari'],
-            'tipus_aparell' => $request['tipus_aparell'],
-            'modality' => $request['modality'],
-            // 'modality_data' => json_encode($request['modality_data']),
-            'estat_integracio' => 3,
-            'sala' => $request['sala'],
-            'his' => $request['his'],
-        ]);
+        // Start the transaction to ensure data consistency in the database
+        DB::beginTransaction();
 
-        return redirect()->route('admin.integration.index')->with('success', 'Element created successfully.');
+        try {
+            $integration = Elemento::create([
+                'tipo' => 9,
+                'codigo' => $request['codigo'],
+                'def' => $request['def'],
+                'estado' => 1,
+                'marca' => $request['marca'],
+                'modelo' => $request['modelo'],
+                'centro' => $request['centro'],
+                'ubicacio' => $request['ubicacio'],
+                'usuario' => $user->username,
+                'fecha' => Carbon::now(),
+                'perfil' => 56,
+                'comentari' => $request['comentari'],
+                'tipus_aparell' => $request['tipus_aparell'],
+                'modality' => $request['modality'],
+                'estat_integracio' => 1,
+                'sala' => $request['sala'],
+                'his' => $request['his'],
+            ]);
+
+            if ($request['his'] === 'SAP') {
+                $this->insertSAPData($user, $integration);
+            } elseif ($request['his'] === 'ECAP') {
+                $this->insertECAPData($user, $integration);
+            }
+
+            // Confirm the transaction
+            DB::commit();
+            return redirect()->route('admin.integration.index')->with('success', __('messages.element_created'));
+        } catch (\Exception $e) {
+            // In case of error, rollback the transaction
+            DB::rollBack();
+            return redirect()->route('admin.integration.index')->with('error', __('messages.error_creating_element'));
+        }
     }
 
     /**
@@ -185,7 +272,7 @@ class IntegrationController extends Controller
         ->leftJoin('tipus_aparell', 'elemento.tipus_aparell', '=', 'tipus_aparell.idtipus_aparell')
         ->leftJoin('estat_integracio', 'elemento.estat_integracio', '=', 'estat_integracio.idestat_integracio')
         ->where('elemento.tipo', '=', 9)
-        ->where('elemento.estat_integracio', '=', 3)
+        ->where('estat_integracio.idestat_integracio', '>=', 1)
         ->first();
     
         $commonData = $this->getCommonData($integration);
@@ -223,57 +310,145 @@ class IntegrationController extends Controller
      */
     public function update(Request $request, Elemento $integration)
     {
-        $request->validate([
-            'codigo' => 'required',
-            'def' => 'required',
-            'tipus_aparell' => 'required',
-            'marca' => 'required',
-            'modelo' => 'required',
-            'centro' => 'required',
-            'modality' => 'required',
-            'sala' => 'required',
-            'his' => 'required',
-            'comentari' => 'required',
-        ]);
-
         $user = Auth::user();
+        $role = $user->getRoleNames()->first();
 
-        Elemento::where('id', $integration->id)->update([
-            'tipo' => 9,
-            'codigo' => $request['codigo'],
-            'def' => $request['def'],
-            'estado' => 1,
-            'marca' => $request['marca'],
-            'modelo' => $request['modelo'],
-            'centro' => $request['centro'],
-            'ubicacio' => $request['ubicacio'],
-            'usuario' => $user->username,
-            'fecha' => Carbon::now(),
-            'perfil' => 56,
-            'comentari' => $request['comentari'],
-            'tipus_aparell' => $request['tipus_aparell'],
-            'modality' => $request['modality'],
-            'maquina_sap' => $request['maquina_sap'],
-            'maquina_sap_desc' => $request['maquina_sap_desc'],
-            'servei' => $request['servei'],
-            'ut' => $request['ut'],
-            'estat_integracio' => 3,
-            'sala' => $request['sala'],
-            'his' => $request['his'],
-        ]);
+        $fieldsAllowed = [
+            'Admin' => [
+                'codigo', 'def', 'tipus_aparell', 'marca', 'modelo', 'centro', 
+                'ubicacio', 'modality', 'sala', 'his', 'comentari', 
+                'maquina_sap', 'maquina_sap_desc', 'servei', 'ut',
+                'roseta', 'switch', 'codi_evolutiu', 'estat_integracio'
+            ],
+            'User SAP' => [
+                'maquina_sap', 'maquina_sap_desc', 'servei', 'ut', 'estat_integracio'
+            ],
+            'User GEE' => [
+                'codigo', 'def', 'tipus_aparell', 'marca', 'modelo', 'centro', 
+                'ubicacio', 'modality', 'sala', 'his', 'comentari', 'estat_integracio'
+            ],
+        ];
 
-        return redirect()->route('admin.integration.index')->with('success', 'Element updated successfully.');
+        // Obtener los campos permitidos para el rol del usuario actual
+        $allowedFields = $fieldsAllowed[$role] ?? [];
+
+        // Filtrar los datos del request para incluir solo los campos permitidos
+        $data = $request->only($allowedFields);
+
+        // Definir las reglas de validación para los campos permitidos
+        $rules = [];
+        if (in_array('codigo', $allowedFields)) {
+            $rules['codigo'] = 'required';
+        }
+        if (in_array('def', $allowedFields)) {
+            $rules['def'] = 'required';
+        }
+        if (in_array('tipus_aparell', $allowedFields)) {
+            $rules['tipus_aparell'] = 'required';
+        }
+        if (in_array('marca', $allowedFields)) {
+            $rules['marca'] = 'required';
+        }
+        if (in_array('modelo', $allowedFields)) {
+            $rules['modelo'] = 'required';
+        }
+        if (in_array('centro', $allowedFields)) {
+            $rules['centro'] = 'required';
+        }
+        if (in_array('modality', $allowedFields)) {
+            $rules['modality'] = 'required';
+        }
+        if (in_array('maquina_sap', $allowedFields)) {
+            $rules['maquina_sap'] = 'required';
+        }
+        if (in_array('maquina_sap_desc', $allowedFields)) {
+            $rules['maquina_sap_desc'] = 'required';
+        }
+        if (in_array('servei', $allowedFields)) {
+            $rules['servei'] = 'required';
+        }
+        if (in_array('ut', $allowedFields)) {
+            $rules['ut'] = 'required';
+        }
+        if (in_array('codi_evolutiu', $allowedFields)) {
+            $rules['codi_evolutiu'] = 'required';
+        }
+        if (in_array('estat_integracio', $allowedFields)) {
+            $rules['estat_integracio'] = 'required';
+        }
+        if (in_array('sala', $allowedFields)) {
+            $rules['sala'] = 'required';
+        }
+        if (in_array('his', $allowedFields)) {
+            $rules['his'] = 'required';
+        }
+        if (in_array('comentari', $allowedFields)) {
+            $rules['comentari'] = 'required';
+        }
+
+        // Validar la solicitud
+        $request->validate($rules);
+
+        // Encontrar la integración existente
+        $integration = Elemento::findOrFail($integration->id);
+
+        // Actualizar la integración con los datos filtrados
+        $integration->update($data);
+
+        // $request->validate([
+        //     'codigo' => 'required',
+        //     'def' => 'required',
+        //     'tipus_aparell' => 'required',
+        //     'marca' => 'required',
+        //     'modelo' => 'required',
+        //     'centro' => 'required',
+        //     'modality' => 'required',
+        //     'maquina_sap' => 'required',
+        //     'maquina_sap_desc' => 'required',
+        //     'sala' => 'required',
+        //     'his' => 'required',
+        //     'comentari' => 'required',
+        // ]);
+
+        // Elemento::where('id', $integration->id)->update([
+        //     'tipo' => 9,
+        //     'codigo' => $request['codigo'],
+        //     'def' => $request['def'],
+        //     'estado' => 1,
+        //     'marca' => $request['marca'],
+        //     'modelo' => $request['modelo'],
+        //     'centro' => $request['centro'],
+        //     'ubicacio' => $request['ubicacio'],
+        //     'usuario' => $user->username,
+        //     'fecha' => Carbon::now(),
+        //     'perfil' => 56,
+        //     'comentari' => $request['comentari'],
+        //     'tipus_aparell' => $request['tipus_aparell'],
+        //     'modality' => $request['modality'],
+        //     'maquina_sap' => $request['maquina_sap'],
+        //     'maquina_sap_desc' => $request['maquina_sap_desc'],
+        //     'servei' => $request['servei'],
+        //     'ut' => $request['ut'],
+        //     'estat_integracio' => 3,
+        //     'sala' => $request['sala'],
+        //     'his' => $request['his'],
+        // ]);
+
+        return redirect()->route('admin.integration.index')->with('success', __('messages.element_updated'));
     }
 
+    /**
+     * Calculate the gateway IP address based on the given IP and subnet mask.
+     */
     public function calculateGateway($ip, $mask)
     {
-        // Validar y separar las partes de la IP
+        // Validate and separate the parts of the IP address
         $ipParts = explode('.', $ip);
         if (count($ipParts) !== 4) {
             throw new \Exception('IP address is not valid.');
         }
     
-        // Validar y separar las partes de la máscara
+        // Validate and separate the parts of the subnet mask
         $maskParts = explode('.', $mask);
         if (count($maskParts) !== 4) {
             throw new \Exception('Subnet mask is not valid.');
@@ -284,10 +459,10 @@ class IntegrationController extends Controller
             $networkParts[] = intval($ipParts[$i]) & intval($maskParts[$i]);
         }
     
-        // Incrementar la última parte para obtener el gateway
+        // Increment the last part of the network address to get the gateway address
         $networkParts[3] += 1;
     
-        // Combinar las partes de nuevo en una cadena de IP
+        // Combine the parts of the gateway address and return it
         $gateway = implode('.', $networkParts);
     
         return $gateway;

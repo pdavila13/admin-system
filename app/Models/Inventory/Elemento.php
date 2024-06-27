@@ -92,7 +92,14 @@ class Elemento extends Model
 		'tipus_aparell',
 		'modality',
 		'modality_data',
+		'maquina_sap',
+		'maquina_sap_desc',
+		'servei',
+		'ut',
+		'codi_evolutiu',
 		'estat_integracio',
+		'roseta',
+		'switch',
 		'sala',
 		'his'
 	];
