@@ -2,16 +2,16 @@
 
 {{-- Customize layout sections --}}
 @section('subtitle', __('Permissions'))
-@section('content_header_title', __('List permissions'))
+@section('content_header')
+    @can('admin.permission.create')
+        <a href="{{ route('admin.permission.create') }}" class="btn btn-sm btn-primary float-right"><i class="fas fa-plus"></i></a>
+    @endcan
+    <h1 class="text-muted">{{ __('List permissions') }}</h1>
+@stop
 
 {{-- Content body: main page content --}}
 @section('content_body')
     <div class="card">
-        <div class="card-header">
-            <div class="card-tools">
-                <a href="{{ route('admin.permission.create') }}" class="btn btn-sm btn-primary">{{ __('Add') }}</a>
-            </div>
-        </div>
         <div class="card-body">
             <table class="table table-striped" id="permissionTable" style="width:100%">
                 <thead>
