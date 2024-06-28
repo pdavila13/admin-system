@@ -11,9 +11,10 @@
             <table class="table table-striped" id="userTable" style="width:100%">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>{{ __('ID') }}</th>
                         <th>{{ __('Name') }}</th>
                         <th>{{ __('Email') }}</th>
+                        <th>{{ __('Role') }}</th>
                         <th>{{ __('Created') }}</th>
                         <th class="text-right">{{ __('Actions') }}</th>
                     </tr>
@@ -24,6 +25,11 @@
                             <td>{{ $user->id }}</td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
+                            <td>
+                                @foreach ($user->roles as $role)
+                                    <span class="badge badge-info">{{ $role->name }}</span>
+                                @endforeach
+                            </td>
                             <td>{{ $user->created_at }}</td>
                             <td class="user-actions text-right">
                                 <a href="{{ route('admin.user.edit', $user) }}" class="btn btn-info btn-xs">

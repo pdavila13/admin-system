@@ -2,32 +2,36 @@
 
 {{-- Customize layout sections --}}
 @section('subtitle', __('Roles'))
-@section('content_header_title', __('List roles'))
+@section('content_header')
+    @can('admin.role.create')
+        <a href="{{ route('admin.role.create') }}" class="btn btn-sm btn-primary float-right"><i class="fas fa-plus"></i></a>
+    @endcan
+    <h1 class="text-muted">{{ __('List roles') }}</h1>
+@stop
 
 {{-- Content body: main page content --}}
 @section('content_body')
     <div class="card">
-        <div class="card-header">
-            <div class="card-tools">
-                <a href="{{ route('admin.role.create') }}" class="btn btn-sm btn-primary">{{__('Add') }}</a>
-            </div>
-        </div>
         <div class="card-body">
             <table class="table table-striped" id="roleTable" style="width:100%">
                 <thead>
                     <tr>
+                        <th>{{ __('ID') }}</th>
                         <th>{{ __('Name') }}</th>
+                        <th>{{ __('Description') }}</th>
                         <th>{{ __('Created') }}</th>
                         <th class="text-right">{{ __('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($data as $role)
+                    @foreach ($roles as $role)
                         <tr>
+                            <td>{{ $role->id }}</td>
                             <td>{{ $role->name }}</td>
+                            <td>{{ $role->description }}</td>
                             <td>{{ $role->created_at }}</td>
                             <td class="role-actions text-right">
-                                <a href="{{ route('admin.role.edit', encrypt($role->id)) }}" class="btn btn-info btn-xs">
+                                <a href="{{ route('admin.role.edit', $role) }}" class="btn btn-info btn-xs">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <form action="{{ route('admin.role.destroy', encrypt($role->id)) }}" method="POST" onsubmit="return confirm('Are sure want to delete?')" style="display: inline;">

@@ -16,7 +16,9 @@
             <table class="table table-striped" id="permissionTable" style="width:100%">
                 <thead>
                     <tr>
+                        <th>{{ __('ID') }}</th>
                         <th>{{ __('Name') }}</th>
+                        <th>{{ __('Description') }}</th>
                         <th>{{ __('Created') }}</th>
                         <th></th>
                     </tr>
@@ -24,7 +26,9 @@
                 <tbody>
                     @forelse ($data as $permission)
                         <tr>
+                            <td>{{ $permission->id }}</td>
                             <td>{{ $permission->name }}</td>
+                            <td>{{ $permission->description }}</td>
                             <td>{{ $permission->created_at }}</td>
                             <td class="permission-actions text-right">
                                 <a href="{{ route('admin.permission.edit', encrypt($permission->id)) }}" class="btn btn-info btn-xs">

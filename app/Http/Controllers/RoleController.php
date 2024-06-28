@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller
 {
@@ -17,44 +18,53 @@ class RoleController extends Controller
 
     public function index()
     {
-        $data = Role::orderBy('id','ASC')->get();
-        return view('admin.role.index', compact('data'));
+        $roles = Role::orderBy('id','ASC')->get();
+        return view('admin.role.index', compact('roles'));
     }
 
     public function create()
     {
-        return view('admin.role.create');
+        $permissions = Permission::orderBy('id','ASC')->get();
+
+        return view('admin.role.create', compact('permissions'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|unique:roles|max:255',
+            'description' => 'required|max:255'
         ]);
-        Role::updateOrCreate(
-            [
-                'id'=>$request->id
-            ],[
-                'name'=>$request->name,
-            ]
-        );
-        if($request->id){
-            $msg = 'Role updated successfully.';
-        }else{
-            $msg = 'Role created successfully.';
-        }
-        return redirect()->route('admin.role.index')->with('success',$msg);
+        
+        $role = Role::create($request->all());
+        $role->permissions()->sync($request->permissions);
+
+        return redirect()->route('admin.role.index')->with('success','Role created successfully.');
     }
 
-    public function edit($id)
+    public function edit(Role $role)
     {
-        $data = Role::where('id',decrypt($id))->first();
-        return view('admin.role.edit',compact('data'));
+        $permissions = Permission::orderBy('id','ASC')->get();
+
+        return view('admin.role.edit',compact('role','permissions'));
+    }
+
+    public function update(Request $request, Role $role)
+    {
+        $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required|max:255'
+        ]);
+
+        $role->update($request->all());
+        $role->permissions()->sync($request->permissions);
+
+        return redirect()->route('admin.role.index')->with('success','Role updated successfully.');
     }
 
     public function destroy($id)
     {
         Role::where('id',decrypt($id))->delete();
-        return redirect()->route('admin.role.index')->with('error','Role deleted successfully.');
+        return redirect()->route('admin.role.index')->with('success','Role deleted successfully.');
     }
 }

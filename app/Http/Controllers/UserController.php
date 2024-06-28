@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use DragonCode\Contracts\Cashier\Auth\Auth;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 
@@ -19,7 +20,8 @@ class UserController extends Controller
 
     public function index()
     {
-        $data = User::orderBy('id','ASC')->get();
+        $data = User::with('roles')->orderBy('id','ASC')->get();
+
         return view('admin.user.index', compact('data'));
     }
 
