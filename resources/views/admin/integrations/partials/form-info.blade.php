@@ -13,7 +13,9 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-network-wired"></i></span>
                                 </div>
-                                {!! Form::text('network', $dataFromFacadeIP->where('id', $integration->id)->first()->centro_ip ?? '', ['class' => 'form-control', 'readonly' => 'readonly']) !!}
+                                {!! Form::text('network', $dataFromFacadeIP->centro_ip, ['class' => 'form-control', 'readonly' => 'readonly']) !!}
+
+                                {{-- {!! Form::text('network', $dataFromFacadeIP->where('id', $integration->id)->first()->centro_ip ?? '', ['class' => 'form-control', 'readonly' => 'readonly']) !!} --}}
                             </div>
                         </div>
 
@@ -24,7 +26,9 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-laptop"></i></span>
                                     </div>
-                                    {!! Form::select('ip_address', $dataFromFacadeIP->where('id', $integration->id)->pluck('ip', 'id')->toArray(), old('ip_address'), ['class' => 'form-control select2 select2-bootstrap4']) !!}
+                                    {!! Form::select('ip_address', [$dataFromFacadeIP->id => $dataFromFacadeIP->ip], old('ip_address'), ['class' => 'form-control select2 select2-bootstrap4']) !!}
+
+                                    {{-- {!! Form::select('ip_address', $dataFromFacadeIP->where('id', $integration->id)->pluck('ip', 'id')->toArray(), old('ip_address'), ['class' => 'form-control select2 select2-bootstrap4']) !!} --}}
                                 </div>
                             </div>
                             @error('ip_address')
@@ -40,7 +44,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-door-open"></i></span>
                                 </div>
-                                {!! Form::text('gateway', null, ['class' => 'form-control', 'readonly' => 'readonly']) !!}
+                                {!! Form::text('gateway', $gateway, ['class' => 'form-control', 'readonly' => 'readonly']) !!}
                             </div>
                         </div>
 
@@ -50,7 +54,9 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-mask"></i></span>
                                 </div>
-                                {!! Form::text('netmask', $dataFromFacadeIP->where('id', $integration->id)->first()->centro_mask ?? '', ['class' => 'form-control', 'readonly' => 'readonly']) !!}
+                                {!! Form::text('netmask', $dataFromFacadeIP->centro_mask, ['class' => 'form-control', 'readonly' => 'readonly']) !!}
+
+                                {{-- {!! Form::text('netmask', $dataFromFacadeIP->where('id', $integration->id)->first()->centro_mask ?? '', ['class' => 'form-control', 'readonly' => 'readonly']) !!} --}}
                             </div>
                         </div>
                     </div>

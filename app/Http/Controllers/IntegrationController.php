@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Inventory\Elemento;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 class IntegrationController extends Controller
@@ -288,8 +289,7 @@ class IntegrationController extends Controller
     
         $commonData['dataFromFacadeAreaFromElemento'] = $dataFromFacadeAreaFromElemento;
     
-        $dataFromFacadeIP = Elemento::on('inventory')
-            ->with(['ip', 'centro'])
+        $dataFromFacadeIP = DB::connection('inventory')->table('elemento')
             ->leftJoin('ip', 'elemento.id', '=', 'ip.id')
             ->leftJoin('centro', 'elemento.centro', '=', 'centro.id')
             ->select(
@@ -298,11 +298,21 @@ class IntegrationController extends Controller
                 DB::raw("concat(centro.ip1,'.',centro.ip2,'.',centro.ip3,'.',centro.ip4) as centro_ip"),
                 DB::raw("concat(centro.mask1,'.',centro.mask2,'.',centro.mask3,'.',centro.mask4) as centro_mask")
             )
-            ->get();
-    
-        $commonData['dataFromFacadeIP'] = $dataFromFacadeIP;
-    
-        return view('admin.integrations.edit', array_merge($commonData, compact('integration')));
+            ->where('elemento.id', $integration->id)
+            ->first();
+
+        // Verificar si se encontraron datos de IP
+        if ($dataFromFacadeIP) {
+            try {
+                $gateway = $this->calculateGateway($dataFromFacadeIP->centro_ip, $dataFromFacadeIP->centro_mask);
+            } catch (\Exception $e) {
+                $gateway = 'N/A';
+            }
+        } else {
+            $gateway = 'N/A';
+        }
+        
+        return view('admin.integrations.edit', array_merge($commonData, compact('integration', 'gateway', 'dataFromFacadeIP')));
     }
 
     /**
@@ -447,24 +457,24 @@ class IntegrationController extends Controller
         if (count($ipParts) !== 4) {
             throw new \Exception('IP address is not valid.');
         }
-    
+
         // Validate and separate the parts of the subnet mask
         $maskParts = explode('.', $mask);
         if (count($maskParts) !== 4) {
             throw new \Exception('Subnet mask is not valid.');
         }
-    
+
         $networkParts = [];
         for ($i = 0; $i < 4; $i++) {
             $networkParts[] = intval($ipParts[$i]) & intval($maskParts[$i]);
         }
-    
+
         // Increment the last part of the network address to get the gateway address
         $networkParts[3] += 1;
-    
+
         // Combine the parts of the gateway address and return it
         $gateway = implode('.', $networkParts);
-    
+
         return $gateway;
     }
 }
