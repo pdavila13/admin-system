@@ -28,8 +28,10 @@ class GroupVpnController extends Controller
         $data = GroupVpn::whereHas('company', function ($query) {
             $query->where('active', 1);
         })->orderBy('id', 'DESC')->get();
+
+        $companies = Company::where('active', 1)->get();
         
-        return view('admin.groups_vpn.index',compact('data'));
+        return view('admin.groups_vpn.index',compact('data','companies'));
     }
 
     /**

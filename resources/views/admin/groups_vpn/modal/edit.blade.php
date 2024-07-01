@@ -28,9 +28,9 @@
                                 <label for="company">{{ __('Company') }}</label>
                                 <select class="form-control select2 select2-bootstrap4 initialize-select2" name="company_id" id="company" class="form-control">
                                     <option value="" selected disabled>{{ __('Select company') }}</option>
-                                    @foreach ($company as $com)
-                                        @if ($com->active == 1)
-                                            <option {{ $group_vpn->company_id  == $com->id ? 'selected' : '' }} value="{{ $com->id }}">{{ $com->name }}</option>
+                                    @foreach ($companies as $company)
+                                        @if ($company->active == 1)
+                                            <option {{ $group_vpn->company_id  == $company->id ? 'selected' : '' }} value="{{ $company->id }}">{{ $company->name }}</option>
                                         @endif
                                     @endforeach
                                 </select>
