@@ -368,18 +368,6 @@ class IntegrationController extends Controller
         if (in_array('modality', $allowedFields)) {
             $rules['modality'] = 'required';
         }
-        if (in_array('maquina_sap', $allowedFields)) {
-            $rules['maquina_sap'] = 'required';
-        }
-        if (in_array('maquina_sap_desc', $allowedFields)) {
-            $rules['maquina_sap_desc'] = 'required';
-        }
-        if (in_array('servei', $allowedFields)) {
-            $rules['servei'] = 'required';
-        }
-        if (in_array('ut', $allowedFields)) {
-            $rules['ut'] = 'required';
-        }
         if (in_array('codi_evolutiu', $allowedFields)) {
             $rules['codi_evolutiu'] = 'required';
         }
@@ -404,45 +392,6 @@ class IntegrationController extends Controller
 
         // Actualizar la integración con los datos filtrados
         $integration->update($data);
-
-        // $request->validate([
-        //     'codigo' => 'required',
-        //     'def' => 'required',
-        //     'tipus_aparell' => 'required',
-        //     'marca' => 'required',
-        //     'modelo' => 'required',
-        //     'centro' => 'required',
-        //     'modality' => 'required',
-        //     'maquina_sap' => 'required',
-        //     'maquina_sap_desc' => 'required',
-        //     'sala' => 'required',
-        //     'his' => 'required',
-        //     'comentari' => 'required',
-        // ]);
-
-        // Elemento::where('id', $integration->id)->update([
-        //     'tipo' => 9,
-        //     'codigo' => $request['codigo'],
-        //     'def' => $request['def'],
-        //     'estado' => 1,
-        //     'marca' => $request['marca'],
-        //     'modelo' => $request['modelo'],
-        //     'centro' => $request['centro'],
-        //     'ubicacio' => $request['ubicacio'],
-        //     'usuario' => $user->username,
-        //     'fecha' => Carbon::now(),
-        //     'perfil' => 56,
-        //     'comentari' => $request['comentari'],
-        //     'tipus_aparell' => $request['tipus_aparell'],
-        //     'modality' => $request['modality'],
-        //     'maquina_sap' => $request['maquina_sap'],
-        //     'maquina_sap_desc' => $request['maquina_sap_desc'],
-        //     'servei' => $request['servei'],
-        //     'ut' => $request['ut'],
-        //     'estat_integracio' => 3,
-        //     'sala' => $request['sala'],
-        //     'his' => $request['his'],
-        // ]);
 
         return redirect()->route('admin.integration.index')->with('success', __('messages.element_updated'));
     }
