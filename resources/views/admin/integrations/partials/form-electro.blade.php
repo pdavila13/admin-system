@@ -132,7 +132,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-layer-group"></i></span>
                                 </div>
-                                {!! Form::select('ubicacio', [''] + $dataFromFacadeFloor->toArray(), old('ubicacio'), ['class' => 'form-control select2 select2-bootstrap4', 'required' => 'required']) !!}
+                                {!! Form::select('ubicacio', [''] + $dataFromFacadeFloor->toArray(), old('ubicacio'), ['class' => 'form-control select2 select2-bootstrap4']) !!}
                             </div>
                             @error('ubicacio')
                                 <span class="text-danger">{{ $message }}</span>
@@ -147,7 +147,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-thumbtack"></i></span>
                                 </div>
-                                {!! Form::text('sala', old('sala'), ['class' => 'form-control', 'required' => 'required']) !!}
+                                {!! Form::text('sala', old('sala'), ['class' => 'form-control']) !!}
                             </div>
                             @error('sala')
                                 <span class="text-danger">{{ $message }}</span>

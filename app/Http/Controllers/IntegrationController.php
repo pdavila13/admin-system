@@ -111,7 +111,7 @@ class IntegrationController extends Controller
     private function insertSAPData($user, $integration)
     {
         // Generate the edit URL for the integration
-        $editUrl = route('admin.integration.edit', ['id' => $integration->id]);
+        $editUrl = route('admin.integration.edit', $integration);
 
         $solId = DB::connection('portalaplicacions')->table('sol_d_activitat')->insertGetId([
             'SOL_NIVELL' => 10,
@@ -148,7 +148,7 @@ class IntegrationController extends Controller
     private function insertECAPData($user, $integration)
     {
         // Generate the edit URL for the integration
-        $editUrl = route('admin.integration.edit', ['id' => $integration->id]);
+        $editUrl = route('admin.integration.edit', $integration);
 
         $solId = DB::connection('portalaplicacions')->table('sol_d_activitat')->insertGetId([
             'SOL_NIVELL' => 6,
@@ -192,7 +192,6 @@ class IntegrationController extends Controller
             'modelo' => 'required',
             'centro' => 'required',
             'modality' => 'required',
-            'sala' => 'required',
             'his' => 'required',
             'comentari' => 'required',
         ]);
@@ -326,7 +325,7 @@ class IntegrationController extends Controller
         $fieldsAllowed = [
             'Admin' => [
                 'codigo', 'def', 'tipus_aparell', 'marca', 'modelo', 'centro', 
-                'ubicacio', 'modality', 'sala', 'his', 'comentari', 
+                'ubicacio', 'modality', 'his', 'comentari', 
                 'maquina_sap', 'maquina_sap_desc', 'servei', 'ut',
                 'roseta', 'switch', 'codi_evolutiu', 'estat_integracio'
             ],
@@ -335,7 +334,7 @@ class IntegrationController extends Controller
             ],
             'User GEE' => [
                 'codigo', 'def', 'tipus_aparell', 'marca', 'modelo', 'centro', 
-                'ubicacio', 'modality', 'sala', 'his', 'comentari', 'estat_integracio'
+                'ubicacio', 'modality', 'his', 'comentari', 'estat_integracio'
             ],
         ];
 
@@ -368,14 +367,8 @@ class IntegrationController extends Controller
         if (in_array('modality', $allowedFields)) {
             $rules['modality'] = 'required';
         }
-        if (in_array('codi_evolutiu', $allowedFields)) {
-            $rules['codi_evolutiu'] = 'required';
-        }
         if (in_array('estat_integracio', $allowedFields)) {
             $rules['estat_integracio'] = 'required';
-        }
-        if (in_array('sala', $allowedFields)) {
-            $rules['sala'] = 'required';
         }
         if (in_array('his', $allowedFields)) {
             $rules['his'] = 'required';
