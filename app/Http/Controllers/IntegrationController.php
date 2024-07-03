@@ -113,7 +113,7 @@ class IntegrationController extends Controller
         // Generate the edit URL for the integration
         $editUrl = route('admin.integration.edit', $integration);
 
-        $solId = DB::connection('portalaplicacions')->table('sol_d_activitat')->insertGetId([
+        $solId = DB::connection('portalaplicacions')->table('SOL_D_ACTIVITAT')->insertGetId([
             'SOL_NIVELL' => 10,
             'SOL_DATA_ALTA' => Carbon::now(),
             'SOL_ESTAT' => 1,
@@ -125,7 +125,7 @@ class IntegrationController extends Controller
             'SOL_TIPOLOGIA' => 2,
         ]);
 
-        DB::connection('portalaplicacions')->table('sol_d_notes_tecnics')->insert([
+        DB::connection('portalaplicacions')->table('SOL_D_NOTES_TECNICS')->insert([
             'NOT_ID_REGISTRE' => $solId,
             'NOT_ID_TECNIC' => $user->username,
             'NOT_DATA' => Carbon::now(),
@@ -133,7 +133,7 @@ class IntegrationController extends Controller
             'NOT_ES_PUBLICABLE' => 1,
         ]);
 
-        DB::connection('portalaplicacions')->table('sol_d_assig_tecnics')->insert([
+        DB::connection('portalaplicacions')->table('SOL_D_ASSIG_TECNICS')->insert([
             'ASSIG_ID_REGISTRE' => $solId,
             'ASSIG_ID_TECNIC' => 'X0000007F',
             'ASSIG_DATA_INICI' => Carbon::now(),
@@ -150,7 +150,7 @@ class IntegrationController extends Controller
         // Generate the edit URL for the integration
         $editUrl = route('admin.integration.edit', $integration);
 
-        $solId = DB::connection('portalaplicacions')->table('sol_d_activitat')->insertGetId([
+        $solId = DB::connection('portalaplicacions')->table('SOL_D_ACTIVITAT')->insertGetId([
             'SOL_NIVELL' => 6,
             'SOL_DATA_ALTA' => Carbon::now(),
             'SOL_ESTAT' => 1,
@@ -162,7 +162,7 @@ class IntegrationController extends Controller
             'SOL_TIPOLOGIA' => 2,
         ]);
 
-        DB::connection('portalaplicacions')->table('sol_d_notes_tecnics')->insert([
+        DB::connection('portalaplicacions')->table('SOL_D_NOTES_TECNICS')->insert([
             'NOT_ID_REGISTRE' => $solId,
             'NOT_ID_TECNIC' => $user->username,
             'NOT_DATA' => Carbon::now(),
@@ -170,7 +170,7 @@ class IntegrationController extends Controller
             'NOT_ES_PUBLICABLE' => 1,
         ]);
 
-        DB::connection('portalaplicacions')->table('sol_d_assig_tecnics')->insert([
+        DB::connection('portalaplicacions')->table('SOL_D_ASSIG_TECNICS')->insert([
             'ASSIG_ID_REGISTRE' => $solId,
             'ASSIG_ID_TECNIC' => 'X0000001R',
             'ASSIG_DATA_INICI' => Carbon::now(),
@@ -243,7 +243,7 @@ class IntegrationController extends Controller
      */
     public function show(Elemento $elemento)
     {
-        //
+        return view('admin.integrations.modal.show', compact('elemento'));
     }
 
     /**
