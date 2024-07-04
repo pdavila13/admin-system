@@ -229,6 +229,7 @@
     "Update :name": "Actualitzar :name",
     "Update Password": "Actualitzar La Contrasenya",
     "Update your account's profile information and email address.": "Actualitzeu la informació del seu compte i l'adreça de correu electrònic",
+    "Updated": "Actualitzat",
     "Upgrade Required": "Actualització necessària",
     "URI Too Long": "URI massa llarg",
     "Use Proxy": "Utilitzeu el proxy",
@@ -327,7 +328,7 @@
     "Equipment description": "Descripció de l'equipament",
     "Type": "Tipus",
     "Modality": "Modalitat",
-    "Equipment type": "Tipus d'equipament",
+    "Equipment type": "Tipus d'aparell",
     "Manufacturer information": "Informació del fabricant",
     "Trademark": "Marca",
     "Model": "Model",
@@ -347,11 +348,13 @@
     "Point": "Punt de connexió",
     "Evolutionary information": "Informació evolutiu",
     "Evolutionary State": "Estat evolutiu",
+    "Evolutive code": "Codi evolutiu",
     "MQ code": "Codi MQ",
     "MQ Description": "Descripció MQ",
     "High": "Alta nova integració",
     "Send to eCAP": "Enviat a eCAP",
     "Send to SAP": "Enviat a SAP",
     "In tests": "En proves",
-    "Integrated": "Integrat"
+    "Integrated": "Integrat",
+    "Digital image": "Imatge digital"
 }

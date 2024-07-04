@@ -189,6 +189,19 @@
                 @error('comentari')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
+
+                <div class="form-group">
+                    {!! Form::label('estat_integracio', __('Evolutionary State')) !!}
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-paper-plane"></i></span>
+                        </div>
+                        {!! Form::select('estat_integracio', $dataFromFacadeIntegrationState->pluck('descripcio', 'idestat_integracio')->toArray(), old('estat_integracio'), ['class' => 'form-control select2 select2-bootstrap4']) !!}
+                    </div>
+                    @error('estat_integracio')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
             </div>
         </div>
     </div>

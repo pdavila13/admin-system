@@ -26,8 +26,8 @@ class IntegrationController extends Controller
     {
         $dataFromFacadeTypeOfDevice = DB::connection('inventory')->table('tipus_aparell')->orderBy('descripcio', 'ASC')->get();
         $dataFromFacadeModalities = DB::connection('inventory')->table('modalities')->orderBy('modality', 'ASC')->get();
-        $dataFromFacadeTrademark = DB::connection('inventory')->table('marca')->where('tipo', '=', 9)->orderBy('DEF', 'ASC')->get();
-        $dataFromFacadeModel = DB::connection('inventory')->table('modelo')->where('tipo', '=', 9)->orderBy('DEF', 'ASC')->get();
+        $dataFromFacadeTrademark = DB::connection('inventory')->table('marca')->orderBy('DEF', 'ASC')->get();
+        $dataFromFacadeModel = DB::connection('inventory')->table('modelo')->orderBy('DEF', 'ASC')->get();
         $dataFromFacadeArea = DB::connection('inventory')->table('area')->whereNot('id', '=', 'STOCK')->orderBy('def', 'ASC')->get();
         $dataFromFacadeCenter = DB::connection('inventory')->table('centro')->orderBy('def', 'ASC')->get();
         $dataFromFacadeIntegrationState = DB::connection('inventory')->table('estat_integracio')->orderBy('descripcio', 'ASC')->get();
@@ -74,18 +74,35 @@ class IntegrationController extends Controller
             'elemento.id',
             'elemento.centro',
             'centro.def as centro_def',
+            'tipo.def as tipo_def',
+            'marca.DEF as marca_def',
+            'modelo.def as modelo_def',
             'tipus_aparell.descripcio as tipus_aparell_def',
             'estat_integracio.idestat_integracio as estat_integracio_id',
+            'descripcio_perfil as perfil_def',
             'elemento.def',
             'elemento.tipo',
             'elemento.marca',
             'elemento.modelo',
+            'elemento.codigo',
             'elemento.modality',
-            'elemento.fecha'
+            'elemento.aet',
+            'elemento.maquina_sap',
+            'elemento.ut',
+            'elemento.codi_evolutiu',
+            'elemento.roseta',
+            'elemento.switch',
+            'elemento.fecha',
+            DB::raw("concat(ip.ip1,'.',ip.ip2,'.',ip.ip3,'.',ip.ip4) as ip")
         )
         ->leftJoin('centro', 'elemento.centro', '=', 'centro.id')
+        ->leftJoin('tipo', 'elemento.tipo', '=', 'tipo.id')
+        ->leftJoin('marca', 'elemento.marca', '=', 'marca.id')
+        ->leftJoin('modelo', 'elemento.modelo', '=', 'modelo.id')
         ->leftJoin('tipus_aparell', 'elemento.tipus_aparell', '=', 'tipus_aparell.idtipus_aparell')
         ->leftJoin('estat_integracio', 'elemento.estat_integracio', '=', 'estat_integracio.idestat_integracio')
+        ->leftJoin('ip', 'elemento.id', '=', 'ip.id')
+        ->leftJoin('perfils', 'elemento.perfil', '=', 'perfils.id_perfil')
         ->where('elemento.tipo', '=', 9)
         ->where('elemento.estat_integracio', '>=', 1)
         ->orderBy('elemento.fecha', 'DESC')
@@ -170,7 +187,7 @@ class IntegrationController extends Controller
             'NOT_ES_PUBLICABLE' => 1,
         ]);
 
-        DB::connection('portalaplicacions')->table('SOL_D_ASSIG_TECNICS')->insert([
+        DB::connection('portalaplicacions')->table('SOL_D_NOTES_TECNICS')->insert([
             'ASSIG_ID_REGISTRE' => $solId,
             'ASSIG_ID_TECNIC' => 'X0000001R',
             'ASSIG_DATA_INICI' => Carbon::now(),

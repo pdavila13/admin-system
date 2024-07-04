@@ -102,12 +102,12 @@
                 <div class="row justify-content-center">
                     <div class="col">
                         <div class="form-group">
-                            {!! Form::label('codi_evolutiu', __('AET')) !!}
+                            {!! Form::label('aet', __('AETITLE')) !!}
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-tag"></i></span>
                                 </div>
-                                {!! Form::text('codi_evolutiu', old('codi_evolutiu'), ['class' => 'form-control']) !!}
+                                {!! Form::text('aet', old('aet'), ['class' => 'form-control']) !!}
                             </div>
                             @error('codi_evolutiu')
                                 <span class="text-danger">{{ $message }}</span>
@@ -115,14 +115,14 @@
                         </div>
 
                         <div class="form-group">
-                            {!! Form::label('estat_integracio', __('Evolutionary State')) !!}
+                            {!! Form::label('codi_evolutiu', __('Evolutive code')) !!}
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-paper-plane"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-barcode"></i></span>
                                 </div>
-                                {!! Form::select('estat_integracio', $dataFromFacadeIntegrationState->pluck('descripcio', 'idestat_integracio')->toArray(), old('estat_integracio'), ['class' => 'form-control select2 select2-bootstrap4']) !!}
+                                {!! Form::text('codi_evolutiu', old('codi_evolutiu'), ['class' => 'form-control']) !!}
                             </div>
-                            @error('estat_integracio')
+                            @error('codi_evolutiu')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>

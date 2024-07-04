@@ -229,6 +229,7 @@
     "Update :name": "Actualizar :name",
     "Update Password": "Actualizar contraseña",
     "Update your account's profile information and email address.": "Actualice la información de su cuenta y la dirección de correo electrónico.",
+    "Updated": "Actualizado",
     "Upgrade Required": "Se requiere actualización",
     "URI Too Long": "URI demasiado largo",
     "Use Proxy": "Usa proxy",
@@ -337,11 +338,13 @@
     "Point": "Punto de conexión",
     "Evolutionary information": "Información evolutivo",
     "Evolutionary": "Evolutivo",
+    "Evolutive code": "Código evolutivo",
     "MQ code": "Código MQ",
     "MQ Description": "Descripción MQ",
     "High": "Alta nueva integración",
     "Send to eCAP": "Enviado a eCAP",
     "Send to SAP": "Enviado a SAP",
     "In tests": "En pruebas",
-    "Integrated": "Integrado"
+    "Integrated": "Integrado",
+    "Digital image": "Imagen digital"
 }

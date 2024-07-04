@@ -49,7 +49,9 @@
                                 @endif
                             </td>
                             <td class="text-right">
-                                <a href="#" class="btn btn-success btn-xs"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="btn btn-success btn-xs" data-toggle="modal" data-target="#ModalIntegrationShow{{ $elemento->id }}">
+                                    <i class="fas fa-eye"></i>
+                                </a>
                                 @can('admin.integration.edit')
                                     <a href="{{route('admin.integration.edit', $elemento)}}" class="btn btn-info btn-xs"><i class="fas fa-edit"></i></a>
                                 @endcan
@@ -61,6 +63,10 @@
             </table>
         </div>
     </div>
+
+    @foreach ($dataFromFacadeElement as $elemento)
+        @include('admin.integrations.modal.show', ['elemento' => $elemento])
+    @endforeach  
 @stop
 
 {{-- Push extra CSS --}}

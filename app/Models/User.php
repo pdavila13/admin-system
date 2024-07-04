@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Task;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use LdapRecord\Laravel\Auth\HasLdapUser;
@@ -13,6 +13,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * @method \Illuminate\Database\Eloquent\Collection getRoleNames()
+ */
 class User extends Authenticatable implements LdapAuthenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles, AuthenticatesWithLdap, HasLdapUser;
@@ -55,6 +58,11 @@ class User extends Authenticatable implements LdapAuthenticatable
     public function petition(): HasMany
     {
         return $this->hasMany(Petition::class);
+    }
+
+    public function task(): HasMany
+    {
+        return $this->hasMany(Task::class);
     }
 
     public function adminlte_image()
