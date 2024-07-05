@@ -90,6 +90,7 @@ class Elemento extends Model
 		'perfil',
 		'comentari',
 		'tipus_aparell',
+		'aet',
 		'modality',
 		'modality_data',
 		'maquina_sap',

@@ -115,7 +115,7 @@
                     {!! Form::label('centro', __('Center')) !!}
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-hospital-user"></i></span>
+                            <span class="input-group-text"><i class="fas fa-house-medical"></i></span>
                         </div>
                         {!! Form::select('centro', [''] + $dataFromFacadeCenter->pluck('def', 'id')->toArray(), old('centro'), ['class' => 'form-control select2 select2-bootstrap4', 'required' => 'required']) !!}
                     </div>
