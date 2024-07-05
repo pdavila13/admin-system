@@ -79,7 +79,7 @@
                             {!! Form::label('roseta', __('Point')) !!}
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-location-dot"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-thumbtack"></i></span>
                                 </div>
                                 {!! Form::text('roseta', null, ['class' => 'form-control']) !!}
                             </div>

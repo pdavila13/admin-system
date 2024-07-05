@@ -279,6 +279,7 @@ class IntegrationController extends Controller
             'elemento.tipo',
             'elemento.marca',
             'elemento.modelo',
+            'elemento.aet',
             'elemento.modality',
             'elemento.fecha',
             'elemento.his',
@@ -342,7 +343,7 @@ class IntegrationController extends Controller
         $fieldsAllowed = [
             'Admin' => [
                 'codigo', 'def', 'tipus_aparell', 'marca', 'modelo', 'centro', 
-                'ubicacio', 'modality', 'his', 'comentari', 
+                'ubicacio', 'aet', 'modality', 'his', 'comentari', 
                 'maquina_sap', 'maquina_sap_desc', 'servei', 'ut',
                 'roseta', 'switch', 'codi_evolutiu', 'estat_integracio'
             ],
@@ -380,6 +381,9 @@ class IntegrationController extends Controller
         }
         if (in_array('centro', $allowedFields)) {
             $rules['centro'] = 'required';
+        }
+        if (in_array('aet', $allowedFields)) {
+            $rules['aet'] = 'required';
         }
         if (in_array('modality', $allowedFields)) {
             $rules['modality'] = 'required';
