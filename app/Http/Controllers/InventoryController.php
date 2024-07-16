@@ -32,15 +32,17 @@ class InventoryController extends Controller
             'elemento.id',
             'tipo.def as tipo_def',
             'elemento.codigo',
+            'elemento.estado',
             'elemento.def',
             'marca.DEF as marca_def',
             'modelo.def as modelo_def',
             'centro.def as centro_def',
             'elemento.aet',
-            'elemento.modality',
+            'elemento.maquina_sap',
             'estat_integracio.descripcio as estat_integracio_descripcio'
         )
         ->where('elemento.tipo', '=', 9)
+        ->whereNot('elemento.centro', 'LIKE', 'idi%')
         ->get();
 
         return view('admin.inventory.index', ['dataFromFacade' => $dataFromFacade]);
