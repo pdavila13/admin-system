@@ -307,6 +307,7 @@
     "MANAGEMENT": "ADMINISTRACIÓN",
     "Medical equipment": "Equipo médico",
     "Integrations": "Integraciones",
+    "Integration disable": "Deshabilitar integración",
     "Integration MQ": "Integración MQ",
     "List inventory": "Lista de inventario",
     "Type": "Tipo",
@@ -316,15 +317,11 @@
     "Create new element": "Crear nuevo elemento",
     "Device data": "Datos del dispositivo",
     "Equipment description": "Descripción del equipo",
-    "Type": "Tipo",
-    "Modality": "Modalidad",
     "Equipment type": "Tipo de equipo",
     "Manufacturer information": "Información del fabricante",
     "Trademark": "Marca",
     "Model": "Modelo",
-    "Serial Number": "Número de serie",
     "Area": "Área",
-    "Center": "Centro",
     "Location": "Ubicación",
     "Floor": "Planta",
     "Room": "Sala",
@@ -346,5 +343,6 @@
     "Send to SAP": "Enviado a SAP",
     "In tests": "En pruebas",
     "Integrated": "Integrado",
-    "Digital image": "Imagen digital"
+    "Digital image": "Imagen digital",
+    "Edit element": "Editar elemento"
 }

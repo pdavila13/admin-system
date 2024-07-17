@@ -13,15 +13,15 @@
 @section('content_body')
     <div class="card">     
         <div class="card-body">
-            <table class="table table-striped" id="integrationTable" style="width:100%">
+            <table class="table table-striped" id="integrationTable" cellspacing="0" style="width:100%">
                 <thead>
                     <tr>
                         <th>{{ __('ID') }}</th>
                         <th>{{ __('Tipus Aparell') }}</th>
                         <th>{{ __('Centre') }}</th>
-                        <th>{{ __('Description') }}</th>
-                        <th>{{ __('Modality') }}</th>
-                        <th>{{ __('Date') }}</th>
+                        {{-- <th width="15%">{{ __('Description') }}</th> --}}
+                        <th>{{ __('AET') }}</th>
+                        <th>{{ __('MQ code') }}</th>
                         <th>{{ __('Status') }}</th>
                         <th class="text-right">{{ __('Actions') }}</th>
                     </tr>
@@ -31,10 +31,10 @@
                         <tr>
                             <td>{{ $elemento->id }}</td>
                             <td>{{ $elemento->tipus_aparell_def }}</td>
-                            <td>{{ $elemento->centro_def }}</td>
-                            <td>{{ $elemento->def}}</td>
-                            <td>{{ $elemento->modality }}</td>
-                            <td>{{ $elemento->fecha }}</td>
+                            <td width="15%">{{ $elemento->centro_def }}</td>
+                            {{-- <td>{{ $elemento->def}}</td> --}}
+                            <td>{{ $elemento->aet }}</td>
+                            <td width="15%">{{ !empty($elemento->maquina_sap) ? $elemento->maquina_sap : 'N/A' }}</td>
                             <td class="integration-state" >
                                 @if ($elemento->estat_integracio_id == '1')
                                     <span class="badge badge-primary">{{ __('High') }}</span>
@@ -46,18 +46,22 @@
                                     <span class="badge badge-info">{{ __('In tests') }}</span>
                                 @elseif ($elemento->estat_integracio_id == '5')
                                     <span class="badge badge-success">{{ __('Integrated') }}</span>
+                                @elseif ($elemento->estat_integracio_id == '6')
+                                    <span class="badge badge-danger">{{ __('Discharged') }}</span>
                                 @endif
                             </td>
-                            <td class="text-right">
-                                <a href="#" class="btn btn-success btn-xs" data-toggle="modal" data-target="#ModalIntegrationShow{{ $elemento->id }}">
-                                    <i class="fas fa-eye"></i>
-                                </a>
+                            <td class="integration-actions text-right">
+                                <a href="#" class="btn btn-success btn-xs" data-toggle="modal" data-target="#ModalIntegrationShow{{ $elemento->id }}"><i class="fas fa-eye"></i></a>
+
                                 @can('admin.integration.edit')
                                     <a href="{{route('admin.integration.edit', $elemento)}}" class="btn btn-info btn-xs"><i class="fas fa-edit"></i></a>
                                 @endcan
+                                
+                                @can('admin.integration.delete')
+                                    <a href="#" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#ModalIntegrationDelete{{ $elemento->id }}"><i class="fas fa-ban"></i></a>
+                                @endcan
                             </td>
                         </tr>
-                        {{-- @include('admin.integrations.modal.edit') --}}
                     @endforeach
                 </tbody>
             </table>
@@ -66,6 +70,7 @@
 
     @foreach ($dataFromFacadeElement as $elemento)
         @include('admin.integrations.modal.show', ['elemento' => $elemento])
+        @include('admin.integrations.modal.delete', ['elemento' => $elemento])
     @endforeach  
 @stop
 

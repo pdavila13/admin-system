@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Inventory\Elemento;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 class IntegrationController extends Controller
@@ -26,8 +25,8 @@ class IntegrationController extends Controller
     {
         $dataFromFacadeTypeOfDevice = DB::connection('inventory')->table('tipus_aparell')->orderBy('descripcio', 'ASC')->get();
         $dataFromFacadeModalities = DB::connection('inventory')->table('modalities')->orderBy('modality', 'ASC')->get();
-        $dataFromFacadeTrademark = DB::connection('inventory')->table('marca')->orderBy('DEF', 'ASC')->get();
-        $dataFromFacadeModel = DB::connection('inventory')->table('modelo')->orderBy('DEF', 'ASC')->get();
+        $dataFromFacadeTrademark = DB::connection('inventory')->table('marca')->where('tipo', '=', 9)->orderBy('DEF', 'ASC')->get();
+        $dataFromFacadeModel = DB::connection('inventory')->table('modelo')->where('tipo', '=', 9)->orderBy('DEF', 'ASC')->get();
         $dataFromFacadeArea = DB::connection('inventory')->table('area')->whereNot('id', '=', 'STOCK')->orderBy('def', 'ASC')->get();
         $dataFromFacadeCenter = DB::connection('inventory')->table('centro')->orderBy('def', 'ASC')->get();
         $dataFromFacadeIntegrationState = DB::connection('inventory')->table('estat_integracio')->orderBy('descripcio', 'ASC')->get();
@@ -105,6 +104,7 @@ class IntegrationController extends Controller
         ->leftJoin('perfils', 'elemento.perfil', '=', 'perfils.id_perfil')
         ->where('elemento.tipo', '=', 9)
         ->where('elemento.estat_integracio', '>=', 1)
+        ->where('elemento.estado', '=', 1)
         ->orderBy('elemento.fecha', 'DESC')
         ->get();
 
@@ -408,6 +408,22 @@ class IntegrationController extends Controller
         $integration->update($data);
 
         return redirect()->route('admin.integration.index')->with('success', __('messages.element_updated'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($id)
+    {
+        $integrationId = decrypt($id);
+
+        $integration = Elemento::findOrFail($integrationId);
+
+        $integration->estado = 0;
+        $integration->estat_integracio = 6;
+        $integration->save();
+
+        return redirect()->route('admin.integration.index')->with('success', __('messages.element_disabled'));
     }
 
     /**

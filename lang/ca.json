@@ -319,6 +319,7 @@
     "MANAGEMENT": "ADMINISTRACIÓ",
     "Medical equipment": "Equipament mèdic",
     "Integrations": "Integracions",
+    "Integration disable": "Deshabilitar integració",
     "Integration MQ": "Integració MQ",
     "List inventory": "Llista d'inventari",
     "List integrations": "Llista d'integracions",
@@ -356,5 +357,6 @@
     "Send to SAP": "Enviat a SAP",
     "In tests": "En proves",
     "Integrated": "Integrat",
-    "Digital image": "Imatge digital"
+    "Digital image": "Imatge digital",
+    "Edit element": "Editar element"
 }

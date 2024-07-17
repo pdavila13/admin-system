@@ -60,7 +60,7 @@
                     </div>
 
                     <div class="card-footer">
-                        {!! Form::submit('Save changes', ['class' => 'btn btn-info float-right']) !!}
+                        {!! Form::submit( __('Save changes'), ['class' => 'btn btn-info float-right']) !!}
                     </div>
                 {!! Form::close() !!}
             </div>
