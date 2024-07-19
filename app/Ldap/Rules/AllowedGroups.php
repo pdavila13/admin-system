@@ -24,11 +24,21 @@ class AllowedGroups implements Rule
         // Verify the user is a member of one of the allowed groups
         foreach ($allowedGroups as $groupDn) {
             $group = Group::find($groupDn);
-            if ($user->groups()->recursive()->exists($group)) {
+            if ($group && $user->groups()->recursive()->exists($group)) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    /**
+     * Get the validation error message.
+     *
+     * @return string
+     */
+    public function message()
+    {
+        return 'Access denied. You are not a member of an allowed group.';
     }
 }

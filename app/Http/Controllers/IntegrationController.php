@@ -136,6 +136,7 @@ class IntegrationController extends Controller
             'SOL_ESTAT' => 1,
             'SOL_NIF' => $user->username,
             'SOL_SOLICITANT' => $user->name,
+            'SOL_TELEFON' => $user->phone,
             'SOL_DESCRIPCIO' => __('messages.sap_description') . $editUrl,
             'SOL_ID_CENTRE' => 'suport',
             'SOL_MAIL' => $user->email,

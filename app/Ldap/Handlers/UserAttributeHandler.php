@@ -15,6 +15,7 @@ class UserAttributeHandler
         $database->name = $ldap->getFirstAttribute('cn');
         $database->email = $ldap->getFirstAttribute('mail');
         $database->username = $ldap->getFirstAttribute('samaccountname');
+        $database->phone = $ldap->getFirstAttribute('telephonenumber');
         
         // Save the user to the database
         $database->save();
