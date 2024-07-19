@@ -368,6 +368,13 @@ return [
             'icon' => 'fas fa-fw fa-puzzle-piece',
             'submenu' => [
                 [
+                    'text' => 'management_brand_model',
+                    'route' => 'admin.marca-model.index',
+                    'icon' => 'fas fa-fw fa-desktop',
+                    'active' => ['admin/marca-model*'],
+                    'can' => 'admin.marca-model.index',
+                ],
+                [
                     'text' => 'medic_devices',
                     'route' => 'admin.inventary.index',
                     'icon' => 'fas fa-fw fa-medkit',

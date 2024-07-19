@@ -30,14 +30,11 @@ class PermissionController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:permissions|max:255',
+            'description' => 'required',
         ]);
-        Permission::updateOrCreate(
-            [
-                'id'=>$request->id
-            ],[
-                'name'=>$request->name,
-            ]
-        );
+
+        Permission::create($request->all());
+        
         if($request->id){
             $msg = 'Permission updated successfully.';
         }else{

@@ -11,6 +11,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\IntegrationController;
+use App\Http\Controllers\Inventory\MarcaModelController;
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -28,6 +29,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
 
     Route::resource('inventary',InventoryController::class);
     Route::resource('integration',IntegrationController::class);
+
+    Route::get('/marca-model', [MarcaModelController::class, 'index'])->name('marca-model.index');
+    Route::post('/marca-model/store', [MarcaModelController::class, 'store'])->name('marca-model.store');
+
+    Route::get('/get-marcas', [MarcaModelController::class, 'getMarcas'])->name('get-marcas');
+    Route::get('/get-modelos', [MarcaModelController::class, 'getModelos'])->name('get-modelos');
 
     Route::get('/get-models/{trademark}', [App\Http\Controllers\InventoryController::class, 'getModels'])->name('get.models');
     Route::get('/get-centers/{zona}', [App\Http\Controllers\InventoryController::class, 'getCenters'])->name('get.centers');

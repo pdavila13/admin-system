@@ -14,6 +14,7 @@ return [
     'groups_vpn' => 'Grups VPN',
     'petitions' => 'Peticions',
     'integrations' => 'Integracions',
+    'management_brand_model' => 'Gestió de Marca i Model',
     'medic_devices' => 'Dispositius mèdics',
     'mq_integration' => 'Integració MQ',
     'account_settings' => 'CONFIGURACIÓ DE COMPTE',

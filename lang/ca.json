@@ -9,7 +9,7 @@
     "Action": "Acció",
     "Actions": "Accions",
     "Add": "Afegir",
-    "Add :name": "Afegeix :name",
+    "Add new": "Afegir nova :name",
     "Admin": "Admin",
     "Agree": "Acordar",
     "All rights reserved.": "Tots els drets reservats.",
@@ -184,7 +184,7 @@
     "Search": "Cerca",
     "Search :name": "Cerca :name",
     "See Other": "Vegeu Altres",
-    "Select": "Seleccioni",
+    "Select": "Seleccionar :name",
     "Select All": "Seleccionar tot",
     "Send": "Enviar",
     "Server Error": "Error del servidor",
@@ -358,5 +358,6 @@
     "In tests": "En proves",
     "Integrated": "Integrat",
     "Digital image": "Imatge digital",
-    "Edit element": "Editar element"
+    "Edit element": "Editar element",
+    "Manage Trademark and Model": "Gestiona Marca i Model"
 }
