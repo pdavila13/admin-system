@@ -17,6 +17,12 @@ class PetitionController extends Controller
 {
     public function __construct()
     {
+
+        $this->middleware('can:admin.petition.index')->only('index');
+        $this->middleware('can:admin.petition.create')->only('create','store');
+        $this->middleware('can:admin.petition.edit')->only('edit','update');
+        $this->middleware('can:admin.petition.delete')->only('destroy');
+        
         $company = Company::orderBy('id','DESC')->get();
         view()->share('company',$company);
 
@@ -56,16 +62,17 @@ class PetitionController extends Controller
      */
     public function create()
     {
-        $user = Auth::user();
+        $users = Auth::user();
 
-        if (!$user) {
+        if (!$users) {
             return redirect()->route('login');
         }
 
         $currentDate = Carbon::now()->format('d-m-Y');
-        return view('admin.petition.modal.create', [
+
+        return view('admin.petition.create', [
             'currentDate' => $currentDate,
-            'user' => $user,
+            'users' => $users,
             'company' => Company::orderBy('id', 'DESC')->get(),
             'petitionType' => PetitionType::orderBy('id', 'DESC')->get(),
             'state' => State::orderBy('id', 'DESC')->get(),

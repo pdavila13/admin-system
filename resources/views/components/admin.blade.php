@@ -150,7 +150,7 @@
     <!-- Bootstrap 4 -->
     <script src="{{ asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- ChartJS -->
-    <script src="{{ asset('admin/plugins/chart.js/Chart.min.js') }}"></script>
+    <script src="{{ asset('admin/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
     <!-- JQVMap -->
     <script src="{{ asset('admin/plugins/jqvmap/jquery.vmap.min.js') }}"></script>
     <script src="{{ asset('admin/plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>

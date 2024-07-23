@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\LoginWithOTPController;
-use App\Http\Controllers\SocialiteController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\LoginWithOTPController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes

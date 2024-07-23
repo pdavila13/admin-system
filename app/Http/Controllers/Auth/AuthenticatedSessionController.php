@@ -2,16 +2,39 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use App\Providers\RouteServiceProvider;
+use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Validation\ValidationException;
+use LdapRecord\Laravel\Auth\ListensForLdapBindFailure;
 
 class AuthenticatedSessionController extends Controller
 {
+    use ListensForLdapBindFailure;
+
+    protected $username = 'username';
+
+    public function __construct()
+    {
+        $this->listenForLdapBindFailure();
+    }
+
+    protected function handleLdapBindError($message, $code = null)
+    {
+        if ($code == '773') {
+            // The users password has expired. Redirect them.
+            abort(redirect('/password-reset'));
+        }
+
+        throw ValidationException::withMessages([
+            'username' => "Whoops! LDAP server cannot be reached.",
+        ]);
+    }
+    
     /**
      * Display the login view.
      */
@@ -26,23 +49,6 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-        $ldapUser = Auth::user();
-        $memberOf = $ldapUser->getAttribute('memberof');
-        if (!is_array($memberOf)) {
-            $memberOf = [];
-        }
-        $role = 'user';
-        if (in_array('CN=Sistemes,OU=Administradors Informàtica,DC=parcsanitari,DC=local', $memberOf)) {
-            $role = 'admin';
-        }
-
-        $user = Auth::user();
-        $user->assignRole($role);
-
-        $username = $user->username;
-        $avatar = config('app.avatar_url') . $username;
-
-        $user->update(['avatar' => $avatar]);
 
         $request->session()->regenerate();
 

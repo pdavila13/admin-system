@@ -1,7 +1,11 @@
-<x-admin>
-    @section('title')
-        {{ __('Edit company') }}
-    @endsection
+@extends('layouts.app')
+
+{{-- Customize layout sections --}}
+@section('subtitle', __('Companies'))
+@section('content_header_title', __('Edit company'))
+
+{{-- Content body: main page content --}}
+@section('content_body')
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
@@ -52,4 +56,4 @@
             </div>
         </div>
     </div>
-</x-admin>
+@stop

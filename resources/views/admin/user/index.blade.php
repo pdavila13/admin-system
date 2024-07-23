@@ -1,19 +1,22 @@
-<x-admin>
-    @section('title')  {{ __('Users') }} @endsection
+@extends('layouts.app')
+
+{{-- Customize layout sections --}}
+@section('subtitle', __('Users'))
+@section('content_header_title', __('List users'))
+
+{{-- Content body: main page content --}}
+@section('content_body')
     <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">{{ __('List users') }}</h3>
-            <div class="card-tools"><a href="{{ route('admin.user.create') }}" class="btn btn-sm btn-primary disabled">{{ __('Add') }}</a></div>
-        </div>
         <div class="card-body">
             <table class="table table-striped" id="userTable" style="width:100%">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>{{ __('ID') }}</th>
                         <th>{{ __('Name') }}</th>
                         <th>{{ __('Email') }}</th>
+                        <th>{{ __('Role') }}</th>
                         <th>{{ __('Created') }}</th>
-                        <th></th>
+                        <th class="text-right">{{ __('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,15 +25,20 @@
                             <td>{{ $user->id }}</td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
+                            <td>
+                                @foreach ($user->roles as $role)
+                                    <span class="badge badge-info">{{ $role->name }}</span>
+                                @endforeach
+                            </td>
                             <td>{{ $user->created_at }}</td>
                             <td class="user-actions text-right">
-                                <a href="{{ route('admin.user.edit', encrypt($user->id)) }}" class="btn btn-info btn-sm">
+                                <a href="{{ route('admin.user.edit', $user) }}" class="btn btn-info btn-xs">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <form action="{{ route('admin.user.destroy', encrypt($user->id)) }}" method="POST" onsubmit="return confirm('{{ __('Are sure want to delete?') }}')" style="display: inline;">
                                     @method('DELETE')
                                     @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm">
+                                    <button type="submit" class="btn btn-danger btn-xs">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
@@ -41,22 +49,24 @@
             </table>
         </div>
     </div>
-    @section('js')
-        <script>
-            $(function() {
-                var selectedLanguage = 'ca';
-                var dataTableConfig = {
-                    paging: true,
-                    searching: true,
-                    ordering: true,
-                    responsive: true,
-                    language: {
-                        url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/' + selectedLanguage + '.json'
-                    }
-                };
+@stop
 
-                $('#userTable').DataTable(dataTableConfig);
-            });
-        </script>
-    @endsection
-</x-admin>
+{{-- Push extra scripts --}}
+@push('js')
+    <script>
+        $(function() {
+            var selectedLanguage = 'ca';
+            var dataTableConfig = {
+                paging: true,
+                searching: true,
+                ordering: false,
+                responsive: true,
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/' + selectedLanguage + '.json'
+                }
+            };
+
+            $('#userTable').DataTable(dataTableConfig);
+        });
+    </script>
+@endpush

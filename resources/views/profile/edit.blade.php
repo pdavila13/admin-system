@@ -1,7 +1,11 @@
-<x-admin>
-    @section('title')
-        {{ __('Profile Information') }}
-    @endsection
+@extends('layouts.app')
+
+{{-- Customize layout sections --}}
+@section('subtitle', __('Profile'))
+@section('content_header_title', __('Profile Information'))
+
+{{-- Content body: main page content --}}
+@section('content_body')
     <div class="container">
         <div class="p-3 mb-3">
             <div class="row">
@@ -30,4 +34,4 @@
 
         </div>
     </div>
-</x-admin>
+@stop

@@ -1,5 +1,11 @@
-<x-admin>
-    @section('title', 'Create User')
+@extends('layouts.app')
+
+{{-- Customize layout sections --}}
+@section('subtitle', __('Users'))
+@section('content_header_title', __('Create User'))
+
+{{-- Content body: main page content --}}
+@section('content_body')
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Create User</h3>
@@ -62,4 +68,4 @@
             </form>
         </div>
     </div>
-</x-admin>
+@stop

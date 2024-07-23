@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.company.index')->only('index');
+        $this->middleware('can:admin.company.create')->only('create','store');
+        $this->middleware('can:admin.company.edit')->only('edit','update');
+        $this->middleware('can:admin.company.delete')->only('destroy');
+    }
+    
     /**
      * Display a listing of the resource.
      */
@@ -47,6 +55,7 @@ class CompanyController extends Controller
             'name'=>$request->name,
             'cif'=>$request->cif,
             'description'=>$request->description,
+            'active'=>1,
         ]);
 
         Storage::makeDirectory($companyDirectory);
@@ -77,6 +86,7 @@ class CompanyController extends Controller
             'name'=>$request->name,
             'cif'=>$request->cif,
             'description'=>$request->description,
+            'active'=>1,
         ]);
         return redirect()->route('admin.company.index')->with('info','Company updated successfully.');   
     }

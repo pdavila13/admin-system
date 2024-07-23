@@ -1,13 +1,17 @@
-<x-admin>
-    @section('title')
-        {{ __('Companies') }}
-    @endsection
+@extends('layouts.app')
+
+{{-- Customize layout sections --}}
+@section('subtitle', __('Companies'))
+@section('content_header_title', __('List companies'))
+
+{{-- Content body: main page content --}}
+@section('content_body')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">{{ __('List companies') }}</h3>
             <div class="card-tools">                
                 <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalCompanyCreate">{{ __('New') }}</a>
             </div>
+            @include('admin.companies.modal.create')
         </div>
         <div class="card-body">
             <table class="table table-striped" id="companyTable" style="width:100%">
@@ -24,7 +28,7 @@
                         <tr>
                             <td>{{ $company->name }}</td>
                             <td>{{ $company->cif }}</td>
-                            <td>{{ $company->description }}</td>
+                            <td width="60%">{{ $company->description }}</td>
                             <td class="company-actions text-right">
                                 <a href="#" class="btn btn-info btn-xs" data-toggle="modal" data-target="#ModalCompanyEdit{{ $company->id }}">
                                     <i class="fas fa-edit"></i>
@@ -39,31 +43,30 @@
             </table>
         </div>
     </div>
-
+    
     <!-- Incluir modal de edición para cada empresa -->
     @foreach ($data as $company)
         @include('admin.companies.modal.edit', ['company' => $company])
         @include('admin.companies.modal.delete')
     @endforeach
+@stop
 
-    @include('admin.companies.modal.create')
+{{-- Push extra scripts --}}
+@push('js')
+    <script>
+        $(function() {
+            var selectedLanguage = 'ca';
+            var dataTableConfig = {
+                paging: true,
+                searching: true,
+                ordering: true,
+                responsive: true,
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/' + selectedLanguage + '.json'
+                }
+            };
 
-    @section('js')
-        <script>
-            $(function() {
-                var selectedLanguage = 'ca';
-                var dataTableConfig = {
-                    paging: true,
-                    searching: true,
-                    ordering: true,
-                    responsive: true,
-                    language: {
-                        url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/' + selectedLanguage + '.json'
-                    }
-                };
-
-                $('#companyTable').DataTable(dataTableConfig);
-            });
-        </script>
-    @endsection
-</x-admin>
+            $('#companyTable').DataTable(dataTableConfig);
+        });
+    </script>
+@endpush

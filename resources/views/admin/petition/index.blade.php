@@ -1,14 +1,23 @@
-<x-admin>
-    @section('title')
-        {{ __('Petitions') }}
-    @endsection
+@extends('layouts.app')
+
+{{-- Customize layout sections --}}
+@section('subtitle', __('Petitions'))
+@section('content_header')
+    <a href="{{ route('admin.petition.create') }}" class="btn btn-sm btn-primary float-right"><i class="fas fa-plus"></i></a>
+    <h1 class="text-muted">{{ __('List petitions') }}</h1>
+@stop
+
+{{-- Content body: main page content --}}
+@section('content_body')
     <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">{{ __('List petitions') }}</h3>
+        {{-- <div class="card-header">
             <div class="card-tools">
+                
                 <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalPetitionCreate">{{ __('New') }}</a>
-            </div>
-        </div>
+            </div> 
+
+            {{-- @include('admin.petition.modal.create')
+        </div> --}}
         <div class="card-body">
             <table class="table table-striped petitions" id="petitionTable" style="width:100%">
                 <thead>
@@ -71,65 +80,64 @@
         </div>
     </div>
 
-    @section('css')
-        <style>
-            .petition-state .petition-actions {
-                text-align: center;
-            }
-            .petitions td {
-                vertical-align: middle;
-            }
-        </style>
-    @endsection
-    
-    @section('js')
-        <script>
-            $(document).ready(function() {
-                var selectedLanguage = 'ca';
-                var dataTableConfig = {
-                    paging: true,
-                    searching: true,
-                    ordering: false,
-                    responsive: true,
-                    language: {
-                        url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/' + selectedLanguage + '.json'
-                    }
-                };
-                $('#petitionTable').DataTable(dataTableConfig);
-
-                $('#companySelect2').select2({ 
-                    dropdownParent: "#ModalPetitionCreate",
-                    theme: 'bootstrap4',
-                });
-
-                $('#ModalPetitionCreate').on('show.bs.modal', function() {
-                    var currentDate = moment().format('DD-MM-YYYY');
-                    $(this).find('.datetimepicker-input').val(currentDate);
-
-                    $(this).find('.datetimepicker').each(function() {
-                        $(this).datetimepicker({
-                            dropdownParent: $(this).closest('.modal'),
-                            format: 'DD-MM-YYYY',
-                            defaultDate: new Date(),
-                        });
-                    });
-                });
-
-                $('.datetimepicker').each(function() {
-                    $(this).datetimepicker({
-                        dropdownParent: $(this).closest('.modal'),
-                        format: 'DD-MM-YYYY',
-                    });
-                });
-            });
-        </script>
-    @endsection
-
-    @include('admin.petition.modal.create')
-    
     @foreach ($data as $petition)
         @include('admin.petition.modal.edit', ['petition' => $petition])
         @include('admin.petition.modal.show', ['petition' => $petition, 'files' => $petition->files])
         @include('admin.petition.modal.delete', ['petition' => $petition])
-    @endforeach
-</x-admin>
+    @endforeach  
+@stop
+
+{{-- Push extra CSS --}}
+@push('css')
+    <style>
+        .petition-state .petition-actions {
+            text-align: center;
+        }
+        .petitions td {
+            vertical-align: middle;
+        }
+    </style>
+@endpush
+
+{{-- Push extra scripts --}}
+@push('js')
+    <script>
+        $(document).ready(function() {
+            var selectedLanguage = 'ca';
+            var dataTableConfig = {
+                paging: true,
+                searching: true,
+                ordering: false,
+                responsive: true,
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/' + selectedLanguage + '.json'
+                }
+            };
+
+            $('#petitionTable').DataTable(dataTableConfig);
+
+            // $('.modal').on('shown.bs.modal', function () {
+            //     $(this).find('.select2').select2({
+            //         theme: 'bootstrap4',
+            //     });
+
+            //     var currentDate = moment().format('DD-MM-YYYY');
+            //     $(this).find('.datetimepicker-input').val(currentDate);
+
+            //     $(this).find('.datetimepicker').each(function() {
+            //         $(this).datetimepicker({
+            //             dropdownParent: $(this).closest('.modal'),
+            //             format: 'DD-MM-YYYY',
+            //         });
+            //     });
+            // });
+
+            $('.datetimepicker').each(function() {
+                $(this).datetimepicker({
+                    dropdownParent: $(this).closest('.modal'),
+                    format: 'DD-MM-YYYY',
+                });
+            });
+        });
+    </script>
+@endpush

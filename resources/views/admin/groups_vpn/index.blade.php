@@ -1,13 +1,18 @@
-<x-admin>
-    @section('title')
-        {{ __('VPN Groups') }}
-    @endsection
+@extends('layouts.app')
+
+{{-- Customize layout sections --}}
+@section('subtitle', __('VPN Groups'))
+@section('content_header_title', __('VPN Groups List'))
+
+{{-- Content body: main page content --}}
+@section('content_body')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">{{ __('VPN Groups List') }}</h3>
             <div class="card-tools">
                 <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalGroupVPNCreate">{{ __('New') }}</a>
             </div>
+
+            @include('admin.groups_vpn.modal.create')
         </div>
         <div class="card-body">
             <table class="table table-striped" id="group_vpnTable" style="width:100%">
@@ -42,34 +47,34 @@
         </div>
     </div>
 
-    @section('js')
-        <script>
-            $(function() {
-                var selectedLanguage = 'ca';
-                var dataTableConfig = {
-                    paging: true,
-                    searching: true,
-                    ordering: true,
-                    responsive: true,
-                    language: {
-                        url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/' + selectedLanguage + '.json'
-                    }
-                };
-
-                $('#group_vpnTable').DataTable(dataTableConfig);
-
-                $('.select2').select2({
-                    dropdownParent: $("#ModalGroupVPNCreate")
-                });
-
-            });
-        </script>
-    @endsection
-
-    @include('admin.groups_vpn.modal.create')
-
     @foreach ($data as $group_vpn)
         @include('admin.groups_vpn.modal.edit', ['group_vpn' => $group_vpn])
         @include('admin.groups_vpn.modal.delete')
     @endforeach
-</x-admin>
+@stop
+
+{{-- Push extra scripts --}}
+@push('js')
+    <script>
+        $(document).ready(function() {
+            var selectedLanguage = 'ca';
+            var dataTableConfig = {
+                paging: true,
+                searching: true,
+                ordering: true,
+                responsive: true,
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/' + selectedLanguage + '.json'
+                }
+            };
+
+            $('#group_vpnTable').DataTable(dataTableConfig);
+
+            $('.modal').on('shown.bs.modal', function () {
+                $(this).find('.select2').select2({
+                    theme: 'bootstrap4',
+                });
+            });
+        });
+    </script>
+@endpush

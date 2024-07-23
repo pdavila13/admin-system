@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use DragonCode\Contracts\Cashier\Auth\Auth;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 
@@ -11,18 +12,24 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $roles = Role::all();
-        view()->share('roles',$roles);
+        $this->middleware('can:admin.user.index')->only('index');
+        $this->middleware('can:admin.user.create')->only('create','store');
+        $this->middleware('can:admin.user.edit')->only('edit','update');
+        $this->middleware('can:admin.user.delete')->only('destroy');
     }
+
     public function index()
     {
-        $data = User::orderBy('id','DESC')->get();
+        $data = User::with('roles')->orderBy('id','ASC')->get();
+
         return view('admin.user.index', compact('data'));
     }
+
     public function create()
     {
         return view('admin.user.create');
     }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -40,25 +47,35 @@ class UserController extends Controller
         $user->assignRole($request->role);
         return redirect()->route('admin.user.index')->with('success','User created successfully.');
     }
-    public function edit($id)
+
+    public function edit(User $user)
     {
-        $user = User::where('id',decrypt($id))->first();
-        return view('admin.user.edit',compact('user'));
+        //$user = User::where('id',decrypt($user))->first();
+        $roles = Role::all();
+
+        return view('admin.user.edit',compact('user', 'roles'));
     }
+
     public function update(Request $request, User $user)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'role' => ['required', 'string']
+            'role' => ['required', 'array']
         ]); 
-        $user = User::find($request->id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->save();
-        $user->assignRole($request->role);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+        ]);
+
+        $roles = Role::whereIn('id', $request->role)->pluck('name')->toArray();
+
+        $user->syncRoles($roles);
+
         return redirect()->route('admin.user.index')->with('success','User updated successfully.');
     }
+
     public function destroy($id)
     {
         User::where('id',decrypt($id))->delete();
