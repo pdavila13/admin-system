@@ -13,7 +13,7 @@
 @section('content_body')
     <div class="card">
         <div class="card-body">
-            <table class="table table-striped" id="permissionTable" style="width:100%">
+            <table class="table table-striped" id="permissionTable">
                 <thead>
                     <tr>
                         <th>{{ __('ID') }}</th>
@@ -54,18 +54,21 @@
     </div>
 @stop
 
+{{-- Enable Datatables Plugin --}}
+@section('plugins.Datatables', true)
+
 {{-- Push extra scripts --}}
 @push('js')
     <script>
         $(function() {
-            var selectedLanguage = 'ca';
             var dataTableConfig = {
                 paging: true,
                 searching: true,
                 ordering: true,
                 responsive: true,
+                autoWidth: false,
                 language: {
-                    url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/' + selectedLanguage + '.json'
+                    url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/ca.json'
                 }
             };
 
