@@ -15,7 +15,7 @@
             @include('admin.groups_vpn.modal.create')
         </div>
         <div class="card-body">
-            <table class="table table-striped" id="group_vpnTable" style="width:100%">
+            <table class="table table-striped" id="group_vpnTable">
                 <thead>
                     <tr>
                         <th>{{ __('Company') }}</th>
@@ -53,18 +53,22 @@
     @endforeach
 @stop
 
+{{-- Enable Plugins --}}
+@section('plugins.Datatables', true)
+@section('plugins.Select2', true)
+
 {{-- Push extra scripts --}}
 @push('js')
     <script>
         $(document).ready(function() {
-            var selectedLanguage = 'ca';
             var dataTableConfig = {
                 paging: true,
                 searching: true,
                 ordering: true,
                 responsive: true,
+                autoWidth: false,
                 language: {
-                    url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/' + selectedLanguage + '.json'
+                    url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/ca.json'
                 }
             };
 
