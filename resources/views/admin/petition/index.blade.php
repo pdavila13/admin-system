@@ -99,6 +99,10 @@
     </style>
 @endpush
 
+{{-- Enable Plugins --}}
+@section('plugins.Datatables', true)
+@section('plugins.TempusDominusBs4', true)
+
 {{-- Push extra scripts --}}
 @push('js')
     <script>

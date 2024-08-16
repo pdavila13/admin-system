@@ -86,18 +86,21 @@
     </style>
 @endpush
 
+{{-- Enable Plugins --}}
+@section('plugins.Datatables', true)
+
 {{-- Push extra scripts --}}
 @push('js')
     <script>
         $(document).ready(function() {
-            var selectedLanguage = 'ca';
             var dataTableConfig = {
                 paging: true,
                 searching: true,
                 ordering: false,
                 responsive: true,
+                autoWidth: false,
                 language: {
-                    url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/' + selectedLanguage + '.json'
+                    url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/ca.json'
                 }
             };
 

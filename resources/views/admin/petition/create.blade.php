@@ -31,6 +31,10 @@
     </div>
 @stop
 
+{{-- Enable Plugins --}}
+@section('plugins.Select2', true)
+@section('plugins.TempusDominusBs4', true)
+
 {{-- Push extra scripts --}}
 @push('js')
     <script>
