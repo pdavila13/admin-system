@@ -17,6 +17,8 @@ return [
     'management_brand_model' => 'Gestió de Marca i Model',
     'medic_devices' => 'Dispositius mèdics',
     'mq_integration' => 'Integració MQ',
+    'tasks' => 'TASQUES',
+    'tasks_management_servers' => 'Manteniment servidors',
     'account_settings' => 'CONFIGURACIÓ DE COMPTE',
     'profile' => 'Perfil',
     'change_password' => 'Canviar contrasenya',
