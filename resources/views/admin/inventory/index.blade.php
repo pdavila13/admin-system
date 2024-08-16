@@ -8,7 +8,7 @@
 @section('content_body')
     <div class="card">
         <div class="card-body">
-            <table class="table table-striped" id="inventoryTable" cellspacing="0" style="width:100%">
+            <table class="table table-striped table-sm" id="inventoryTable" cellspacing="0">
                 <thead>
                     <tr>
                         <th>{{ __('Center') }}</th>
@@ -47,26 +47,23 @@
             background-color: #f0aaaa !important
         }
 
-        .integration-state .integration-actions {
-            text-align: center;
-        }
-        .integration td {
-            vertical-align: middle;
-        }
-
         .dataTables_wrapper .dataTables_filter {
             float: right;
         }
 
         .dataTables_wrapper .dt-buttons {
             float: left;
-            
         }
     </style>
 @endpush
 
+{{-- Enable Plugins --}}
+@section('plugins.Datatables', true)
+@section('plugins.DatatablesPlugins', true)
+
 {{-- Push extra scripts --}}
 @push('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jeditable.js/2.0.19/jquery.jeditable.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#inventoryTable').DataTable( {
@@ -76,6 +73,18 @@
                 searching: true,
                 ordering: true,
                 responsive: true,
+                autoWidth: false,
+                // ajax: "{{ route('admin.get-inventary') }}",
+                // columns: [
+                //     { data: 'centro_def' },
+                //     { data: 'def' },
+                //     { data: 'marca_def' },
+                //     { data: 'modelo_def' },
+                //     { data: 'codigo' },
+                //     { data: 'aet' },
+                //     { data: 'maquina_sap' },
+                //     { data: 'estat_integracio_descripcio' } 
+                // ],
                 columnDefs: [{
                     targets: 7,
                     render: function(data, type, full, meta) {
@@ -91,6 +100,10 @@
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/ca.json'
                 },
+                lengthMenu: [
+                    [16, 35, 50, -1],
+                    [16, 35, 50, 'All']
+                ]
             });
         });
     </script>

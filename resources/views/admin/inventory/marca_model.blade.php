@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
+{{-- Customize layout sections --}}
 @section('subtitle', __('Inventory'))
 @section('content_header_title', __('Manage Trademark and Model'))
 
+{{-- Content body: main page content --}}
 @section('content_body')
     <div class="d-flex justify-content-center">
         <div class="col-md-8">
@@ -48,8 +50,12 @@
     </div>
 @stop
 
+{{-- Enable Plugins --}}
+@section('plugins.Select2', true)
+@section('plugins.Sweetalert2', true)
+
+{{-- Push extra scripts --}}
 @push('js')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
         $(document).ready(function() {
             $('.select2').select2({

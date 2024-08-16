@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Inventory\Elemento;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class InventoryController extends Controller
 {
@@ -100,51 +101,30 @@ class InventoryController extends Controller
         return response()->json($plantas);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+    public function getData() {
+        $data = Elemento::on('inventory')->with(['tipo','marca','modelo','centro','estat_integracio'])
+        ->leftJoin('tipo', 'elemento.tipo', '=', 'tipo.id')
+        ->leftJoin('marca', 'elemento.marca', '=', 'marca.ID')
+        ->leftJoin('modelo', 'elemento.modelo', '=', 'modelo.id')
+        ->leftJoin('centro', 'elemento.centro', '=', 'centro.id')
+        ->leftJoin('estat_integracio', 'elemento.estat_integracio', '=', 'estat_integracio.idestat_integracio')
+        ->select(
+            'elemento.id',
+            'tipo.def as tipo_def',
+            'elemento.codigo',
+            'elemento.estado',
+            'elemento.def',
+            'marca.DEF as marca_def',
+            'modelo.def as modelo_def',
+            'centro.def as centro_def',
+            'elemento.aet',
+            'elemento.maquina_sap',
+            'estat_integracio.descripcio as estat_integracio_descripcio'
+        )
+        ->where('elemento.tipo', '=', 9)
+        ->whereNot('elemento.centro', 'LIKE', 'idi%')
+        ->get();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return Datatables::collection($data)->toJson();
     }
 }
