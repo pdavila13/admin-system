@@ -391,11 +391,22 @@ return [
             ],
         ],
         [
+            'header' => 'tasks',
+            'can' => 'admin.tasks.header',
+        ],
+        [
             'text' => 'petitions',
             'route' => 'admin.petition.index',
-            'icon' => 'fas fa-fw fa-list',
+            'icon' => 'fas fa-fw fa-share-square',
             'active' => ['admin/petition*'],
             'can' => 'admin.petition.index',
+        ],
+        [
+            'text' => 'tasks_management_servers',
+            'route' => 'admin.vms.index',
+            'icon' => 'fas fa-fw fa-server',
+            'active' => ['admin/vms*'],
+            'can' => 'admin.vms.index',
         ],
         ['header' => 'account_settings'],
         [
@@ -441,7 +452,7 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => true,
+            'active' => false,
             'files' => [
                 [
                     'type' => 'js',
@@ -458,10 +469,25 @@ return [
                     'asset' => true,
                     'location' => 'vendor/datatables/css/dataTables.bootstrap4.min.css',
                 ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/responsive/js/dataTables.responsive.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/responsive/js/responsive.bootstrap4.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/responsive/css/responsive.bootstrap4.min.css',
+                ],
             ],
         ],
         'DatatablesPlugins' => [
-            'active' => true,
+            'active' => false,
             'files' => [
                 [
                     'type' => 'js',
@@ -503,25 +529,10 @@ return [
                     'asset' => true,
                     'location' => 'vendor/datatables-plugins/buttons/css/buttons.bootstrap4.min.css',
                 ],
-                [
-                    'type' => 'js',
-                    'asset' => true,
-                    'location' => 'vendor/datatables-plugins/responsive/js/dataTables.responsive.min.js',
-                ],
-                [
-                    'type' => 'js',
-                    'asset' => true,
-                    'location' => 'vendor/datatables-plugins/responsive/js/responsive.bootstrap4.min.js',
-                ],
-                [
-                    'type' => 'css',
-                    'asset' => true,
-                    'location' => 'vendor/datatables-plugins/responsive/css/responsive.bootstrap4.min.css',
-                ],
             ],
         ],
         'Select2' => [
-            'active' => true,
+            'active' => false,
             'files' => [
                 [
                     'type' => 'js',
@@ -555,8 +566,8 @@ return [
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
+                    'asset' => true,
+                    'location' => 'vendor/sweetalert2/sweetalert2.all.min.js',
                 ],
             ],
         ],
@@ -591,7 +602,7 @@ return [
             ],
         ],
         'DateRangePicker' => [
-            'active' => true,
+            'active' => false,
             'files' => [
                 [
                     'type' => 'js',
@@ -611,7 +622,7 @@ return [
             ],
         ],
         'TempusDominusBs4' => [
-            'active' => true,
+            'active' => false,
             'files' => [
                 [
                     'type' => 'js',
