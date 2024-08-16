@@ -28,9 +28,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
     Route::resource('company',CompanyController::class);
     Route::resource('petition',PetitionController::class);
 
-    Route::get('/index', [VCenterController::class, 'index'])->name('index');
-
-    Route::resource('inventary',InventoryController::class);
+    Route::get('/vms/index', [VCenterController::class, 'index'])->name('vms.index');
+    Route::post('/update-vm', [VCenterController::class, 'update'])->name('update');
+    Route::post('/clear-upgrade-status', [VCenterController::class, 'clearUpgradeStatus'])->name('clearUpgradeStatus');
+ 
     Route::resource('integration',IntegrationController::class);
 
     Route::get('/marca-model', [MarcaModelController::class, 'index'])->name('marca-model.index');
@@ -39,7 +40,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
     Route::get('/get-marcas', [MarcaModelController::class, 'getMarcas'])->name('get-marcas');
     Route::get('/get-modelos', [MarcaModelController::class, 'getModelos'])->name('get-modelos');
 
-    Route::get('/get-models/{trademark}', [App\Http\Controllers\InventoryController::class, 'getModels'])->name('get.models');
-    Route::get('/get-centers/{zona}', [App\Http\Controllers\InventoryController::class, 'getCenters'])->name('get.centers');
-    Route::get('/get-plantas/{centroId}', [App\Http\Controllers\InventoryController::class, 'getPlantas'])->name('get.plantas');
+    Route::resource('inventary',InventoryController::class);
+    Route::get('/get-inventary', [InventoryController::class, 'getData'])->name('get-inventary');
+    Route::get('/get-centers/{zona}', [InventoryController::class, 'getCenters'])->name('get.centers');
+    Route::get('/get-models/{trademark}', [InventoryController::class, 'getModels'])->name('get.models');
+    Route::get('/get-plantas/{centroId}', [InventoryController::class, 'getPlantas'])->name('get.plantas');
 });
