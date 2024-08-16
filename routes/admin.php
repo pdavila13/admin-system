@@ -30,6 +30,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
 
     Route::get('/vms/index', [VCenterController::class, 'index'])->name('vms.index');
     Route::post('/update-vm', [VCenterController::class, 'update'])->name('update');
+     Route::get('/datatable/vms', [VCenterController::class, 'vms'])->name('datatable.vms');
+
     Route::post('/clear-upgrade-status', [VCenterController::class, 'clearUpgradeStatus'])->name('clearUpgradeStatus');
  
     Route::resource('integration',IntegrationController::class);
