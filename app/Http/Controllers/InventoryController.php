@@ -11,7 +11,7 @@ class InventoryController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:admin.inventory.index')->only('index');
+        $this->middleware('can:admin.inventory.index')->only('index','getModels','getCenters','getPlantas','getData');
         $this->middleware('can:admin.inventory.create')->only('create', 'store');
         $this->middleware('can:admin.inventory.edit')->only('edit', 'update');
         $this->middleware('can:admin.inventory.delete')->only('destroy');
