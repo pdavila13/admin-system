@@ -12,6 +12,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\IntegrationController;
+use App\Http\Controllers\Catalog\CatalogController;
 use App\Http\Controllers\Inventory\MarcaModelController;
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(function () {
@@ -47,4 +48,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
     Route::get('/get-centers/{zona}', [InventoryController::class, 'getCenters'])->name('get.centers');
     Route::get('/get-models/{trademark}', [InventoryController::class, 'getModels'])->name('get.models');
     Route::get('/get-plantas/{centroId}', [InventoryController::class, 'getPlantas'])->name('get.plantas');
+
+    Route::resource('catalog',CatalogController::class)->only('index');
+    Route::post('/catalog/search', [CatalogController::class, 'search'])->name('catalog.search');
+    // Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
+    // Route::post('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
 });

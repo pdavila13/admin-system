@@ -408,6 +408,13 @@ return [
             'active' => ['admin/vms*'],
             'can' => 'admin.vms.index',
         ],
+        [
+            'text' => 'search_catalog_files',
+            'route' => 'admin.catalog.index',
+            'icon' => 'fas fa-fw fa-search',
+            'active' => ['admin/catalog*'],
+            'can' => 'admin.catalog.index',
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',

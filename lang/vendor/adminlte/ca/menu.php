@@ -23,4 +23,5 @@ return [
     'profile' => 'Perfil',
     'change_password' => 'Canviar contrasenya',
     'search' => 'buscar',
+    'search_catalog_files' => 'Catàleg de fitxers',
 ];
