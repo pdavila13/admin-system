@@ -8,6 +8,11 @@ use App\Http\Controllers\Controller;
 
 class CatalogController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.catalog.index')->only('index','search');
+    }
+
     public function index()
     {
         return view('admin.catalog.index');
@@ -15,6 +20,10 @@ class CatalogController extends Controller
 
     public function search(Request $request)
     {
+        $request->validate([
+            'ruta' => 'required',
+        ]);
+
         $file_name = $request->input('file_name');
         $latest_version = $request->input('latest_version');
         $ruta = $request->input('ruta');
