@@ -7,14 +7,6 @@
 <h1 class="text-muted">{{ __('Virtual Machines') }}</h1>
 @stop
 
-
-{{-- @section('content_header')
-    @can('admin.integration.create')
-        <a href="{{ route('admin.integration.create') }}" class="btn btn-sm btn-primary float-right"><i class="fas fa-plus"></i></a>
-    @endcan
-    <h1 class="text-muted">{{ __('List integrations') }}</h1>
-@stop --}}
-
 {{-- Content body: main page content --}}
 @section('content_body')
     <div class="card">
@@ -35,7 +27,7 @@
                     <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>Estado de Energía</th>
+                            <th>Descripción</th>
                             <th>Guest OS</th>
                             <th>Hardware Version</th>
                             <th>Tools Version</th>
@@ -94,8 +86,19 @@
             },
             ajax: "{{ route('admin.datatable.vms') }}",
             columns: [
-                { data: 'name' },
-                { data: 'power_state' },
+                { data: 'name', render: function(data, type, row) {
+                    if (type === 'display') {
+                        let badge = '';
+                        // Verifica si 'annotation' tiene el valor 'enabled'
+                        if (row.annotation === 'enabled') {
+                            badge = '<span class="badge badge-info">Email Notification</span>';
+                        }
+                        // Retorna el nombre del servidor y el badge si corresponde
+                        return data + ' ' + badge;
+                    }
+                    return data;
+                }},
+                { data: 'description' },
                 { data: 'guest_OS' },
                 { data: 'tools_version_status' },
                 { data: 'hardware_version' },
@@ -152,7 +155,7 @@
                             // Actualiza los datos de la fila con los nuevos valores
                             table.row(rowIndex).data({
                                 name: updatedVm.name,
-                                power_state: updatedVm.power_state,
+                                description: updatedVm.description,
                                 guest_OS: updatedVm.guest_OS,
                                 tools_version_status: updatedVm.tools_version_status,
                                 hardware_version: updatedVm.hardware_version,
@@ -203,33 +206,6 @@
                     });
                 }
             });
-
-
-            // $('#vmsTable').on('change', '.vm-state', function() {
-            //     var vmId = $(this).data('id');
-            //     var state = $(this).val();
-
-            //     $.ajax({
-            //         url: '{{ route('admin.update') }}',
-            //         method: 'POST',
-            //         data: {
-            //             id: vmId,
-            //             column: 'upgrade_status',
-            //             value: state,
-            //             _token: '{{ csrf_token() }}'
-            //         },
-            //         success: function(response) {
-            //             if (response.success) {
-            //                 location.reload(); // Recarga la página después de una actualización exitosa
-            //             } else {
-            //                 alert('Failed to update VM state.');
-            //             }
-            //         },
-            //         error: function() {
-            //             alert('Error updating VM state.');
-            //         }
-            //     });
-            // });
         });
     </script>
 @endpush

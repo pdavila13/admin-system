@@ -84,7 +84,7 @@ class VCenterController extends Controller
     // }
 
     public function vms() {
-        $vms = vCenterVM::select('id','name','power_state','guest_OS','tools_version_status','hardware_version','upgrade_status')
+        $vms = vCenterVM::select('id','name','description','annotation','guest_OS','tools_version_status','hardware_version','upgrade_status')
         ->where(function ($query) {
             $query->whereNull('upgrade_status')
                 ->orWhere('upgrade_status', '!=', 'NO');
