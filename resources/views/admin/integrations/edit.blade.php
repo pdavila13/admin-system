@@ -68,6 +68,9 @@
     </div>
 @stop
 
+{{-- Enable Plugins --}}
+@section('plugins.Select2', true)
+
 {{-- Push extra scripts --}}
 @push('js')
     <script>
