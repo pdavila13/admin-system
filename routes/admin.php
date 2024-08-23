@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Inventory\TipusAparell;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\IntegrationController;
 use App\Http\Controllers\Catalog\CatalogController;
 use App\Http\Controllers\Inventory\MarcaModelController;
+use App\Http\Controllers\Inventory\TipusAparellController;
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -51,6 +53,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
 
     Route::resource('catalog',CatalogController::class)->only('index');
     Route::post('/catalog/search', [CatalogController::class, 'search'])->name('catalog.search');
-    // Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
-    // Route::post('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
+
+    Route::resource('tipus_aparell',TipusAparellController::class)->only('index','store','update');
 });

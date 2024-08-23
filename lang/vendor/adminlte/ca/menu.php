@@ -15,6 +15,7 @@ return [
     'petitions' => 'Peticions',
     'integrations' => 'Integracions',
     'management_brand_model' => 'Gestió de Marca i Model',
+    'equipment_type' => 'Tipus d\'aparell',
     'medic_devices' => 'Dispositius mèdics',
     'mq_integration' => 'Integració MQ',
     'tasks' => 'TASQUES',

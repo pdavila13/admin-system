@@ -375,6 +375,13 @@ return [
                     'can' => 'admin.marca-model.index',
                 ],
                 [
+                    'text' => 'equipment_type',
+                    'route' => 'admin.tipus_aparell.index',
+                    'icon' => 'fas fa-fw fa-prescription',
+                    'active' => ['admin/tipus_aparell*'],
+                    'can' => 'admin.tipus_aparell.index',
+                ],
+                [
                     'text' => 'medic_devices',
                     'route' => 'admin.inventary.index',
                     'icon' => 'fas fa-fw fa-medkit',
