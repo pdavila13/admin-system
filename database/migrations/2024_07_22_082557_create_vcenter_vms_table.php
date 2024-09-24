@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('criticality')->nullable();
             $table->string('tools_version_status');
             $table->string('hardware_version');
+            $table->string('last_reboot')->nullable();
             $table->enum('upgrade_status',['N/A','YES','NO','REBOOT'])->nullable();
             $table->timestamps();
         });

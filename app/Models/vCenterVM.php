@@ -19,8 +19,8 @@ class vCenterVM extends Model
         // 'annotation',
         'guest_OS',
         // 'criticality',
-        'tools_version_status',
+        // 'tools_version_status',
         'hardware_version',
-        // 'upgrade_status',
+        'last_reboot'
     ];
 }
