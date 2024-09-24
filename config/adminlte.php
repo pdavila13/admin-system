@@ -409,6 +409,11 @@ return [
             'can' => 'admin.petition.index',
         ],
         [
+            'text' => 'calendar',
+            'route' => 'admin.calendar.index',
+            'icon' => 'fas fa-fw fa-calendar-alt',
+        ],
+        [
             'text' => 'tasks_management_servers',
             'route' => 'admin.vms.index',
             'icon' => 'fas fa-fw fa-server',
@@ -652,6 +657,31 @@ return [
                     'type' => 'css',
                     'asset' => true,
                     'location' => 'vendor/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css',
+                ],
+            ],
+        ],
+        'FullCalendar' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/fullcalendar/main.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/fullcalendar/main.css',
+                ],
+            ],
+        ],
+        'jQueryUI' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/jquery-ui/jquery-ui.min.js',
                 ],
             ],
         ],

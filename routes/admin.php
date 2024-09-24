@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VCenterController;
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\GroupVpnController;
 use App\Http\Controllers\PetitionController;
 use App\Http\Controllers\DashboardController;
@@ -30,6 +31,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
     Route::resource('group_vpn',GroupVpnController::class);
     Route::resource('company',CompanyController::class);
     Route::resource('petition',PetitionController::class);
+    Route::resource('calendar',CalendarController::class);
 
     Route::get('/vms/index', [VCenterController::class, 'index'])->name('vms.index');
     Route::post('/update-vm', [VCenterController::class, 'update'])->name('update');
