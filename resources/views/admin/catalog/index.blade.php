@@ -18,21 +18,21 @@
                     <table class="table table-striped table-sm" id="catalogFilesTable" cellspacing="0" style="width:100%">
                         <thead>
                             <tr>
-                                <th>{{ __('Date') }}</th>
-                                <th>{{ __('File') }}</th>
-                                <th>{{ __('Modification Date') }}</th>
+                                <th>{{ __('Backup date') }}</th>
+                                <th>{{ __('File name') }}</th>
+                                <th>{{ __('Modification date') }}</th>
+                                <th>{{ __('Absolute path') }}</th>
                                 <th>{{ __('File size') }}</th>
-                                <th>{{ __('Location') }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($results as $result)
                                 <tr>
-                                    <td>{{ $result->fecha }}</td>
+                                    <td width="10%">{{ $result->fecha }}</td>
                                     <td>{{ $result->file_name }}</td>
-                                    <td>{{ $result->ultimo_cambio }}</td>
-                                    <td>{{ number_format($result->tamaño / 1024, 2) }}</td>
+                                    <td width="15%">{{ $result->ultimo_cambio }}</td>
                                     <td>{{ $result->ruta }}</td>
+                                    <td>{{ number_format($result->tamaño / 1024, 2) }}</td>
                                 </tr>
                             @empty
                                 <tr>
@@ -54,10 +54,6 @@
         .radio-spacing {
             margin-right: 10px;
         }
-
-        table{
-		    width:100%
-        }
     </style>
 @endpush
 
@@ -76,7 +72,7 @@
             var dataTableConfig = {
                 paging: true,
                 searching: true,
-                ordering: false,
+                ordering: true,
                 responsive: true,
                 autoWidth: false,
                 language: {
@@ -85,6 +81,14 @@
             };
 
             $('#catalogFilesTable').DataTable(dataTableConfig);
+
+            $('form').on('submit', function(event) {
+                var $button = $('#searchButton');
+
+                // Cambiar el botón a estado de carga
+                $button.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> {{ __('Searching') }}');
+                $button.prop('disabled', true); // Desactiva el botón
+            });
         });
     </script>
 @endpush

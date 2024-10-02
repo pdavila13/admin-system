@@ -3,8 +3,8 @@
 {{-- Customize layout sections --}}
 @section('subtitle', __('vCenter Virtual Machines'))
 @section('content_header')
-<button id="clearUpgradeStatus" class="btn btn-sm btn-danger mb-3 float-right">Clear Upgrade Status</button>
-<h1 class="text-muted">{{ __('Virtual Machines') }}</h1>
+    <button id="clearUpgradeStatus" class="btn btn-sm btn-danger mb-3 float-right">{{ __('Clear Upgrade Status') }}</button>
+    <h1 class="text-muted">{{ __('Virtual Machines') }}</h1>
 @stop
 
 {{-- Content body: main page content --}}
@@ -26,17 +26,17 @@
                 <table class="table table-striped table-sm vms" id="vmsTable">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Descripción</th>
-                            <th>Guest OS</th>
-                            <th>Hardware Version</th>
-                            <th>Tools Version</th>
-                            <th>Updated</th>
+                            <th>{{ __('Name') }}</th>
+                            <th>{{ __('Description') }}</th>
+                            <th>{{ __('Guest OS') }}</th>
+                            <th>{{ __('Hardware Version') }}</th>
+                            <th>{{ __('Last Reboot') }}</th>
+                            <th>{{ __('Update') }}</th>
                         </tr>
                     </thead>
                 </table>
             @else
-                <p>No se encontraron VMs.</p>
+                <p>{{ __('No se encontraron VMs.') }}</p>
             @endif
         </div>
     </div>
@@ -100,8 +100,8 @@
                 }},
                 { data: 'description' },
                 { data: 'guest_OS' },
-                { data: 'tools_version_status' },
                 { data: 'hardware_version' },
+                { data: 'last_reboot' },
                 { data: 'upgrade_status', render: function(data, type, row) {
                     if (type === 'display') {
                         return '<select class="form-control vm-state" data-id="'+row.id+'">' +
@@ -157,8 +157,8 @@
                                 name: updatedVm.name,
                                 description: updatedVm.description,
                                 guest_OS: updatedVm.guest_OS,
-                                tools_version_status: updatedVm.tools_version_status,
                                 hardware_version: updatedVm.hardware_version,
+                                last_reboot: updatedVm.last_reboot,
                                 upgrade_status: updatedVm.upgrade_status
                             }).draw(false); // Redibuja la fila sin recargar toda la tabla
 
