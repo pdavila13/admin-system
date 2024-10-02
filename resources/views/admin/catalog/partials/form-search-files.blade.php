@@ -45,6 +45,6 @@
 
     <!-- Botón de búsqueda -->
     <div class="form-group">
-        {!! Form::submit(__('Search'), ['class' => 'btn btn-primary']) !!}
+        {!! Form::button(__('Search'), ['id' => 'searchButton', 'type' => 'submit', 'class' => 'btn btn-primary']) !!}
     </div>
 {!! Form::close() !!}
