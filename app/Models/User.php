@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Task;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -58,11 +57,6 @@ class User extends Authenticatable implements LdapAuthenticatable
     public function petition(): HasMany
     {
         return $this->hasMany(Petition::class);
-    }
-
-    public function task(): HasMany
-    {
-        return $this->hasMany(Task::class);
     }
 
     public function adminlte_image()

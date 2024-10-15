@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Inventory\TipusAparell;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VCenterController;
