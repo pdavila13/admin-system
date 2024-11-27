@@ -66,7 +66,7 @@
                     </div>
                 </div> --}}
 
-                <div class="card collapsed-card bg-light mb-3">
+                {{-- <div class="card collapsed-card bg-light mb-3">
                     <div class="card-header">
                         <h4 class="card-title">Días Festivos Laborales</h4>
                         <div class="card-tools">
@@ -83,7 +83,7 @@
                             @endforeach
                         </ul>
                     </div>
-                </div>
+                </div> --}}
 
                 {{-- <div class="card collapsed-card bg-light mb-3">
                     <div class="card-header">

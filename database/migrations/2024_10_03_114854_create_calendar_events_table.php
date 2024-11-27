@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('backgroundColor');
             $table->string('borderColor');
             $table->string('textColor');
-            $table->integer('year');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('holiday_id')->constrained()->onDelete('cascade');
             $table->timestamps();
