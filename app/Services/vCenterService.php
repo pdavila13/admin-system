@@ -90,7 +90,7 @@ class vCenterService
                             'guest_OS' => $guestOS['full_name']['default_message'] ?? null,
                             // 'criticality' => $detailedVM['criticality'] ?? null,
                             'hardware_version' => $detailedVM['hardware']['version'] ?? null,
-                            'tools_version_status' => $toolsDetails['version_status'] ?? null,
+                            //'tools_version_status' => $toolsDetails['version_status'] ?? null,
                         ]
                     );
                 }
