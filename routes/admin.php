@@ -1,14 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\Inventory\TipusAparell;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\EventController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VCenterController;
-use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\GroupVpnController;
 use App\Http\Controllers\PetitionController;
 use App\Http\Controllers\DashboardController;
@@ -16,6 +13,7 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\IntegrationController;
 use App\Http\Controllers\Catalog\CatalogController;
+use App\Http\Controllers\Calendar\CalendarController;
 use App\Http\Controllers\Inventory\MarcaModelController;
 use App\Http\Controllers\Inventory\TipusAparellController;
 

@@ -4,7 +4,7 @@
 
 @section('subtitle', 'Calendar')
 @section('content_header')
-    <a href="{{ url('#') }}" class="btn btn-sm btn-primary float-right"><i class="fas fa-plus"></i></a>
+    {{-- <a href="{{ url('#') }}" class="btn btn-sm btn-primary float-right"><i class="fas fa-plus"></i></a> --}}
     <h1 class="text-muted">{{ __('Calendar') }}</h1>
 @stop
 
@@ -20,11 +20,11 @@
                     </div>
                     <div class="card-body">
                         <div id="external-events">
-                            @foreach ($users as $user)
+                            {{-- @foreach ($users as $user)
                                 <div class="external-event" data-user-id="{{ $user->id }}"  style="background-color: {{ $user->backgroundColor }}; color: #FFFFFF;">
-                                     {{ $user->name }} {{--<span class="badge badge-light"> {{ $eventCounts[$event->id]->total ?? 0 }} </span> --}}
+                                     {{ $user->name }}
                                 </div>
-                            @endforeach
+                            @endforeach --}}
 
                             <div class="checkbox">
                                 <label for="drop-remove" style="display: none">
@@ -35,74 +35,6 @@
                         </div>
                     </div>
                 </div>
-
-                {{-- <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Create Event</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
-                            <ul class="fc-color-picker" id="color-chooser">
-                                <li><a class="text-primary" href="#"><i class="fas fa-square"></i></a></li>
-                                <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>
-                                <li><a class="text-success" href="#"><i class="fas fa-square"></i></a></li>
-                                <li><a class="text-danger" href="#"><i class="fas fa-square"></i></a></li>
-                                <li><a class="text-muted" href="#"><i class="fas fa-square"></i></a></li>
-                            </ul>
-                        </div>
-
-                        <div class="input-group">
-                            <select id="user-select" class="form-control">
-                                <option value="">{{ __('Select technical') }}</option>
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id }}" data-user-id="{{ $user->id }}">{{ $user->name }}</option>
-                                @endforeach
-                            </select>
-                        
-                            <div class="input-group-append">
-                                <button id="add-new-event" type="button" class="btn btn-primary">Add</button>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-
-                {{-- <div class="card collapsed-card bg-light mb-3">
-                    <div class="card-header">
-                        <h4 class="card-title">Días Festivos Laborales</h4>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                    class="fas fa-plus"></i></button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-group">
-                            @foreach ($laborHolidays as $holiday)
-                                <li class="list-group-item" style="color: {{ $holiday['color'] }};">
-                                    {{ \Carbon\Carbon::parse($holiday['start'])->format('l, j \d\e F \d\e Y') }}
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div> --}}
-
-                {{-- <div class="card collapsed-card bg-light mb-3">
-                    <div class="card-header">
-                        <h4 class="card-title">Días Festivos Especiales</h4>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                    class="fas fa-plus"></i></button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-group">
-                            @foreach ($specialHolidays as $holiday)
-                                <li class="list-group-item" style="color: {{ $holiday['color'] }};">
-                                    {{ \Carbon\Carbon::parse($holiday['start'])->format('l, j \d\e F \d\e Y') }}
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div> --}}
             </div>
         </div>
         <div class="col-md-9">
@@ -115,7 +47,7 @@
     </div>
 @stop
 
-@section('css')
+{{-- @section('css')
     <style>
         .fc-daygrid-day.fc-day-sun .fc-daygrid-day-number,
         .fc-daygrid-day.fc-day-sat .fc-daygrid-day-number,
@@ -124,14 +56,14 @@
             font-weight: bold;
         }
     </style>
-@endsection
+@endsection --}}
 
 {{-- Enable Plugin --}}
-@section('plugins.jQueryUI', true)
-@section('plugins.TempusDominusBs4', true)
+{{-- @section('plugins.jQueryUI', true)
+@section('plugins.TempusDominusBs4', true) --}}
 
 {{-- Push extra scripts --}}
-@section('js')
+{{-- @section('js')
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
     <script>
         $(function() {
@@ -419,49 +351,6 @@
             });
     
             calendar.render();
-
-            // /* ADDING EVENTS */
-            // var currColor = '#3c8dbc'; //Red by default
-
-            // // Color chooser button
-            // $('#color-chooser > li > a').click(function (e) {
-            //     e.preventDefault();
-            //     // Save color
-            //     currColor = $(this).css('color');
-            //     // Add color effect to button
-            //     $('#add-new-event').css({
-            //         'background-color': currColor,
-            //         'border-color'    : currColor
-            //     });
-            // });
-
-            // $('#add-new-event').click(function (e) {
-            //     e.preventDefault();
-            //     // Get value and make sure it is not null
-            //     var userId = $('#user-select').val();
-            //     var userName = $('#user-select option:selected').text(); // Para obtener el nombre
-
-            //     if (!userId) {
-            //         alert('Por favor selecciona un usuario.');
-            //         return;
-            //     }
-
-            //     // Create events
-            //     var event = $('<div />');
-            //     event.css({
-            //         'background-color': currColor,
-            //         'border-color'    : currColor,
-            //         'color'           : '#fff'
-            //     }).addClass('external-holiday-event');
-            //     event.text(userName); // Usar el nombre del usuario seleccionado
-            //     $('#external-holiday-events').prepend(event);
-
-            //     // Add draggable funtionality
-            //     ini_events(event);
-
-            //     // Limpiar el selector
-            //     $('#user-select').val('');
-            // });
         });
     </script>    
-@endsection
+@endsection --}}
