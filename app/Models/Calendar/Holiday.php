@@ -2,14 +2,14 @@
 
 namespace App\Models\Calendar;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Calendar extends Model
+class Holiday extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'NIF', 'PrimerCognom', 'SegonCognom', 'Nom', 'DataInici', 'DataFi'
+        'Data', 'Descripcio', 'idCalendari'
     ];
 }

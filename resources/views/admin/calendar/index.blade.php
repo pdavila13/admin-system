@@ -2,36 +2,28 @@
 
 {{-- Customize layout sections --}}
 
-@section('subtitle', 'Calendar')
+@section('subtitle', __('Calendar'))
 @section('content_header')
     {{-- <a href="{{ url('#') }}" class="btn btn-sm btn-primary float-right"><i class="fas fa-plus"></i></a> --}}
     <h1 class="text-muted">{{ __('Calendar') }}</h1>
 @stop
 
 {{-- Content body: main page content --}}
-
 @section('content_body')
     <div class="row">
         <div class="col-md-3">
             <div class="sticky-top mb-3">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Events</h4>
+                        <h4 class="card-title">{{ __('Events') }}</h4>
                     </div>
                     <div class="card-body">
                         <div id="external-events">
-                            {{-- @foreach ($users as $user)
-                                <div class="external-event" data-user-id="{{ $user->id }}"  style="background-color: {{ $user->backgroundColor }}; color: #FFFFFF;">
-                                     {{ $user->name }}
+                            @foreach ($events->unique('ProfessionalID') as $user)
+                                <div class="external-event" data-user-id="{{ $user->ProfessionalID }}" style="background-color: {{ $colors[$user->ProfessionalID] ?? '#17a2b8' }}; color: #FFFFFF;">
+                                     {{ explode(' ', $user->Nom)[0] . ' ' . $user->PrimerCognom . ' ' . $user->SegonCognom }}
                                 </div>
-                            @endforeach --}}
-
-                            <div class="checkbox">
-                                <label for="drop-remove" style="display: none">
-                                    <input type="checkbox" id="drop-remove">
-                                    Eliminar després d'arrossegar
-                                </label>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -47,7 +39,7 @@
     </div>
 @stop
 
-{{-- @section('css')
+@section('css')
     <style>
         .fc-daygrid-day.fc-day-sun .fc-daygrid-day-number,
         .fc-daygrid-day.fc-day-sat .fc-daygrid-day-number,
@@ -56,301 +48,77 @@
             font-weight: bold;
         }
     </style>
-@endsection --}}
+@endsection
 
 {{-- Enable Plugin --}}
-{{-- @section('plugins.jQueryUI', true)
-@section('plugins.TempusDominusBs4', true) --}}
+@section('plugins.jQueryUI', true)
+@section('plugins.FullCalendar', true)
+@section('plugins.TempusDominusBs4', true)
 
 {{-- Push extra scripts --}}
-{{-- @section('js')
+@section('js')
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-    <script>
-        $(function() {
-            function ini_events(ele) {
-                ele.each(function () {
-                    var eventObject = {
-                        title: $.trim($(this).text()),
-                        userId: $(this).data('user-id'),
-                        backgroundColor: $(this).css('background-color'),
-                        borderColor: $(this).css('background-color'),
-                        textColor: '#fff'
-                    };
 
-                    // Verificar si el userId está presente
-                    if (!eventObject.userId) {
-                        console.error('Error: no se encontró el userId para este evento.');
-                    }
-    
-                    $(this).data('event', eventObject);
-                });
-            }
-    
-            // Inicializar los eventos externos
-            ini_events($('#external-events div.external-event'));
-    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
             // Eventos desde la base de datos (Laravel)
-            var events = @json($events);
+            var groupedEvents = @json($groupedEvents);
             var holidays = @json($holidays);
     
             // Inicializar FullCalendar
             var Calendar = FullCalendar.Calendar;
-            var Draggable = FullCalendar.Draggable;
     
             var containerEl = document.getElementById('external-events');
-            var checkbox = document.getElementById('drop-remove');
             var calendarEl = document.getElementById('calendar');
-    
-            // Habilitar el arrastre de eventos externos
-            new Draggable(containerEl, {
-                itemSelector: '.external-event',
-                eventData: function(eventEl) {
-                    return {
-                        title: eventEl.innerText,
-                        userId: $(eventEl).data('user-id'),
-                        backgroundColor: window.getComputedStyle(eventEl, null).getPropertyValue('background-color'),
-                        borderColor: window.getComputedStyle(eventEl, null).getPropertyValue('background-color'),
-                        textColor: '#fff'
-                    };
-                }
-            });
     
             // Inicializar el calendario
             var calendar = new Calendar(calendarEl, {
-                locale: 'ca',
-                initialView: 'dayGridMonth',
                 headerToolbar: {
-                    left: 'prev,next today',
+                    left: 'prev,next',
                     center: 'title',
                     right: 'dayGridMonth,multiMonthYearGrid,dayGridYear',
                 },
+                locale: "{{ app()->getLocale() }}",
+                initialView: 'dayGridMonth',
                 views: {
                     dayGridMonth: {
-                        buttonText: "Month", 
+                        buttonText: "{{ __('Month') }}",
                     },
                     multiMonthYearGrid: {
                         type: "multiMonthYear",
-                        buttonText: "Grid",
+                        buttonText: "{{ __('Grid') }}",
                         multiMonthMaxColumns: 2
                     },
                     dayGridYear: {
-                        buttonText: "Continuous"
+                        buttonText: "{{ __('Continuous') }}"
                     }
                 },
                 firstDay: 1,
-                editable: true,
-                droppable: true, // Habilitar eventos externos
-                eventResizableFromStart: true,
-                eventDurationEditable: true,
-                events: events.map(event => ({
-                    id: event.id,
-                    title: event.title,
-                    start: event.start,
-                    end: event.end,
-                    backgroundColor: event.backgroundColor,
-                    borderColor: event.borderColor,
-                    textColor: event.textColor,
-                    allDay: true
-                })),
-                eventClick: function(info) {
-                    alert('Guardia: ' + info.event.title);
-                },
-                drop: function(info) {
-                    var originalEventObject = $(info.draggedEl).data('event');
-    
-                    // Verificar si el userId está presente
-                    if (!originalEventObject.userId) {
-                        console.error('Error: no se encontró el userId para este evento.');
-                        return;
-                    }
-    
-                    // Crear una copia del evento original
-                    var copiedEventObject = $.extend({}, originalEventObject);
-    
-                    // Añadir el evento al calendario
-                    calendar.addEvent({
-                        id: copiedEventObject.id || null,
-                        title: copiedEventObject.title,
-                        start: copiedEventObject.start,
-                        backgroundColor: copiedEventObject.backgroundColor,
-                        borderColor: copiedEventObject.borderColor,
-                        textColor: copiedEventObject.textColor || '#fff'
-                    });
-    
-                    // Eliminar el evento si la opción "drop-remove" está marcada
-                    if ($('#drop-remove').is(':checked')) {
-                        $(info.draggedEl).remove();
-                    }
-
-                    function formatDate(date) {
-                        var d = new Date(date);
-                        var year = d.getFullYear();
-                        var month = ('0' + (d.getMonth() + 1)).slice(-2);
-                        var day = ('0' + d.getDate()).slice(-2);
-                        var hours = ('0' + d.getHours()).slice(-2);
-                        var minutes = ('0' + d.getMinutes()).slice(-2);
-                        var seconds = ('0' + d.getSeconds()).slice(-2);
-
-                        return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
-                    }
-
-    
-                    // Guardar el evento en la base de datos (AJAX)
-                    $.ajax({
-                        url: '/admin/calendar',
-                        method: 'POST',
-                        data: {
-                            user_id: originalEventObject.userId,
-                            title: originalEventObject.title,
-                            start: formatDate(info.date),
-                            backgroundColor: originalEventObject.backgroundColor,
-                            borderColor: originalEventObject.borderColor,
-                            textColor: originalEventObject.textColor,
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function(response) {
-                            alert('Evento guardado con éxito.');
-                            location.reload();
-                        },
-                        error: function(xhr, status, error) {
-                            alert('Error al guardar el evento: ' + error);
-                        }
-                    });
-                },
-                eventDrop: function(info) {
-                    // Confirmar si desea guardar los cambios
-                    if (confirm("¿Guardar los cambios en la fecha del evento?")) {
-                        // Formatear las fechas
-                        function formatDate(date) {
-                            var d = new Date(date);
-                            var year = d.getFullYear();
-                            var month = ('0' + (d.getMonth() + 1)).slice(-2);
-                            var day = ('0' + d.getDate()).slice(-2);
-                            var hours = ('0' + d.getHours()).slice(-2);
-                            var minutes = ('0' + d.getMinutes()).slice(-2);
-                            var seconds = ('0' + d.getSeconds()).slice(-2);
-
-                            return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
-                        }
-
-                        // Datos del evento que ha sido movido
-                        var event = info.event;
-
-                        // Enviar los cambios al servidor mediante AJAX
-                        $.ajax({
-                            url: '/admin/calendar/' + event.id, // Ruta para actualizar el evento (recurso)
-                            method: 'PATCH', // Método PATCH para actualizar
-                            data: {
-                                start: formatDate(event.start),  // Nueva fecha de inicio
-                                end: event.end ? formatDate(event.end) : null,  // Nueva fecha de fin (opcional)
-                                _token: '{{ csrf_token() }}'
-                            },
-                            success: function(response) {
-                                alert('Evento actualizado con éxito.');
-                                location.reload();
-                            },
-                            error: function(xhr, status, error) {
-                                alert('Error al actualizar el evento: ' + error);
-                                // Revertir el cambio si hubo un error
-                                info.revert();
-                            }
-                        });
-                    } else {
-                        // Si no se confirma, revertir el cambio visualmente
-                        info.revert();
-                    }
-                },
-                eventResize: function(info) {
-                    // var originalEventObject = $(info.draggedEl).data('event');
-    
-                    // // Crear una copia del evento original
-                    // var copiedEventObject = $.extend({}, originalEventObject);
-    
-                    function formatDate(date) {
-                        var d = new Date(date);
-                        var year = d.getFullYear();
-                        var month = ('0' + (d.getMonth() + 1)).slice(-2);
-                        var day = ('0' + d.getDate()).slice(-2);
-                        var hours = ('0' + d.getHours()).slice(-2);
-                        var minutes = ('0' + d.getMinutes()).slice(-2);
-                        var seconds = ('0' + d.getSeconds()).slice(-2);
-
-                        return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
-                    }
-
-                    var copiedEventObject = info.event;
-    
-                    // Guardar el evento en la base de datos (AJAX)
-                    $.ajax({
-                        url: '/admin/calendar/' + copiedEventObject.id,
-                        method: 'PATCH',
-                        data: {
-                            // user_id: originalEventObject.userId,
-                            start: formatDate(info.event.start),
-                            end: formatDate(info.event.end),
-                            // title: copiedEventObject.title,
-                            // backgroundColor: copiedEventObject.backgroundColor,
-                            // borderColor: copiedEventObject.borderColor,
-                            // textColor: copiedEventObject.textColor,
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function(response) {
-                            alert('Evento actualizado con éxito.');
-                            location.reload();
-                        },
-                        error: function(xhr, status, error) {
-                            alert('Error al actualizar el evento: ' + error);
-                            console.log(originalEventObject.userId);
-                        }
-                    });
-                },
+                events: groupedEvents,
                 dayCellClassNames: function(arg) {
                     var classes = [];
 
-                    // Fines de semana (sábados y domingos)
+                    // Verificar si la fecha es fin de semana
                     if (arg.date.getDay() === 0 || arg.date.getDay() === 6) {
                         classes.push('weekend');
                     }
 
-                    // Días festivos
+                    // Comparar fechas y marcar días festivos
                     holidays.forEach(function(holiday) {
-                        var calendarDate = arg.date.toLocaleDateString('en-CA'); // Formato YYYY-MM-DD
-                        if (calendarDate === holiday.date) {
-                            classes.push('holiday'); // Añadir clase 'holiday' si es festivo
+                        var calendarDate = arg.date.toLocaleDateString('en-CA'); // Convertir a formato YYYY-MM-DD
+                        if (calendarDate === holiday.start) { // 'start' contiene la fecha del festivo
+                            classes.push('holiday'); // Agregar clase 'holiday' si coincide
                         }
                     });
 
                     return classes;
                 },
-                eventDidMount: function(info) {
-                    info.el.style.backgroundColor = info.event.extendedProps.color;
-                    info.el.style.borderColor = info.event.extendedProps.color;
-
-                    // Eliminar el evento de clic derecho
-                    info.el.addEventListener('contextmenu', function(e) {
-                        e.preventDefault();
-                        if (confirm('¿Estás seguro de que deseas eliminar este evento?')) {
-                            fetch('/admin/calendar/' + info.event.id, {
-                                    method: 'DELETE',
-                                    headers: {
-                                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                        'Content-Type': 'application/json'
-                                    },
-                                })
-                                .then(response => {
-                                    if (response.ok) {
-                                        info.event.remove();
-                                        alert('Evento eliminado con éxito.');
-                                    } else {
-                                        alert('Error al eliminar el evento.');
-                                    }
-                                });
-                        }
-                    });
+                eventClick: function(info) {
+                    alert('Guardia: ' + info.event.title);
                 }
             });
     
             calendar.render();
         });
     </script>    
-@endsection --}}
+@endsection
