@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\Inventory\TipusAparell;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
@@ -14,6 +13,7 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\IntegrationController;
 use App\Http\Controllers\Catalog\CatalogController;
+use App\Http\Controllers\Calendar\CalendarController;
 use App\Http\Controllers\Inventory\MarcaModelController;
 use App\Http\Controllers\Inventory\TipusAparellController;
 
@@ -30,6 +30,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
     Route::resource('group_vpn',GroupVpnController::class);
     Route::resource('company',CompanyController::class);
     Route::resource('petition',PetitionController::class);
+    Route::resource('calendar',CalendarController::class);
 
     Route::get('/vms/index', [VCenterController::class, 'index'])->name('vms.index');
     Route::post('/update-vm', [VCenterController::class, 'update'])->name('update');

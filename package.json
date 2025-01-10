@@ -17,6 +17,6 @@
     },
     "dependencies": {
         "flag-icon-css": "^4.1.7",
-        "tempusdominus-bootstrap-4": "^5.39.2"
+        "tempusdominus-bootstrap-4": "^5.1.2"
     }
 }
