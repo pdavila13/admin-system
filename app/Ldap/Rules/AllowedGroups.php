@@ -17,6 +17,7 @@ class AllowedGroups implements Rule
          // Define the groups that are allowed to access the application
          $allowedGroups = [
             'CN=Sistemes,OU=Administradors Informàtica,DC=parcsanitari,DC=local',
+            'CN=Informatica,OU=Administradors Informàtica,DC=parcsanitari,DC=local',
             'CN=Oficina SAP,OU=Grups d\'Usuaris,DC=parcsanitari,DC=local',
             'CN=Electromedicina,OU=Grups d\'Usuaris,DC=parcsanitari,DC=local',
         ];

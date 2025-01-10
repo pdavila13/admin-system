@@ -22,7 +22,8 @@ class UserAttributeHandler
 
         // Defined the LDAP group to role mapping for the application
         $rolesMap = [
-            'Admin' => 'CN=Informatica,OU=Administradors Informàtica,DC=parcsanitari,DC=local',
+            'Admin' => 'CN=Sistemes,OU=Administradors Informàtica,DC=parcsanitari,DC=local',
+            'User' => 'CN=Informatica,OU=Administradors Informàtica,DC=parcsanitari,DC=local',
             'User SAP' => 'CN=Oficina SAP,OU=Grups d\'Usuaris,DC=parcsanitari,DC=local',
             'User GEE' => 'CN=Electromedicina,OU=Grups d\'Usuaris,DC=parcsanitari,DC=local',
         ];
