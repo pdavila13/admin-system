@@ -26,9 +26,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-laptop"></i></span>
                                     </div>
-                                    {!! Form::select('ip_address', [$dataFromFacadeIP->id => $dataFromFacadeIP->ip], old('ip_address'), ['class' => 'form-control select2 select2-bootstrap4']) !!}
 
-                                    {{-- {!! Form::select('ip_address', $dataFromFacadeIP->where('id', $integration->id)->pluck('ip', 'id')->toArray(), old('ip_address'), ['class' => 'form-control select2 select2-bootstrap4']) !!} --}}
+                                    {!! Form::select('ip_address', $ipOptions, old('ip_address', $dataFromFacadeIP->ip ?? null), $selectAttributes) !!}
                                 </div>
                             </div>
                             @error('ip_address')

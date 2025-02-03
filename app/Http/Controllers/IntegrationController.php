@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Helpers\IPHelper;
 use Illuminate\Http\Request;
 use App\Models\Inventory\Elemento;
 use Illuminate\Support\Facades\DB;
@@ -312,6 +313,7 @@ class IntegrationController extends Controller
             ->leftJoin('centro', 'elemento.centro', '=', 'centro.id')
             ->select(
                 'elemento.id',
+                'elemento.centro',
                 DB::raw("concat(ip.ip1,'.',ip.ip2,'.',ip.ip3,'.',ip.ip4) as ip"),
                 DB::raw("concat(centro.ip1,'.',centro.ip2,'.',centro.ip3,'.',centro.ip4) as centro_ip"),
                 DB::raw("concat(centro.mask1,'.',centro.mask2,'.',centro.mask3,'.',centro.mask4) as centro_mask")
@@ -319,7 +321,68 @@ class IntegrationController extends Controller
             ->where('elemento.id', $integration->id)
             ->first();
 
-        // Verificar si se encontraron datos de IP
+            $networkIp = $dataFromFacadeIP->centro_ip;  // Ejemplo: "10.84.139.0"
+            $mask = $dataFromFacadeIP->centro_mask;       // Ejemplo: "255.255.254.0"
+
+            // Obtener las IPs usadas (por ejemplo, extraídas de la tabla 'ip')
+            $usedIPs = /* array de IPs ya asignadas, e.g.: */ ['10.84.139.5', '10.84.139.6'];
+
+            // Obtener IPs disponibles:
+            $ipsLibres = IPHelper::getAvailableIPs($networkIp, $mask, $usedIPs);
+
+        // Si se encontró la configuración de red, procesamos las IPs usadas y calculamos las libres.
+        if ($dataFromFacadeIP) {
+            // La IP de la red (ya concatenada) y la máscara se usan como parámetros para el helper.
+            $networkIp = $dataFromFacadeIP->centro_ip; // Ejemplo: "10.84.139.32"
+            $mask = $dataFromFacadeIP->centro_mask;      // Ejemplo: "255.255.254.0"
+
+            // Convertir la IP de la red en partes para usar en la condición del query.
+            $parts = explode('.', $networkIp);
+
+            // Recuperar las IPs ya asignadas (usadas) para el centro.
+            // La condición depende de la máscara: 
+            if ($mask === '255.255.254.0') {
+                // Rango más amplio: filtrar por ip1 e ip2.
+                $usedIPs = DB::connection('inventory')->table('ip')
+                    ->selectRaw("concat(ip1,'.',ip2,'.',ip3,'.',ip4) as ip")
+                    ->where('ip1', $parts[0])
+                    ->where('ip2', $parts[1])
+                    ->orderBy('ip3')
+                    ->orderBy('ip4')
+                    ->pluck('ip')
+                    ->toArray();
+            } else {
+                // Rango más restringido: filtrar por ip1, ip2 e ip3.
+                $usedIPs = DB::connection('inventory')->table('ip')
+                    ->selectRaw("concat(ip1,'.',ip2,'.',ip3,'.',ip4) as ip")
+                    ->where('ip1', $parts[0])
+                    ->where('ip2', $parts[1])
+                    ->where('ip3', $parts[2])
+                    ->orderBy('ip4')
+                    ->pluck('ip')
+                    ->toArray();
+            }
+
+            // Llamamos al helper para obtener las IPs libres en la red, excluyendo las usadas.
+            $ipsLibres = IPHelper::getAvailableIPs($networkIp, $mask, $usedIPs);
+        } else {
+            $ipsLibres = [];
+        }
+
+
+        // Supongamos que ya has calculado $ipsLibres usando tu helper (array de strings, ej: ['10.84.139.5', '10.84.139.6', ...])
+        // Ahora, preparamos las opciones para el select:
+        if (!empty($dataFromFacadeIP->ip)) {
+            // Si el elemento tiene una IP asignada, mostramos esa IP como única opción.
+            // Puedes usar el ID de la IP o simplemente usar la IP como clave y valor.
+            $ipOptions = [$dataFromFacadeIP->id => $dataFromFacadeIP->ip];
+        } else {
+            // Si no tiene IP asignada, mostramos la lista de IPs libres.
+            // Por ejemplo, creando un array en que la clave y el valor sean la propia IP:
+            $ipOptions = array_combine($ipsLibres, $ipsLibres);
+        }
+
+        // El resto del código de tu método edit (gateway, commonData, etc.)
         if ($dataFromFacadeIP) {
             try {
                 $gateway = $this->calculateGateway($dataFromFacadeIP->centro_ip, $dataFromFacadeIP->centro_mask);
@@ -329,8 +392,45 @@ class IntegrationController extends Controller
         } else {
             $gateway = 'N/A';
         }
-        
-        return view('admin.integrations.edit', array_merge($commonData, compact('integration', 'gateway', 'dataFromFacadeIP')));
+
+        // Construir el array de opciones para el select de IPs
+        if (!empty($dataFromFacadeIP->ip)) {
+            // El elemento tiene una IP asignada.
+            // Primero, creamos un array con las IPs libres (clave y valor iguales)
+            $ipOptions = array_combine($ipsLibres, $ipsLibres);
+            
+            // Asegurarnos de que la IP asignada aparezca en el array.
+            // Si no se encuentra, la agregamos al principio.
+            if (!isset($ipOptions[$dataFromFacadeIP->ip])) {
+                $ipOptions = [$dataFromFacadeIP->ip => $dataFromFacadeIP->ip] + $ipOptions;
+            } else {
+                // Si ya está, la movemos al principio.
+                $temp = [$dataFromFacadeIP->ip => $dataFromFacadeIP->ip];
+                foreach ($ipOptions as $key => $val) {
+                    if ($key !== $dataFromFacadeIP->ip) {
+                        $temp[$key] = $val;
+                    }
+                }
+                $ipOptions = $temp;
+            }
+        } else {
+            // Si no tiene una IP asignada, usamos únicamente las IPs libres.
+            $ipOptions = array_combine($ipsLibres, $ipsLibres);
+        }
+
+        // Si no hay IP asignada, opcionalmente podemos dejar un placeholder para que el usuario seleccione:
+        $selectAttributes = ['class' => 'form-control select2 select2-bootstrap4'];
+        if (empty($dataFromFacadeIP->ip)) {
+            $selectAttributes['placeholder'] = 'Selecciona una ip';
+        }
+
+        return view('admin.integrations.edit', array_merge(
+            $commonData,
+            compact('integration', 'gateway', 'dataFromFacadeIP', 'ipsLibres')
+        ))->with('ipOptions', $ipOptions)
+          ->with('selectAttributes', $selectAttributes);
+
+
     }
 
     /**
@@ -346,7 +446,7 @@ class IntegrationController extends Controller
                 'codigo', 'def', 'tipus_aparell', 'marca', 'modelo', 'centro', 
                 'ubicacio', 'aet', 'modality', 'his', 'comentari', 
                 'maquina_sap', 'maquina_sap_desc', 'servei', 'ut',
-                'roseta', 'switch', 'codi_evolutiu', 'estat_integracio'
+                'ip_address','roseta', 'switch', 'codi_evolutiu', 'estat_integracio'
             ],
             'User SAP' => [
                 'maquina_sap', 'maquina_sap_desc', 'servei', 'ut', 'estat_integracio'
@@ -397,6 +497,26 @@ class IntegrationController extends Controller
         }
         if (in_array('comentari', $allowedFields)) {
             $rules['comentari'] = 'required';
+        }
+        if (in_array('ip_address', $allowedFields)) {
+            $rules['ip_address'] = 'required';
+        }
+        // Si se ha seleccionado una IP en el formulario, la guardamos en la tabla 'ip'
+        if ($request->has('ip_address')) {
+            $selectedIp = $request->input('ip_address'); // Por ejemplo, "10.84.139.5"
+            $parts = explode('.', $selectedIp);
+            if (count($parts) === 4) {
+                // Actualiza o inserta el registro en la tabla 'ip' usando el id del elemento
+                DB::connection('inventory')->table('ip')->updateOrInsert(
+                    ['id' => $integration->id],
+                    [
+                        'ip1' => (int)$parts[0],
+                        'ip2' => (int)$parts[1],
+                        'ip3' => (int)$parts[2],
+                        'ip4' => (int)$parts[3]
+                    ]
+                );
+            }
         }
 
         // Validar la solicitud

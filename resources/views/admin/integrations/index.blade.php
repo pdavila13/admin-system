@@ -99,6 +99,10 @@
                 ordering: false,
                 responsive: true,
                 autoWidth: false,
+                lengthMenu: [
+                    [20, 35, 50, -1],
+                    [20, 35, 50, 'All']
+                ],
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/ca.json'
                 }
