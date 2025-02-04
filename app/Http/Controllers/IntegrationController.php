@@ -321,14 +321,14 @@ class IntegrationController extends Controller
             ->where('elemento.id', $integration->id)
             ->first();
 
-            $networkIp = $dataFromFacadeIP->centro_ip;  // Ejemplo: "10.84.139.0"
-            $mask = $dataFromFacadeIP->centro_mask;       // Ejemplo: "255.255.254.0"
+        $networkIp = $dataFromFacadeIP->centro_ip;  // Ejemplo: "10.84.139.0"
+        $mask = $dataFromFacadeIP->centro_mask;       // Ejemplo: "255.255.254.0"
 
-            // Obtener las IPs usadas (por ejemplo, extraídas de la tabla 'ip')
-            $usedIPs = /* array de IPs ya asignadas, e.g.: */ ['10.84.139.5', '10.84.139.6'];
+        // Obtener las IPs usadas (por ejemplo, extraídas de la tabla 'ip')
+        $usedIPs = /* array de IPs ya asignadas, e.g.: */ ['10.84.139.5', '10.84.139.6'];
 
-            // Obtener IPs disponibles:
-            $ipsLibres = IPHelper::getAvailableIPs($networkIp, $mask, $usedIPs);
+        // Obtener IPs disponibles:
+        $ipsLibres = IPHelper::getAvailableIPs($networkIp, $mask, $usedIPs);
 
         // Si se encontró la configuración de red, procesamos las IPs usadas y calculamos las libres.
         if ($dataFromFacadeIP) {
@@ -429,8 +429,6 @@ class IntegrationController extends Controller
             compact('integration', 'gateway', 'dataFromFacadeIP', 'ipsLibres')
         ))->with('ipOptions', $ipOptions)
           ->with('selectAttributes', $selectAttributes);
-
-
     }
 
     /**
